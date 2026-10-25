@@ -1,0 +1,18 @@
+{
+  "name": "Labyrinthe Aventure — ELC Éducation",
+  "short_name": "Labyrinthe",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f0f7ee",
+  "theme_color": "#173c42",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
