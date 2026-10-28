@@ -1,30 +1,21 @@
-# Labyrinthe Aventure V1.0 — ELC Éducation
+# Labyrinthe Aventure — ELC Éducation V2.0
 
-Jeu HTML gratuit pour enfants de 8 à 10 ans, CE2–CM1.
+Jeu gratuit mobile-first, sans publicité, inscription ni collecte personnelle.
 
 ## Jouer
-Ouvrir [Labyrinthe Aventure](https://estebancaballeroai.github.io/labyrinthe-aventure/) lorsque GitHub Pages est activé.
+https://estebancaballeroai.github.io/labyrinthe-aventure/
 
 ## Contenu
-- 30 labyrinthes dans 3 univers, jusqu’à 25 × 25 cases.
-- 8 personnages au choix : garçon, fille, dragon, licorne, renard, robot, chat, panda.
-- 196 questions CE2–CM1 dans 8 domaines : maths, français, histoire, géographie, sciences, découverte du monde, citoyenneté, logique.
-- Livres éducatifs colorés **facultatifs** : le chemin vers la sortie n’est jamais bloqué par une question.
-- Corrections pédagogiques après chaque réponse.
-- Mode infini, expéditions du savoir, sauvegarde locale.
-- Aucun compte, publicité ou collecte de données.
+- 30 labyrinthes CE2–CM1 d'aventure, 16 expéditions pédagogiques, 6 chapitres bonus narratifs, mode infini et niveau pilote « Le Pont aux trois chemins ».
+- 196 questions originales : français, mathématiques, histoire, géographie, sciences, découverte du monde, citoyenneté et logique. Le joueur peut **passer tous les livres sans être bloqué**.
+- 8 personnages illustrés (garçon, fille, dragon, licorne, renard, robot, chat, panda), portraits WebP originaux, décors des mondes.
+- Carrefours à trois chemins, coffres, collection d'objets, cartes géantes, clés, leviers, portails, gardiens et trésors.
+- Sauvegarde locale compatible avec la V1.0, et ressources en cache pour l'utilisation hors-ligne.
 
-## Installation
-Pour GitHub Pages : Settings > Pages > Deploy from a branch > main > /(root).
-Une fois la page visitée, le service worker conserve les ressources utiles pour le mode hors ligne.
+## Versions et QA
+- Main à jour V2.0 après QA ; historique V1.0 et backup dans backup/index-v1.0.html ; branches expérimentales préservées.
+- Détails : QA-REPORT.md.
+- Grands ajouts progressifs : V1.1 nouveaux portraits et carrefour pilote ; V1.2 carrefours déployés ; V1.3 carnet de collection ; V2.0 six chapitres narratifs.
 
-## Sauvegardes
-L'ancienne V0.1 est conservée dans `backup/index-v0.1.html`.
-
-## Références
-- https://www.education.gouv.fr/programmes-et-horaires-l-ecole-elementaire-9011
-- https://eduscol.education.gouv.fr/4347/enseigner-au-cycle-2
-- https://eduscol.education.gouv.fr/4356/enseigner-au-cycle-3
-
-## Licence
-Projet éducatif gratuit. Les contenus de l'application sont originaux.
+## Remarques
+Les grands graphismes de décor sont des illustrations recadrées pour le jeu, pas encore un tileset d'animation complet. Tests sur une tablette Android ancienne à confirmer.
