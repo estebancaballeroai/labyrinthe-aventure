@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173c42">
-<title>Labyrinthe Aventure V3.0.1 — ELC Éducation</title>
+<title>Labyrinthe Aventure V3.0.2 — ELC Éducation</title>
 <meta name="description" content="Explore des labyrinthes avec des personnages fantastiques. Livres éducatifs CE2–CM1 facultatifs. Jeu gratuit, sans publicité ni compte.">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -62,7 +62,7 @@ var ART_AVATARS={};var ART_READY={};var HERO_OUTLINES={"boy":[[36,1],[25,8],[27,
 var TILE_IMAGES={};
 var TILE_SOURCES=[['floor.webp','wall.webp'],['ruins-floor.webp','ruins-wall.webp'],['ice-floor.webp','ice-wall.webp'],['island-floor.webp','island-wall.webp'],['cloud-floor.webp','cloud-wall.webp'],['stars-floor.webp','stars-wall.webp']];
 TILE_SOURCES.forEach(function(pair,i){TILE_IMAGES[i]=pair.map(function(filename){var im=new Image();im.src='./assets/tiles/'+filename;im.onload=function(){if(screen==='game')paint();};return im;});});
-['boy','girl','dragon','unicorn','fox','robot','cat','panda'].forEach(function(id){var img=new Image();img.onload=function(){var cv=document.createElement('canvas');cv.width=128;cv.height=128;var sc=cv.getContext('2d');var contour=HERO_OUTLINES[id];if(sc&&contour&&contour.length){sc.beginPath();sc.moveTo(contour[0][0],contour[0][1]);for(var j=1;j<contour.length;j++)sc.lineTo(contour[j][0],contour[j][1]);sc.closePath();sc.clip();sc.drawImage(img,0,0,128,128);ART_AVATARS[id]=cv;}else ART_AVATARS[id]=img;ART_READY[id]=true;if(screen==='game')paint();};img.onerror=function(){ART_READY[id]=false;};img.src='./assets/avatars/'+id+'.webp';ART_AVATARS[id]=img;});
+['boy','girl','dragon','unicorn','fox','robot','cat','panda'].forEach(function(id){var img=new Image();img.onload=function(){ART_AVATARS[id]=img;ART_READY[id]=true;if(screen==='game')paint();};img.onerror=function(){ART_READY[id]=false;if(screen==='game')paint();};img.src='./assets/sprites/'+id+'.webp?v=302';});
 var LEGACY_STORAGE='elc_labyrinthe_aventure_v01';
 var WORLDS=[
 {id:'forest',name:'Forêt des chemins',emoji:'🌳',desc:'Sentiers, clés et passages cachés',color:'#47865d'},
@@ -361,7 +361,7 @@ function worldUnlocked(i){return i===0||!!progress.done['c'+(i*10-1)];}
 function levelUnlocked(i){return i===0||!!progress.done['c'+(i-1)];}
 function earned(){var s=0;Object.keys(progress.done).forEach(function(k){if(k.charAt(0)==='c')s+=progress.done[k].stars||0;});return s;}
 function completed(){return CAMPAIGN.filter(function(c){return !!progress.done[c.id];}).length;}
-function top(){return '<header class="top"><div class="topinner"><div class="brand"><div class="brandicon">🧭</div><div><b>Labyrinthe Aventure</b><small>ELC ÉDUCATION · V3.0.1</small></div></div><button class="headbtn" data-action="sound" aria-label="Activer ou désactiver le son">'+(progress.sound?'🔊 Son':'🔇 Son')+'</button></div></header>';}
+function top(){return '<header class="top"><div class="topinner"><div class="brand"><div class="brandicon">🧭</div><div><b>Labyrinthe Aventure</b><small>ELC ÉDUCATION · V3.0.2</small></div></div><button class="headbtn" data-action="sound" aria-label="Activer ou désactiver le son">'+(progress.sound?'🔊 Son':'🔇 Son')+'</button></div></header>';}
 function stars(n){return '<span class="stars">'+('★'.repeat(n||0))+('☆'.repeat(3-(n||0)))+'</span>';}
 function character(){return AVATARS.find(function(a){return a.id===progress.avatar;})||AVATARS[0];}
 function avatarPicker(){return '<section class="panel picker"><div class="section-title" style="margin:0 0 9px"><h2>🎭 Choisis ton héros</h2><span class="sub">Modifiable à tout moment</span></div><div class="avatar-list">'+AVATARS.map(function(a){return '<button class="avatar-choice '+(a.id===progress.avatar?'picked':'')+'" data-action="avatar" data-avatar="'+a.id+'" aria-label="Choisir '+esc(a.name)+'" aria-pressed="'+(a.id===progress.avatar)+'"><span class="avatar-pic"><img class="avatar-art" src="./assets/avatars/'+a.id+'.webp" alt="" loading="lazy"></span><small>'+esc(a.name)+'</small></button>';}).join('')+'</div><div class="grade-row"><div><b>📚 Livres du niveau</b><small>Les questions restent facultatives</small></div><div class="grade-buttons"><button data-action="grade" data-grade="CE2" class="grade-btn '+(progress.grade==='CE2'?'chosen':'')+'">CE2</button><button data-action="grade" data-grade="CM1" class="grade-btn '+(progress.grade==='CM1'?'chosen':'')+'">CM1</button></div></div></section>';}
