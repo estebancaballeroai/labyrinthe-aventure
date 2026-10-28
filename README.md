@@ -17,7 +17,7 @@ Jeu d'exploration 8–10 ans, mobile-first, hors ligne après premier chargement
 ## Organisation
 - Ancienne V3.0.2 : `backup/index-v3.0.2.html`.
 - Jalons testés : `versions/v3.1/` à `versions/v4.0/`.
-- Ressources originales WebP : `assets/decor/` ; personnages : `assets/sprites/`.
+- Ressources originales WebP de décoration intégrées dans les pages HTML pour éviter les chargements manquants ; personnages : `assets/sprites/`.
 - Tests : `QA-V4.md`.
 
 ## Notes de compatibilité
