@@ -1,11 +1,24 @@
-# Labyrinthe Aventure V3.0
+# Labyrinthe Aventure V4.0 — ELC Éducation
 
-[**Jouer sur GitHub Pages**](https://estebancaballeroai.github.io/labyrinthe-aventure/)
+[Jouer gratuitement sur GitHub Pages](https://estebancaballeroai.github.io/labyrinthe-aventure/?v=400)
 
-Jeu ELC Éducation gratuit, sans publicité et sans compte, conçu pour les 8–10 ans.
+Jeu d'exploration 8–10 ans, mobile-first, hors ligne après premier chargement, sans inscription ni publicité. L'aventure libre est au cœur du jeu, avec **des livres CE2–CM1 facultatifs et jamais bloquants**.
 
-**V3.0 :** 60 niveaux répartis dans six mondes, 12 chapitres narratifs, 16 expéditions éducatives, labyrinthes infinis, 336 questions CE2–CM1 (livres facultatifs), huit personnages, passage secret, caisses et dalles bonus, camp d’explorateur, badges et révision des erreurs.
+## Contenu
+- 60 labyrinthes de campagne, 12 chapitres scénarisés et 16 expéditions pédagogiques.
+- 336 questions en 8 matières, explications après erreur, carnet de révision.
+- 8 personnages, sprites transparents conservés.
+- V3.1 : détails illustrés, mouvement plus fluide.
+- V3.2 : lieux remarquables facultatifs.
+- V3.3 : rencontres amicales et petites découvertes.
+- V3.4 : passages secrets à fouiller et collection.
+- V4.0 : commandes mobiles améliorées, petits trophées, accessibilité et cache renouvelé.
 
-**Historique :** V2.0 conservée dans `backup/index-v2.0.html` ; jalons V2.1 à V3.0 dans `versions/`.
+## Organisation
+- Ancienne V3.0.2 : `backup/index-v3.0.2.html`.
+- Jalons testés : `versions/v3.1/` à `versions/v4.0/`.
+- Ressources originales WebP : `assets/decor/` ; personnages : `assets/sprites/`.
+- Tests : `QA-V4.md`.
 
-Voir `QA-REPORT-V3.md` pour les résultats et limites des tests.
+## Notes de compatibilité
+Les sauvegardes de V3.0.2 sont lues sans conversion et les cartes existantes gardent leur géométrie. Voir les limites de test sur les anciennes tablettes dans `QA-V4.md`.
