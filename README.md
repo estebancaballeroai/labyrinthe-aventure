@@ -1,21 +1,11 @@
-# Labyrinthe Aventure — ELC Éducation V2.0
+# Labyrinthe Aventure V3.0
 
-Jeu gratuit mobile-first, sans publicité, inscription ni collecte personnelle.
+[**Jouer sur GitHub Pages**](https://estebancaballeroai.github.io/labyrinthe-aventure/)
 
-## Jouer
-https://estebancaballeroai.github.io/labyrinthe-aventure/
+Jeu ELC Éducation gratuit, sans publicité et sans compte, conçu pour les 8–10 ans.
 
-## Contenu
-- 30 labyrinthes CE2–CM1 d'aventure, 16 expéditions pédagogiques, 6 chapitres bonus narratifs, mode infini et niveau pilote « Le Pont aux trois chemins ».
-- 196 questions originales : français, mathématiques, histoire, géographie, sciences, découverte du monde, citoyenneté et logique. Le joueur peut **passer tous les livres sans être bloqué**.
-- 8 personnages illustrés (garçon, fille, dragon, licorne, renard, robot, chat, panda), portraits WebP originaux, décors des mondes.
-- Carrefours à trois chemins, coffres, collection d'objets, cartes géantes, clés, leviers, portails, gardiens et trésors.
-- Sauvegarde locale compatible avec la V1.0, et ressources en cache pour l'utilisation hors-ligne.
+**V3.0 :** 60 niveaux répartis dans six mondes, 12 chapitres narratifs, 16 expéditions éducatives, labyrinthes infinis, 336 questions CE2–CM1 (livres facultatifs), huit personnages, passage secret, caisses et dalles bonus, camp d’explorateur, badges et révision des erreurs.
 
-## Versions et QA
-- Main à jour V2.0 après QA ; historique V1.0 et backup dans backup/index-v1.0.html ; branches expérimentales préservées.
-- Détails : QA-REPORT.md.
-- Grands ajouts progressifs : V1.1 nouveaux portraits et carrefour pilote ; V1.2 carrefours déployés ; V1.3 carnet de collection ; V2.0 six chapitres narratifs.
+**Historique :** V2.0 conservée dans `backup/index-v2.0.html` ; jalons V2.1 à V3.0 dans `versions/`.
 
-## Remarques
-Les grands graphismes de décor sont des illustrations recadrées pour le jeu, pas encore un tileset d'animation complet. Tests sur une tablette Android ancienne à confirmer.
+Voir `QA-REPORT-V3.md` pour les résultats et limites des tests.
