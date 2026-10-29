@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173c42">
-<title>Labyrinthe Aventure V4.1.1 — ELC Éducation</title>
+<title>Labyrinthe Aventure V4.2 — ELC Éducation</title>
 <meta name="description" content="Explore des labyrinthes avec des personnages fantastiques. Livres éducatifs CE2–CM1 facultatifs. Jeu gratuit, sans publicité ni compte.">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -109,7 +109,7 @@
 }
 @media(max-width:350px){.gamepage .clean-controls .dpad{grid-template-columns:repeat(3,46px);grid-template-rows:repeat(3,46px)}.gamepage .clean-controls .control{width:46px;height:46px;min-height:46px}.gamepage .smallside{flex-basis:44px;height:47px}}
 
-/* V4.1.1: old-Android-safe responsive layout; V4.1 clean UI retained */
+/* V4.2: old-Android-safe responsive layout; V4.1 clean UI retained */
 .overlay{position:fixed;top:0;right:0;bottom:0;left:0;z-index:70;overflow-y:auto;overflow-x:hidden;padding:15px;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center}
 .overlay .dialog{position:relative;margin:auto;max-height:calc(100vh - 32px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .top.compacttop .topinner{max-width:860px}
@@ -167,6 +167,62 @@
  .gamepage .context-actions{grid-column:1 / -1;width:100%;margin-top:5px}
 }
 @media(max-height:650px){.overlay .dialog{max-height:calc(100vh - 18px)}}
+
+
+/* V4.2 — readable typography and accessible touch controls, old Android CSS compatible. */
+.a11y-dialog{max-width:690px;text-align:left;max-height:calc(100vh - 30px);overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 20px}
+.a11y-header{text-align:center}.a11y-header h2{margin:5px 0}.a11y-header p{margin:4px 0 16px}
+.a11y-emoji{font-size:34px}.a11y-section{padding:11px 0;border-top:1px solid #d9e9de}
+.a11y-section h3{font-size:var(--a11y-answer-size,18px);margin:3px 0 12px;color:#153b41}
+.a11y-label{font-size:var(--a11y-base-size,16px);font-weight:900;margin:15px 0 7px;line-height:1.35}
+.a11y-options{display:flex;flex-wrap:wrap;gap:7px}
+.a11y-choice{min-height:48px;min-width:64px;flex:1 1 auto;border:2px solid #bed4c8;border-radius:12px;background:#fff;color:#254d4e;padding:9px 11px;font-weight:800;font-size:var(--a11y-small-size,14px);line-height:1.25}
+.a11y-choice.selected{border-color:#227660;background:#d8f2de;box-shadow:inset 0 0 0 1px #227660}
+.a11y-choice:focus-visible{outline:3px solid #e5a63c;outline-offset:2px}
+.a11y-sample{padding:10px 12px;background:#eff7ee;border-left:4px solid #2c7967;border-radius:8px;font-size:var(--a11y-question-size,18px)!important;line-height:1.5}
+.a11y-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:14px}
+.a11y-actions .btn{flex:1 1 160px;min-height:52px;white-space:normal}
+.a11y-note{margin:12px 0 0!important;font-size:var(--a11y-small-size,13px)!important;line-height:1.55}
+/* Question and correction windows scale even when legacy content uses inline px sizes. */
+.overlay .dialog{font-size:var(--a11y-base-size,16px);line-height:1.48}
+.overlay .dialog h2{font-size:var(--a11y-heading-size,25px);line-height:1.24;overflow-wrap:break-word}
+.overlay .dialog p,.overlay .dialog .help-note,.overlay .dialog .feedback,.overlay .dialog .pause-summary p,.overlay .dialog .routecard small{font-size:var(--a11y-explain-size,16px)!important;line-height:1.5;overflow-wrap:break-word}
+.overlay .dialog .quiz-question{font-size:var(--a11y-question-size,19px)!important;line-height:1.48;white-space:normal}
+.overlay .dialog .quiz-option{font-size:var(--a11y-answer-size,17px)!important;line-height:1.4;min-height:56px;overflow-wrap:break-word;white-space:normal;text-align:left}
+.overlay .dialog .bookbadge{font-size:var(--a11y-small-size,14px);line-height:1.4;white-space:normal}
+.overlay .dialog .btn,.overlay .dialog .pause-tools button,.overlay .dialog .routecard,.overlay .dialog .camp-item button{font-size:var(--a11y-btn-size,16px);line-height:1.35;min-height:48px;white-space:normal;overflow-wrap:break-word}
+.overlay .dialog .pause-summary small,.overlay .dialog .pause-summary b{font-size:var(--a11y-small-size,14px)}
+.top .brand b,.gamepage .gamehead h2{font-size:var(--a11y-home-size,17px);line-height:1.25}
+.gamepage .gamehead p{font-size:var(--a11y-small-size,13px)}
+.main .hero p,.main .world span,.main .levelbtn small,.main .muted,.main .panel p,.main .stat .lbl{font-size:var(--a11y-small-size,13px)!important;line-height:1.45}
+.main .levelbtn b,.main .world strong,.main .section-title h2,.main .tab,.main .btn,.main .gamepage .context-btn{font-size:var(--a11y-home-size,16px)!important;line-height:1.35;white-space:normal;overflow-wrap:break-word}
+.main .world,.main .levelbtn,.main .hero,.main .panel{min-width:0}
+html.a11y-btn-large .gamepage .clean-controls .control{transform:scale(1.08)}
+html.a11y-btn-xl .gamepage .clean-controls .control{transform:scale(1.16)}
+html.a11y-btn-large .gamepage .smallside{transform:scale(1.05)}
+html.a11y-btn-xl .gamepage .smallside{transform:scale(1.12)}
+html.a11y-btn-xl .gamepage .context-btn{min-height:55px;padding:13px 16px}
+html.a11y-contrast body{color:#102b30;background:#f8fff4}
+html.a11y-contrast .overlay .dialog{background:#fff;border-color:#1f6056;color:#112d2d}
+html.a11y-contrast .overlay .dialog .quiz-option,html.a11y-contrast .gamepage .control{border:3px solid #1b6558;background:#fff;color:#102f30}
+html.a11y-contrast .overlay .dialog .help-note,html.a11y-contrast .pause-summary{color:#173b32;background:#e5f4e5}
+html.a11y-contrast .gamepage .canvasframe{border-color:#286c5a;box-shadow:0 0 0 2px #286c5a}
+html.a11y-contrast .a11y-choice.selected{background:#ffe9a9;border-color:#224a44}
+@media(max-width:359px){html.a11y-btn-xl .gamepage .clean-controls .control{transform:scale(1.11)}html.a11y-btn-xl .gamepage .smallside{transform:scale(1.05)}.a11y-dialog{padding:12px}}
+
+
+/* V4.2 — zoom and reduced motion */
+html.a11y-reduced *,html.a11y-reduced *:before,html.a11y-reduced *:after{animation-duration:0.001ms!important;animation-iteration-count:1!important;transition-duration:0.001ms!important;scroll-behavior:auto!important}
+html.a11y-reduced .gamebottom{backdrop-filter:none}
+@media(prefers-reduced-motion:reduce){.gamepage .clean-controls .control,.gamepage .smallside{transition:none}}
+
+
+/* V4.2 — comfortable reading and optional offline-system French speech. */
+.a11y-dialog .speech-status{font-size:var(--a11y-explain-size,15px);border-radius:11px;background:#fff3dd;padding:10px 12px;color:#5b4422;line-height:1.5;margin:10px 0}
+.a11y-comfort .overlay .dialog .quiz-question,.a11y-comfort .overlay .dialog .quiz-option,.a11y-comfort .overlay .dialog p,.a11y-comfort .overlay .dialog .help-note{line-height:1.9!important;letter-spacing:.025em;word-spacing:.055em}
+.a11y-comfort .overlay .dialog .quiz-option{margin:14px 0}
+.speech-button{display:block;width:100%;min-height:54px;background:#e4f4f6;border:2px solid #236d75;color:#214d57;border-radius:14px;font-size:var(--a11y-btn-size,16px);font-weight:800;margin:12px 0}
+.speech-message{color:#715124;font-size:var(--a11y-small-size,14px);line-height:1.4;background:#fff4dc;border-radius:9px;padding:9px;margin:8px 0}
 
 </style>
 </head>
@@ -318,6 +374,53 @@ function load(){
  }catch(e){return Object.assign({},DEFAULT);}
 }
 var progress=load();
+
+/* Accessibility settings — stored separately from player progress. */
+var PREFS_KEY='elc_labyrinthe_a11y_v1';
+function defaultPrefs(){return {font:window.innerWidth>=700?140:120,controls:'normal',contrast:false,zoom:'normal',speed:'normal',reducedMotion:false,speech:'off',comfort:false};}
+function safePrefs(x){
+ var d=defaultPrefs(),p=x&&typeof x==='object'?x:{};
+ var allowed=[100,120,140,170,200]; d.font=allowed.indexOf(Number(p.font))>=0?Number(p.font):d.font;
+ d.controls=['normal','large','xl'].indexOf(p.controls)>=0?p.controls:'normal';
+ d.contrast=p.contrast===true;
+ d.zoom=['normal','near','close'].indexOf(p.zoom)>=0?p.zoom:'normal';
+ d.speed=['slow','normal','fast'].indexOf(p.speed)>=0?p.speed:'normal';
+ d.reducedMotion=p.reducedMotion===true;
+ d.speech=['off','manual','auto'].indexOf(p.speech)>=0?p.speech:'off';
+ d.comfort=p.comfort===true;
+ return d;
+}
+var prefs=(function(){try{return safePrefs(JSON.parse(localStorage.getItem(PREFS_KEY)||'null'));}catch(e){return defaultPrefs();}})();
+var returnFromSettings=null;
+function savePrefs(){try{localStorage.setItem(PREFS_KEY,JSON.stringify(prefs));}catch(e){feedback='Les réglages ne peuvent pas être sauvegardés sur cet appareil.';}applyPrefs();}
+function applyPrefs(){
+ var root=document.documentElement, f=prefs.font/100;
+ var sizes={base:Math.round(15*f),heading:Math.round(24*f),question:Math.round(17*f),answer:Math.round(16*f),explain:Math.round(15*f),small:Math.round(13*f),btn:Math.round(15*f),home:Math.round(15*f)};
+ for(var k in sizes)if(Object.prototype.hasOwnProperty.call(sizes,k))root.style.setProperty('--a11y-'+k+'-size',sizes[k]+'px');
+ root.className=root.className.replace(/\ba11y-btn-(?:normal|large|xl)\b|\ba11y-contrast\b|\ba11y-reduced\b|\ba11y-comfort\b/g,' ').replace(/\s+/g,' ').trim();
+ root.className+=' a11y-btn-'+prefs.controls+(prefs.contrast?' a11y-contrast':'')+(prefs.reducedMotion?' a11y-reduced':'')+(prefs.comfort?' a11y-comfort':'');
+}
+function prefButtons(field,opts){return '<div class="a11y-options" role="group" aria-label="'+field+'">'+opts.map(function(x){var picked=String(prefs[field])===String(x[0]);return '<button type="button" data-action="setpref" data-pref="'+field+'" data-value="'+String(x[0])+'" class="a11y-choice'+(picked?' selected':'')+'" aria-pressed="'+picked+'">'+x[1]+'</button>';}).join('')+'</div>';}
+function settingsPage(){
+ var h='<div class="a11y-header"><span class="a11y-emoji" aria-hidden="true">⚙️</span><h2>Confort de jeu</h2><p>Choisis ce qui est plus facile à lire et à toucher.</p></div>';
+ h+='<div class="a11y-section"><h3>🔎 Affichage</h3><div class="a11y-label">Taille des textes</div>'+prefButtons('font',[[100,'Normal'],[120,'Grand'],[140,'Très grand'],[170,'XL'],[200,'XXL']])+'<p class="a11y-sample">Exemple : Quel objet attire le fer ?</p>';
+ h+='<div class="a11y-label">Taille des boutons</div>'+prefButtons('controls',[['normal','Normal'],['large','Grands'],['xl','Très grands']]);
+ h+='<div class="a11y-label">Contraste</div>'+prefButtons('contrast',[[false,'Classique'],[true,'Renforcé']])+'</div>';
+ h+='';
+
+ h+='<div class="a11y-section"><h3>🧭 Déplacements</h3><div class="a11y-label">Zoom du labyrinthe</div>'+prefButtons('zoom',[['normal','Normal'],['near','Rapproché'],['close','Très rapproché']])+'<p class="a11y-note">La carte générale reste toujours disponible.</p>';
+ h+='<div class="a11y-label">Vitesse quand on garde une flèche appuyée</div>'+prefButtons('speed',[['slow','Lente'],['normal','Normale'],['fast','Rapide']]);
+ h+='<div class="a11y-label">Animations</div>'+prefButtons('reducedMotion',[[false,'Normales'],[true,'Réduites']])+'</div>';
+
+ h+='<div class="a11y-section"><h3>📖 Lecture et voix</h3><div class="a11y-label">Lecture plus aérée</div>'+prefButtons('comfort',[[false,'Classique'],[true,'Lignes espacées']]);
+ h+='<div class="a11y-label">Voix des livres</div>'+prefButtons('speech',[['off','Désactivée'],['manual','Bouton Écouter'],['auto','Automatique']]);
+ h+='<p class="a11y-note">Lecture vocale uniquement si la tablette possède une voix française. Le jeu ne télécharge aucune voix et fonctionne toujours sans son.</p></div>';
+ h+='<div class="a11y-actions"><button class="btn ghost" data-action="resetprefs">↺ Réglages par défaut</button><button class="btn deep" data-action="closesettings">✓ Revenir au jeu</button></div>';
+ h+='<p class="a11y-note">Ces réglages ne suppriment jamais tes étoiles, tes livres ou ta progression.</p>';
+ return '<div class="overlay a11y-overlay" role="dialog" aria-modal="true" aria-label="Paramètres de confort"><div class="dialog a11y-dialog">'+h+'</div></div>';
+}
+applyPrefs();
+
 progress.camp=progress.camp||{};progress.npcs=progress.npcs||{};progress.landmarks=progress.landmarks||{};progress.friends=progress.friends||{};progress.secrets=progress.secrets||{};
 var FRIEND_NAMES=['Lulu le papillon','Hugo le hibou','Nina la petite chouette','Milo le papillon des îles','Flocon le hibou','Nova la chouette'];
 var FRIEND_WORDS=['Les fleurs cachent parfois des chemins, regarde bien !','Tu peux prendre ton temps. Les ruines gardent des secrets.','Les cristaux brillants sont de bons repères.','Chaque détour peut conduire à un trésor.','Reviens sur tes pas, c’est aussi explorer !','Lève les yeux : chaque étoile indique un chemin.'];
@@ -534,7 +637,7 @@ function worldUnlocked(i){return i===0||!!progress.done['c'+(i*10-1)];}
 function levelUnlocked(i){return i===0||!!progress.done['c'+(i-1)];}
 function earned(){var s=0;Object.keys(progress.done).forEach(function(k){if(k.charAt(0)==='c')s+=progress.done[k].stars||0;});return s;}
 function completed(){return CAMPAIGN.filter(function(c){return !!progress.done[c.id];}).length;}
-function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.1.1</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button></div></header>';}
+function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.2</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button>'+(playing?'':'<button class="headbtn a11y-open" data-action="settings" aria-label="Réglages d’affichage">⚙️</button>')+'</div></header>';}
 function stars(n){return '<span class="stars">'+('★'.repeat(n||0))+('☆'.repeat(3-(n||0)))+'</span>';}
 function character(){return AVATARS.find(function(a){return a.id===progress.avatar;})||AVATARS[0];}
 function avatarPicker(){return '<section class="panel picker"><div class="section-title" style="margin:0 0 9px"><h2>🎭 Choisis ton héros</h2><span class="sub">Modifiable à tout moment</span></div><div class="avatar-list">'+AVATARS.map(function(a){return '<button class="avatar-choice '+(a.id===progress.avatar?'picked':'')+'" data-action="avatar" data-avatar="'+a.id+'" aria-label="Choisir '+esc(a.name)+'" aria-pressed="'+(a.id===progress.avatar)+'"><span class="avatar-pic"><img class="avatar-art" src="./assets/avatars/'+a.id+'.webp" alt="" loading="lazy"></span><small>'+esc(a.name)+'</small></button>';}).join('')+'</div><div class="grade-row"><div><b>📚 Livres du niveau</b><small>Les questions restent facultatives</small></div><div class="grade-buttons"><button data-action="grade" data-grade="CE2" class="grade-btn '+(progress.grade==='CE2'?'chosen':'')+'">CE2</button><button data-action="grade" data-grade="CM1" class="grade-btn '+(progress.grade==='CM1'?'chosen':'')+'">CM1</button></div></div></section>';}
@@ -571,7 +674,45 @@ function gamePage(){var rr=run,mode=rr.cfg.mode==='academy'?'Défis du Savoir':r
  '<div class="gamebottom clean-controls"><button class="smallside" data-action="map" aria-label="Afficher ou cacher la carte générale" title="Carte"><svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></button><div class="dpad"><button class="control up" data-action="move" data-dx="0" data-dy="-1" aria-label="Avancer vers le haut">▲</button><button class="control left" data-action="move" data-dx="-1" data-dy="0" aria-label="Avancer vers la gauche">◀</button><button class="control down" data-action="move" data-dx="0" data-dy="1" aria-label="Avancer vers le bas">▼</button><button class="control right" data-action="move" data-dx="1" data-dy="0" aria-label="Avancer vers la droite">▶</button></div><button class="smallside" data-action="pause" aria-label="Pause et autres actions" title="Menu">☰</button></div>'+
  '<div class="context-actions" id="context-actions">'+(closeSecret?'<button class="context-btn" data-action="inspect">🔎 Fouiller</button>':'')+(readAgain?'<button class="context-btn" data-action="bookopen">📖 Lire</button>':'')+(rr.cfg.type==='guard'?'<button class="context-btn" data-action="wait">⏳ Attendre</button>':'')+'</div></main>';}
 
-function modalPage(){if(!modal)return'';var rr=run;var body='';if(modal==='friend'){
+
+/* Optional browser French text-to-speech; never use a non-French voice as fallback. */
+var lastAutoSpeechKey='',speechMessage='';
+function stopSpeech(){try{if(window.speechSynthesis)window.speechSynthesis.cancel();}catch(e){}}
+function currentSpeechText(){
+ if(!run)return '';
+ if(modal==='book'){
+  var q=currentQuiz(run);return q?'Question. '+q.q+'. Réponses possibles : '+q.answers.map(function(a,i){return (i+1)+'. '+a+'.';}).join(' '):'';
+ }
+ if(modal==='bookresult'){
+  var r=currentQuiz(run);return r?'Bonne réponse : '+r.answers[r.ok]+'. '+r.why:'';
+ }
+ return '';
+}
+function frenchVoice(){
+ try{if(!window.speechSynthesis||typeof window.speechSynthesis.getVoices!=='function')return null;
+  var voices=window.speechSynthesis.getVoices(),preferred=null;
+  for(var j=0;j<voices.length;j++)if(voices[j].lang&&/^fr(-|_)/i.test(voices[j].lang)){if(voices[j].lang.toLowerCase().replace('_','-')==='fr-fr')return voices[j];if(!preferred)preferred=voices[j];}
+  return preferred;
+ }catch(e){return null;}
+}
+function sayCurrent(){
+ var text=currentSpeechText();if(!text)return;
+ try{
+  if(!window.speechSynthesis||typeof window.SpeechSynthesisUtterance!=='function')throw new Error('unsupported');
+  var voice=frenchVoice();if(!voice){speechMessage='Aucune voix française disponible sur cet appareil. Tu peux continuer à lire normalement.';render();return;}
+  stopSpeech();speechMessage='';var u=new window.SpeechSynthesisUtterance(text);
+  u.lang='fr-FR';u.voice=voice;u.rate=0.89;u.pitch=1.0;
+  window.speechSynthesis.speak(u);
+ }catch(e){speechMessage='La lecture vocale n’est pas disponible sur ce navigateur. Les livres restent accessibles.';render();}
+}
+function speechControls(){return prefs.speech==='off'?'':'<button class="speech-button" type="button" data-action="readmodal">🔊 Écouter '+(modal==='bookresult'?'l’explication':'la question')+'</button>'+(speechMessage?'<div class="speech-message" role="status">'+esc(speechMessage)+'</div>':'');}
+function autoSpeech(){
+ if(prefs.speech!=='auto'||(modal!=='book'&&modal!=='bookresult')||!run){lastAutoSpeechKey='';return;}
+ var q=currentQuiz(run),id=modal+':'+(q&&q.id||'none')+':'+run.cfg.id;
+ if(id===lastAutoSpeechKey)return;lastAutoSpeechKey=id;
+ setTimeout(function(){if(modal==='book'||modal==='bookresult')sayCurrent();},30);
+}
+function modalPage(){if(!modal)return'';if(modal==='settings')return settingsPage();var rr=run;var body='';if(modal==='friend'){
  body='<div class="emoji">🦋</div><h2>'+esc(FRIEND_NAMES[rr.cfg.world])+'</h2><p>'+esc(FRIEND_WORDS[rr.cfg.world])+'</p><div class="help-note">Tu as rencontré un nouvel ami et gagné 5 étincelles. Les rencontres ne sont jamais obligatoires.</div><div class="actions"><button class="btn deep" data-action="closemodal">Merci, à bientôt ! →</button></div>';
  return '<div class="overlay" role="dialog" aria-modal="true"><div class="dialog">'+body+'</div></div>';
  }if(modal==='npc'){
@@ -596,7 +737,7 @@ function modalPage(){if(!modal)return'';var rr=run;var body='';if(modal==='frien
  }
  if(modal==='collection'){var n=Object.keys(progress.relics||{}).length;body='<div class="emoji">🎒</div><h2>Mes découvertes</h2><p>Tu as trouvé <b>'+n+' coffres secrets</b>, exploré <b>'+Object.keys(progress.routes||{}).length+' itinéraires</b> et visité <b>'+Object.keys(progress.landmarks||{}).length+' lieux remarquables</b>, rencontré <b>'+Object.keys(progress.friends||{}).length+' amis</b> et découvert <b>'+Object.keys(progress.secrets||{}).length+' passages secrets</b>.</p><div class="help-note">'+badgeList().map(function(b){return (b[2]?'🏅 ':'🔒 ')+esc(b[1]);}).join(' · ')+'</div><div class="actions"><button class="btn deep" data-action="closemodal">Retour</button></div>';return '<div class="overlay" role="dialog" aria-modal="true"><div class="dialog">'+body+'</div></div>';}
  if(modal==='intro'){body='<div class="emoji">'+(rr.cfg.mode==='academy'?'📘':WORLDS[rr.cfg.world].emoji)+'</div><h2>'+esc(rr.cfg.title)+'</h2><p>'+esc(objText(rr))+'</p><div class="help-note">👆 <b>Comment jouer ?</b><br>Glisse le doigt sur la carte, appuie sur les flèches ou utilise ton clavier. Ramasse les objets et ouvre les livres colorés pour découvrir des questions. Tu peux passer sans répondre. Les livres ne ferment jamais la sortie ! Tu peux aussi fouiller les haies scintillantes pour découvrir des raccourcis.</div><div class="actions"><button class="btn deep" data-action="closemodal">C’est parti ! →</button></div>';}
- else if(modal==='pause'){body='<div class="emoji">🧭</div><h2>Menu du jeu</h2><div class="pause-summary"><b>'+esc(rr.cfg.title)+'</b><small>👣 '+rr.steps+' &nbsp; 💎 '+rr.gems.length+'/3 &nbsp; 📚 '+countBooks(rr)+'/'+rr.map.books.length+'</small><p>'+esc(objText(rr))+'</p></div><div class="actions"><button class="btn deep" data-action="closemodal">▶ Continuer</button></div><div class="pause-tools"><button data-action="map">🗺️ Carte</button><button data-action="hint">💡 Indice</button><button data-action="bookopen">📖 Livre</button><button data-action="inspect">🔎 Fouiller</button><button data-action="wait">⏳ Attendre</button><button data-action="sound">'+(progress.sound?'🔇 Couper le son':'🔊 Activer le son')+'</button></div><div class="actions"><button class="btn secondary small" data-action="restart">↻ Recommencer</button><button class="btn ghost small" data-action="leave">⌂ Accueil</button></div><p class="muted pause-foot">Les livres restent facultatifs. La partie est sauvegardée automatiquement.</p>';}
+ else if(modal==='pause'){body='<div class="emoji">🧭</div><h2>Menu du jeu</h2><div class="pause-summary"><b>'+esc(rr.cfg.title)+'</b><small>👣 '+rr.steps+' &nbsp; 💎 '+rr.gems.length+'/3 &nbsp; 📚 '+countBooks(rr)+'/'+rr.map.books.length+'</small><p>'+esc(objText(rr))+'</p></div><div class="actions"><button class="btn deep" data-action="closemodal">▶ Continuer</button></div><div class="pause-tools"><button data-action="map">🗺️ Carte</button><button data-action="hint">💡 Indice</button><button data-action="bookopen">📖 Livre</button><button data-action="inspect">🔎 Fouiller</button><button data-action="wait">⏳ Attendre</button><button data-action="settings">⚙️ Confort</button><button data-action="sound">'+(progress.sound?'🔇 Couper le son':'🔊 Activer le son')+'</button></div><div class="actions"><button class="btn secondary small" data-action="restart">↻ Recommencer</button><button class="btn ghost small" data-action="leave">⌂ Accueil</button></div><p class="muted pause-foot">Les livres restent facultatifs. La partie est sauvegardée automatiquement.</p>';}
 
  else if(modal==='crossroads'){
  body='<div class="emoji">🧭</div><h2>Trois chemins devant toi !</h2><p>Choisis librement ton itinéraire. Tous les chemins peuvent mener vers la sortie.</p>'+
@@ -605,13 +746,13 @@ function modalPage(){if(!modal)return'';var rr=run;var body='';if(modal==='frien
  }
  else if(modal==='chest'){body='<div class="emoji">🎁</div><h2>Un coffre secret !</h2><p>Tu as découvert un objet pour ton carnet de collection. Bravo pour ton exploration !</p><div class="actions"><button class="btn deep" data-action="closemodal">Continuer →</button></div>';}
  else if(modal==='hint'){var need=requiredMessage(rr),lines=[];if(need.length)lines.push('Il te manque : <b>'+need.map(esc).join(', ')+'</b>.');else lines.push('Tu peux déjà rejoindre la sortie dorée 🚪.');if(rr.map.extra&&rr.map.extra.secret&&!rr.secretFound)lines.push('🔎 Certaines haies scintillent. Approche-toi et appuie sur Fouiller pour ouvrir un passage facultatif.');if(rr.map.books.length)lines.push('Les livres 📚 sont facultatifs : tu peux répondre, passer, ou revenir plus tard.');if(rr.blocks&&rr.blocks.length&&!rr.puzzleDone)lines.push('Tu peux pousser une caisse sur une dalle marquée d’une étoile : c’est un défi bonus, jamais obligatoire.');if(rr.gems.length<2)lines.push('Les cristaux sont cachés dans des branches du labyrinthe : explore les impasses !');if(rr.cfg.type==='fog')lines.push('Reviens sur tes pas si nécessaire : les zones déjà visitées restent sur ta carte.');if(rr.cfg.type==='guard')lines.push('Le gardien avance quand tu bouges ou attends. Observe son rythme.');if(rr.cfg.type==='portal')lines.push('Un portail t’envoie jusqu’à son jumeau.');body='<div class="emoji">💡</div><h2>Ton compagnon te conseille</h2><div class="help-note">'+lines.join('<br><br>')+'</div><div class="actions"><button class="btn deep" data-action="closemodal">Continuer l’exploration</button></div>';}
- else if(modal==='book'){var qq=currentQuiz(rr);if(!qq){modal=null;return '';}var meta=SUBJECTS[qq.subject];body='<div class="emoji">📖</div><span class="bookbadge" style="background:'+meta.color+'">'+esc(meta.name)+' · '+esc(qq.grade)+'</span><h2>Le livre des découvertes</h2><p style="font-size:16px;color:#214d4e;font-weight:750">'+esc(qq.q)+'</p>'+qq.answers.map(function(a,i){return '<button class="quiz-option" data-action="answer" data-answer="'+i+'">'+esc(a)+'</button>';}).join('')+'<div class="actions"><button class="btn ghost" data-action="bookskip">🚶 Passer sans répondre</button></div><div class="help-note" style="margin-top:12px">Tu peux toujours sortir du labyrinthe sans lire ce livre.</div>';}
- else if(modal==='bookresult'){var q=currentQuiz(rr);if(!q){modal=null;return '';}var result=rr.lastBookResult;body='<div class="emoji">'+(result&&result.correct?'🌟':'💡')+'</div><h2>'+(result&&result.correct?'Bravo !':'Tu peux apprendre de cette réponse')+'</h2><p><b>Bonne réponse : '+esc(q.answers[q.ok])+'</b></p><div class="help-note">'+esc(q.why)+'</div><div class="actions"><button class="btn deep" data-action="closemodal">Continuer mon exploration →</button></div>';}
+ else if(modal==='book'){var qq=currentQuiz(rr);if(!qq){modal=null;return '';}var meta=SUBJECTS[qq.subject];body='<div class="emoji">📖</div><span class="bookbadge" style="background:'+meta.color+'">'+esc(meta.name)+' · '+esc(qq.grade)+'</span><h2>Le livre des découvertes</h2><p class="quiz-question" style="color:#214d4e;font-weight:750">'+esc(qq.q)+'</p>'+qq.answers.map(function(a,i){return '<button class="quiz-option" data-action="answer" data-answer="'+i+'">'+esc(a)+'</button>';}).join('')+'<div class="actions"><button class="btn ghost" data-action="bookskip">🚶 Passer sans répondre</button></div><div class="help-note" style="margin-top:12px">Tu peux toujours sortir du labyrinthe sans lire ce livre.</div>'+speechControls();}
+ else if(modal==='bookresult'){var q=currentQuiz(rr);if(!q){modal=null;return '';}var result=rr.lastBookResult;body='<div class="emoji">'+(result&&result.correct?'🌟':'💡')+'</div><h2>'+(result&&result.correct?'Bravo !':'Tu peux apprendre de cette réponse')+'</h2><p><b>Bonne réponse : '+esc(q.answers[q.ok])+'</b></p><div class="help-note">'+esc(q.why)+'</div><div class="actions"><button class="btn deep" data-action="closemodal">Continuer mon exploration →</button></div>'+speechControls();}
 
  else if(modal==='win'){var s=(progress.done[rr.cfg.id]||{}).stars||1;body='<div class="emoji">🏆</div><h2>Labyrinthe terminé !</h2><div style="font-size:34px;color:#d6a23f">'+('★'.repeat(s))+('☆'.repeat(3-s))+'</div><p>Tu as trouvé la sortie en <b>'+rr.steps+' pas</b>, avec <b>'+rr.gems.length+' cristal(aux)</b> !</p><div class="help-note">⭐ 1 étoile : terminer le niveau<br>⭐ 2 étoiles : trouver au moins 2 cristaux<br>⭐ 3 étoiles : trouver un 3ᵉ cristal ou lire un livre</div><div class="actions"><button class="btn deep" data-action="next">'+((rr.cfg.mode==='campaign'&&rr.cfg.idx<CAMPAIGN.length-1)||(rr.cfg.mode==='academy'&&rr.cfg.idx<ACADEMY.length-1)||(rr.cfg.mode==='chapters'&&rr.cfg.idx<CHAPTERS.length-1)?'Niveau suivant →':'Terminer →')+'</button><button class="btn secondary" data-action="restart">↻ Rejouer</button><button class="btn ghost" data-action="leave">⌂ Accueil</button></div>';}
  return '<div class="overlay" role="dialog" aria-modal="true"><div class="dialog">'+body+'</div></div>';}
 function chaptersPage(){var h='<main class="main"><button class="mini-btn" data-action="home">← Accueil</button><div class="section-title"><h2>🌌 La Grande Aventure</h2></div><p class="muted">Un voyage en 12 chapitres à travers six mondes. Chaque carte contient un nouveau mystère et plusieurs chemins.</p><div class="levelgrid">';CHAPTERS.forEach(function(c,i){var done=progress.done[c.id],open=i===0||!!progress.done[CHAPTERS[i-1].id];h+='<button class="levelbtn '+(done?'done':'')+'" data-action="chapter" data-id="'+c.id+'" '+(open?'':'disabled')+'><b>'+(open?'🧭':'🔒')+' '+(i+1)+'. '+esc(c.title)+'</b><small>'+esc(c.desc)+'</small></button>';});return h+'</div></main>';}
-function render(){app.innerHTML=top()+(screen==='home'?home():screen==='world'?worldPage():screen==='chapters'?chaptersPage():gamePage())+modalPage();if(screen==='game'){paint();updateHud();}}
+function render(){applyPrefs();app.innerHTML=top()+(screen==='home'?home():screen==='world'?worldPage():screen==='chapters'?chaptersPage():gamePage())+modalPage();if(screen==='game'){paint();updateHud();}autoSpeech();}
 function updateHud(){if(screen!=='game'||!run)return;var el=document.getElementById('steptext');if(el)el.textContent=run.steps;el=document.getElementById('gemtext');if(el)el.textContent=run.gems.length;el=document.getElementById('booktext');if(el)el.textContent=countBooks(run);el=document.getElementById('routejournal');if(el&&run.map.branches)el.textContent=run.chosenRoute===null?'🧭 Découvre le carrefour : 3 chemins disponibles':'🧭 Parcours choisi : '+['Pont','Grotte','Forêt'][run.chosenRoute];el=document.getElementById('puzzlechip');if(el)el.textContent=run.puzzleDone?'📦 Énigme réussie':'📦 Bloc facultatif';el=document.getElementById('chestchip');if(el)el.textContent='🎁 '+(run.openedChests||[]).length;el=document.getElementById('landmarkchip');if(el){el.style.display=run.map.extra&&run.map.extra.landmark?'inline-flex':'none';el.textContent=run.landmarkDone?'🗺️ Lieu découvert':'🗺️ Lieu à découvrir';}el=document.getElementById('secretchip');if(el){el.style.display=run.map.extra&&run.map.extra.secret?'inline-flex':'none';el.textContent=run.secretFound?'✨ Passage découvert':'✨ Secret à trouver';}el=document.getElementById('keychip');if(el)el.textContent=run.key?'🗝️ Clé trouvée':'🔎 Exploration';el=document.getElementById('switchchip');if(el)el.textContent=run.switchOn?'⚙️ Levier activé':run.quizDone?'📘 Énigme résolue':'✨ À découvrir';el=document.getElementById('toast');if(el)el.textContent=feedback;}
 function updateGame(){updateHud();paint();if(modal){render();return;}var row=document.getElementById('context-actions');if(row&&run){var e=run.map.extra||{},q=bookAt(run,run.x,run.y),secret=e.secret&&!run.secretFound&&Math.abs(run.x-e.secret[0])+Math.abs(run.y-e.secret[1])===1;row.innerHTML=(secret?'<button class="context-btn" data-action="inspect">🔎 Fouiller</button>':'')+(q&&!run.booksDone[key(run.x,run.y)]?'<button class="context-btn" data-action="bookopen">📖 Lire</button>':'')+(run.cfg.type==='guard'?'<button class="context-btn" data-action="wait">⏳ Attendre</button>':'');}}
 function rgb(hex){var h=hex.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
@@ -650,7 +791,7 @@ function tile(c,x,y,z,t,world,seen,discovered,full,rr){var bg=world===0?['#a9d39
 }
 function drawHero(c,x,y,z){c.save();c.translate(x+z/2,y+z/2);c.fillStyle='#274b5360';c.beginPath();c.ellipse(0,z*.3,z*.30,z*.12,0,0,7);c.fill();
  var id=progress.avatar||'boy';
- if(ART_READY[id]&&ART_AVATARS[id]&&(ART_AVATARS[id].width||ART_AVATARS[id].naturalWidth)){var image=ART_AVATARS[id];/* Transparent walking sprite: no portrait frame or circular crop. */c.save();var sway=(run&&run.steps%2?-.018:.018);c.rotate(sway);c.drawImage(image,-z*.52,-z*.69,z*1.04,z*1.04);c.restore();c.restore();return;}
+ if(ART_READY[id]&&ART_AVATARS[id]&&(ART_AVATARS[id].width||ART_AVATARS[id].naturalWidth)){var image=ART_AVATARS[id];/* Transparent walking sprite: no portrait frame or circular crop. */c.save();var sway=prefs.reducedMotion?0:(run&&run.steps%2?-.018:.018);c.rotate(sway);c.drawImage(image,-z*.52,-z*.69,z*1.04,z*1.04);c.restore();c.restore();return;}
  if(id!=='boy'&&id!=='girl'){emoji(c,character().emoji,0,-z*.06,z*.82);c.restore();return;}
  rrRect(c,-z*.20,-z*.10,z*.40,z*.44,z*.16,id==='girl'?'#ab73bb':'#e56f68');rrRect(c,-z*.24,-z*.07,z*.14,z*.33,z*.04,'#f0b95a');
  c.fillStyle=id==='girl'?'#794f39':'#f9d4a8';c.beginPath();c.arc(0,-z*.22,z*.21,0,7);c.fill();
@@ -659,7 +800,7 @@ function drawHero(c,x,y,z){c.save();c.translate(x+z/2,y+z/2);c.fillStyle='#274b5
  c.fillStyle='#32494c';c.fillRect(-z*.07,-z*.20,z*.04,z*.035);c.fillRect(z*.07,-z*.20,z*.04,z*.035);c.restore();}
 
 function paint(){if(!run)return;var cvs=document.getElementById('gameCanvas');if(!cvs)return;var outer=cvs.parentNode,available=outer.clientWidth-16;var tablet=window.innerWidth>=700;var landscape=window.innerWidth>window.innerHeight;var sizeCap=tablet?(landscape?Math.max(280,window.innerHeight-142):720):540;if(tablet&&landscape){outer.style.width=Math.min(720,sizeCap+16)+'px';}else{outer.style.width='';}available=outer.clientWidth-16;var sz=Math.max(220,Math.min(available,sizeCap));var dpr=Math.min(window.devicePixelRatio||1,2);cvs.style.height=sz+'px';cvs.style.width=sz+'px';cvs.width=Math.floor(sz*dpr);cvs.height=Math.floor(sz*dpr);var c=cvs.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=true;
- var rr=run,n=rr.map.grid.length,dim=mapShown?n:Math.min(n,11);var tileSize=sz/dim;var max=n-dim;var ox=mapShown?0:Math.max(0,Math.min(max,rr.x-Math.floor(dim/2))),oy=mapShown?0:Math.max(0,Math.min(max,rr.y-Math.floor(dim/2)));
+ var rr=run,n=rr.map.grid.length,dim=mapShown?n:Math.min(n,prefs.zoom==='close'?7:prefs.zoom==='near'?9:11);var tileSize=sz/dim;var max=n-dim;var ox=mapShown?0:Math.max(0,Math.min(max,rr.x-Math.floor(dim/2))),oy=mapShown?0:Math.max(0,Math.min(max,rr.y-Math.floor(dim/2)));
  c.fillStyle='#193d44';c.fillRect(0,0,sz,sz);for(var yy=0;yy<dim;yy++)for(var xx=0;xx<dim;xx++){var gx=xx+ox,gy=yy+oy,t=rr.map.grid[gy][gx],discovered=!!rr.seen[key(gx,gy)],visible=rr.cfg.type!=='fog'||discovered||mapShown;
  c.save();c.translate(xx*tileSize,yy*tileSize);tile(c,gx,gy,tileSize,t,rr.cfg.world,visible,discovered,mapShown,rr);
  if(!visible){c.fillStyle='#122f3e';c.fillRect(0,0,tileSize,tileSize);if(rndhash(gx,gy,42)>.92)emoji(c,'✦',tileSize*.5,tileSize*.5,tileSize*.25);}
@@ -685,7 +826,7 @@ function handleAction(target){while(target&&target!==document){if(target.getAttr
  if(action==='grade'){progress.grade=target.getAttribute('data-grade')==='CM1'?'CM1':'CE2';persist();render();return;}
 
  if(action==='tab'){tab=target.getAttribute('data-tab');render();return;}
- if(action==='home'||action==='leave'){if(run&&modal!=='win'&&modal!=='finale')progress.lastRun=packRun(run);screen='home';modal=null;run=null;persist();render();window.scrollTo(0,0);return;}
+ if(action==='home'||action==='leave'){stopSpeech();lastAutoSpeechKey='';speechMessage='';if(run&&modal!=='win'&&modal!=='finale')progress.lastRun=packRun(run);screen='home';modal=null;run=null;persist();render();window.scrollTo(0,0);return;}
  if(action==='world'){selectedWorld=Number(target.getAttribute('data-world'));if(!worldUnlocked(selectedWorld)){feedback='Termine d’abord le monde précédent.';return;}screen='world';render();window.scrollTo(0,0);return;}
  if(action==='level'){var cfg=findCfg(target.getAttribute('data-id'));if(cfg&&(cfg.mode!=='campaign'||levelUnlocked(cfg.idx)))start(cfg);return;}
  if(action==='camp'){modal='camp';render();return;}
@@ -701,10 +842,20 @@ function handleAction(target){while(target&&target!==document){if(target.getAttr
  if(action==='quickstart'){var i=0;while(i<CAMPAIGN.length-1&&progress.done[CAMPAIGN[i].id])i++;start(CAMPAIGN[i]);return;}
  if(action==='endless'){start(generatedEndless());return;}
  if(action==='resume'){resume();return;}
+ if(action==='settings'){returnFromSettings=modal==='pause'?'pause':null;modal='settings';render();return;}
+ if(action==='closesettings'){modal=returnFromSettings;returnFromSettings=null;render();return;}
+ if(action==='resetprefs'){prefs=defaultPrefs();savePrefs();render();return;}
+ if(action==='setpref'){
+   var field=target.getAttribute('data-pref'),val=target.getAttribute('data-value');
+   if(!Object.prototype.hasOwnProperty.call(prefs,field))return;
+   var n=Object.assign({},prefs);n[field]=field==='font'?Number(val):field==='contrast'||field==='reducedMotion'||field==='comfort'?val==='true':val;
+   prefs=safePrefs(n);if(field==='speech'){stopSpeech();lastAutoSpeechKey='';speechMessage='';}savePrefs();render();return;
+ }
  if(action==='pause'){modal='pause';render();return;}
  if(action==='hint'){modal='hint';render();return;}
  if(action==='map'){var fromMenu=modal==='pause';if(fromMenu){modal=null;render();}mapShown=!mapShown;feedback=mapShown?'🗺️ Carte générale affichée. Appuie encore pour revenir.':'🧭 Retour à ton explorateur.';updateGame();return;}
- if(action==='closemodal'){modal=null;wrongAnswer=false;render();return;}
+ if(action==='readmodal'){sayCurrent();return;}
+ if(action==='closemodal'){stopSpeech();speechMessage='';lastAutoSpeechKey='';modal=null;wrongAnswer=false;render();return;}
  if(action==='move'){step(Number(target.getAttribute('data-dx')),Number(target.getAttribute('data-dy')));return;}
  if(action==='inspect'){
   if(modal==='pause'){modal=null;render();}
@@ -718,12 +869,26 @@ function handleAction(target){while(target&&target!==document){if(target.getAttr
  if(action==='restart'){var cfg2=run&&run.cfg;if(cfg2)start(cfg2);return;}
  if(action==='next'){nextLevel();return;}
  if(action==='bookopen'){if(modal==='pause'){modal=null;render();}if(!run)return;var b=bookAt(run,run.x,run.y);if(b&&!run.booksDone[key(run.x,run.y)])openBook(run,b);else{feedback='📖 Place-toi sur une case contenant un livre de couleur.';updateGame();}return;}
- if(action==='bookskip'){if(run&&run.currentBook)run.booksSkipped[run.currentBook]=true;modal=null;persist();render();return;}
- if(action==='answer'){if(!run||modal!=='book')return;var q=currentQuiz(run);if(!q)return;var pos=run.currentBook;if(run.booksDone[pos])return;var good=Number(target.getAttribute('data-answer'))===q.ok;run.booksDone[pos]={correct:good,id:q.id};progress.booksRead=(progress.booksRead||0)+1;if(good)progress.booksCorrect=(progress.booksCorrect||0)+1;progress.quizHistory[q.id]=(progress.quizHistory[q.id]||0)+1;if(!good){progress.revision=progress.revision||{};progress.revision[q.id]=(progress.revision[q.id]||0)+1;}progress.coins+=good?5:2;run.lastBookResult={correct:good};modal='bookresult';playSound(good?880:330);persist();render();return;}
+ if(action==='bookskip'){stopSpeech();speechMessage='';lastAutoSpeechKey='';if(run&&run.currentBook)run.booksSkipped[run.currentBook]=true;modal=null;persist();render();return;}
+ if(action==='answer'){if(!run||modal!=='book')return;stopSpeech();speechMessage='';lastAutoSpeechKey='';var q=currentQuiz(run);if(!q)return;var pos=run.currentBook;if(run.booksDone[pos])return;var good=Number(target.getAttribute('data-answer'))===q.ok;run.booksDone[pos]={correct:good,id:q.id};progress.booksRead=(progress.booksRead||0)+1;if(good)progress.booksCorrect=(progress.booksCorrect||0)+1;progress.quizHistory[q.id]=(progress.quizHistory[q.id]||0)+1;if(!good){progress.revision=progress.revision||{};progress.revision[q.id]=(progress.revision[q.id]||0)+1;}progress.coins+=good?5:2;run.lastBookResult={correct:good};modal='bookresult';playSound(good?880:330);persist();render();return;}
 
 
 }
-document.addEventListener('click',function(e){if(e.target&&e.target.id==='gameCanvas'){if(Date.now()-lastSwipe<400)return;var canvas=e.target,bounds=canvas.getBoundingClientRect(),cx=(e.clientX-bounds.left)/bounds.width,cy=(e.clientY-bounds.top)/bounds.height;var dx=cx-.5,dy=cy-.5;if(Math.abs(dx)>Math.abs(dy))step(dx>0?1:-1,0);else step(0,dy>0?1:-1);return;}handleAction(e.target);});
+/* Hold-repeat movement on touch, mouse and legacy tablet browsers. */
+var padHeld=null,padDelayTimer=null,padRepeatTimer=null,ignorePadClickUntil=0;
+function padActionTarget(node){while(node&&node!==document){if(node.getAttribute&&node.getAttribute('data-action')==='move')return node;node=node.parentNode;}return null;}
+function stopPad(){if(padDelayTimer){clearTimeout(padDelayTimer);padDelayTimer=null;}if(padRepeatTimer){clearInterval(padRepeatTimer);padRepeatTimer=null;}padHeld=null;}
+function beginPad(e){if(screen!=='game'||modal||padHeld)return;var target=padActionTarget(e.target);if(!target)return;if(e.cancelable)e.preventDefault();padHeld=target;ignorePadClickUntil=Date.now()+1100;var dx=Number(target.getAttribute('data-dx')),dy=Number(target.getAttribute('data-dy'));
+ step(dx,dy);
+ padDelayTimer=setTimeout(function(){padDelayTimer=null;var delay=prefs.speed==='slow'?340:prefs.speed==='fast'?115:210;padRepeatTimer=setInterval(function(){if(!padHeld||!run||modal||screen!=='game'){stopPad();return;}ignorePadClickUntil=Date.now()+1100;step(dx,dy);},delay);},355);
+}
+document.addEventListener('touchstart',beginPad,{passive:false});
+document.addEventListener('mousedown',beginPad);
+document.addEventListener('touchend',stopPad);
+document.addEventListener('touchcancel',stopPad);
+document.addEventListener('mouseup',stopPad);
+window.addEventListener('blur',stopPad);
+document.addEventListener('click',function(e){if(padActionTarget(e.target)&&Date.now()<ignorePadClickUntil){e.preventDefault();return;}if(e.target&&e.target.id==='gameCanvas'){if(Date.now()-lastSwipe<400)return;var canvas=e.target,bounds=canvas.getBoundingClientRect(),cx=(e.clientX-bounds.left)/bounds.width,cy=(e.clientY-bounds.top)/bounds.height;var dx=cx-.5,dy=cy-.5;if(Math.abs(dx)>Math.abs(dy))step(dx>0?1:-1,0);else step(0,dy>0?1:-1);return;}handleAction(e.target);});
 document.addEventListener('keydown',function(e){if(screen!=='game'||modal)return;var k=e.key;var v={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],w:[0,-1],s:[0,1],a:[-1,0],d:[1,0],z:[0,-1],q:[-1,0]};if(v[k]){e.preventDefault();step(v[k][0],v[k][1]);}else if(k==='f'||k==='F'){e.preventDefault();var fb=document.querySelector('[data-action=inspect]');if(fb)fb.click();}else if(k===' '){e.preventDefault();waitTurn();}else if(k==='Escape'){e.preventDefault();modal='pause';render();}});
 var touch=null;document.addEventListener('touchstart',function(e){if(screen!=='game'||modal||e.target.id!=='gameCanvas')return;var t=e.changedTouches[0];touch=[t.clientX,t.clientY];},{passive:true});document.addEventListener('touchend',function(e){if(!touch||screen!=='game'||modal)return;var t=e.changedTouches[0],dx=t.clientX-touch[0],dy=t.clientY-touch[1];touch=null;if(Math.max(Math.abs(dx),Math.abs(dy))<18)return;lastSwipe=Date.now();e.preventDefault();if(Math.abs(dx)>Math.abs(dy))step(dx>0?1:-1,0);else step(0,dy>0?1:-1);},{passive:false});
 window.addEventListener('resize',function(){if(screen==='game')paint();});
