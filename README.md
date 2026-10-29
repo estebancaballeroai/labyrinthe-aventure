@@ -1,24 +1,11 @@
-# Labyrinthe Aventure V4.0 — ELC Éducation
+# Labyrinthe Aventure — V4.1
 
-[Jouer gratuitement sur GitHub Pages](https://estebancaballeroai.github.io/labyrinthe-aventure/?v=400)
+Jeu gratuit CE2-CM1, ELC Éducation : [jouer](https://estebancaballeroai.github.io/labyrinthe-aventure/).
 
-Jeu d'exploration 8–10 ans, mobile-first, hors ligne après premier chargement, sans inscription ni publicité. L'aventure libre est au cœur du jeu, avec **des livres CE2–CM1 facultatifs et jamais bloquants**.
+La V4.1 simplifie **tous les écrans de labyrinthes** : retour au décor propre sans buissons/roches aléatoires, suppression du bandeau de statistiques, grand plateau au centre, flèches tactiles, carte et menu. Les autres actions restent disponibles dans le menu, et un bouton contextuel apparaît lorsqu'un livre ou un secret est à portée.
 
-## Contenu
-- 60 labyrinthes de campagne, 12 chapitres scénarisés et 16 expéditions pédagogiques.
-- 336 questions en 8 matières, explications après erreur, carnet de révision.
-- 8 personnages, sprites transparents conservés.
-- V3.1 : détails illustrés, mouvement plus fluide.
-- V3.2 : lieux remarquables facultatifs.
-- V3.3 : rencontres amicales et petites découvertes.
-- V3.4 : passages secrets à fouiller et collection.
-- V4.0 : commandes mobiles améliorées, petits trophées, accessibilité et cache renouvelé.
+**Contenu préservé :** 60 niveaux dans six mondes, 12 chapitres, 16 expéditions et mode infini ; 336 questions CE2-CM1 facultatives, 8 personnages au choix, sauvegarde locale.
 
-## Organisation
-- Ancienne V3.0.2 : `backup/index-v3.0.2.html`.
-- Jalons testés : `versions/v3.1/` à `versions/v4.0/`.
-- Ressources originales WebP de décoration intégrées dans les pages HTML pour éviter les chargements manquants ; personnages : `assets/sprites/`.
-- Tests : `QA-V4.md`.
+La V4.0 est archivée sous `backup/index-v4.0.html`. Rapport QA : `QA-V4.1.md`. Version actuelle : `versions/v4.1/index.html`.
 
-## Notes de compatibilité
-Les sauvegardes de V3.0.2 sont lues sans conversion et les cartes existantes gardent leur géométrie. Voir les limites de test sur les anciennes tablettes dans `QA-V4.md`.
+Gratuit, sans publicité, compte ni collecte inutile. Site statique GitHub Pages, utilisation hors ligne après la première installation.
