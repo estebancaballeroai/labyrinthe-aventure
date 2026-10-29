@@ -1,15 +1,23 @@
-# Labyrinthe Aventure — V4.1.1
+# Labyrinthe Aventure V4.2 — ELC Éducation
 
-Jeu gratuit CE2-CM1, ELC Éducation : [jouer](https://estebancaballeroai.github.io/labyrinthe-aventure/).
+Jeu éducatif gratuit pour enfants de 8 à 10 ans, sans inscription ni publicité : [jouer à Labyrinthe Aventure](https://estebancaballeroai.github.io/labyrinthe-aventure/).
 
-La V4.1 simplifie **tous les écrans de labyrinthes** : retour au décor propre sans buissons/roches aléatoires, suppression du bandeau de statistiques, grand plateau au centre, flèches tactiles, carte et menu. Les autres actions restent disponibles dans le menu, et un bouton contextuel apparaît lorsqu'un livre ou un secret est à portée.
+### Contenu et liberté de jeu
 
-**Contenu préservé :** 60 niveaux dans six mondes, 12 chapitres, 16 expéditions et mode infini ; 336 questions CE2-CM1 facultatives, 8 personnages au choix, sauvegarde locale.
+60 labyrinthes dans 6 mondes, 16 expéditions, 12 chapitres, 336 questions CE2–CM1, 8 personnages, mode infini et sauvegarde locale. Les livres sont **toujours facultatifs** : une mauvaise réponse ne bloque jamais la sortie.
 
-La V4.0 est archivée sous `backup/index-v4.0.html`. Rapport QA : `QA-V4.1.md`. Version actuelle : `versions/v4.1/index.html`.
+### Accessibilité et confort
 
-Gratuit, sans publicité, compte ni collecte inutile. Site statique GitHub Pages, utilisation hors ligne après la première installation.
+Depuis l'accueil **⚙️**, ou en partie **☰ → ⚙️ Confort** : taille de police 100–200 %, commandes agrandies, contraste, zoom, vitesse par appui long, animations réduites, lecture plus aérée et lecture vocale française lorsqu'elle est prise en charge par l'appareil.
 
-## Correctif tablette V4.1.1
+Les préférences sont stockées séparément de la progression ; réinitialiser les réglages n'efface **jamais** la progression.
 
-Le labyrinthe utilise davantage la largeur de l'écran (jusqu'à 720 px en portrait), les flèches sont mieux regroupées et les livres s'affichent dans une fenêtre superposée, y compris sur les navigateurs Android anciens ne prenant pas en charge `inset`. Le bouton de carte utilise une icône SVG. La V4.1 est sauvegardée dans `backup/index-v4.1.html` ; la V4.1.1 est archivée dans `versions/v4.1.1/`. Les questions, niveaux et sauvegardes sont conservés. Rapport : `QA-V4.1.1.md`. La compatibilité réelle de l'ancienne tablette doit être confirmée par un essai sur l'appareil.
+Documents : [guide](ACCESSIBILITE.md) ; [rapport des tests](QA-V4.2.md).
+
+### Historique et protection des versions
+
+- V4.1.1 (optimisation tablette) conservée dans `backup/index-v4.1.1.html`.
+- Jalons intermédiaires complets : `versions/v4.1.2/`, `versions/v4.1.3/`.
+- V4.2 : `versions/v4.2/index.html` et `index.html` à la racine.
+
+Fonctionnement hors ligne après installation / premier chargement si le navigateur prend en charge Service Worker. La lecture vocale utilise uniquement les voix françaises déjà installées et n'est pas garantie sur les anciennes tablettes.
