@@ -1,4 +1,4 @@
-const CACHE='elc-labyrinthe-v4-1-1';
+const CACHE='elc-labyrinthe-v4-2';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg','./assets/sprites/boy.webp','./assets/sprites/girl.webp','./assets/sprites/dragon.webp','./assets/sprites/unicorn.webp','./assets/sprites/fox.webp','./assets/sprites/robot.webp','./assets/sprites/cat.webp','./assets/sprites/panda.webp'];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('elc-labyrinthe-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
