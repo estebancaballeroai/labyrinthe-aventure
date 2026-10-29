@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173c42">
-<title>Labyrinthe Aventure V4.1 — ELC Éducation</title>
+<title>Labyrinthe Aventure V4.1.1 — ELC Éducation</title>
 <meta name="description" content="Explore des labyrinthes avec des personnages fantastiques. Livres éducatifs CE2–CM1 facultatifs. Jeu gratuit, sans publicité ni compte.">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -108,6 +108,66 @@
  .gamepage .gamehead p{font-size:11px}
 }
 @media(max-width:350px){.gamepage .clean-controls .dpad{grid-template-columns:repeat(3,46px);grid-template-rows:repeat(3,46px)}.gamepage .clean-controls .control{width:46px;height:46px;min-height:46px}.gamepage .smallside{flex-basis:44px;height:47px}}
+
+/* V4.1.1: old-Android-safe responsive layout; V4.1 clean UI retained */
+.overlay{position:fixed;top:0;right:0;bottom:0;left:0;z-index:70;overflow-y:auto;overflow-x:hidden;padding:15px;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center}
+.overlay .dialog{position:relative;margin:auto;max-height:calc(100vh - 32px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.top.compacttop .topinner{max-width:860px}
+.gamepage{width:100%;max-width:860px;margin:0 auto}
+.gamepage .canvasframe{width:100%;max-width:740px;margin:0 auto}
+.gamepage .gamebottom.clean-controls{max-width:650px;width:100%;margin:12px auto 4px}
+.gamepage .smallside svg{display:block;width:28px;height:28px;pointer-events:none}
+/* Four-direction pad: absolute-position fallback rather than modern CSS grid (old Samsung Chrome). */
+.gamepage .clean-controls .dpad{display:block;position:relative;width:194px;height:178px;min-width:194px;min-height:178px;flex:0 0 194px}
+.gamepage .clean-controls .control{position:absolute;display:block;width:58px;height:54px;min-height:54px;margin:0;padding:0;line-height:54px;text-align:center}
+.gamepage .clean-controls .control.up{top:0;left:68px}
+.gamepage .clean-controls .control.left{top:61px;left:0}
+.gamepage .clean-controls .control.right{top:61px;left:136px}
+.gamepage .clean-controls .control.down{top:124px;left:68px}
+@media (max-width:600px){
+ .gamepage .clean-controls .dpad{width:166px;height:152px;min-width:166px;min-height:152px;flex:0 0 166px}
+ .gamepage .clean-controls .control{width:50px;height:46px;min-height:46px;line-height:46px}
+ .gamepage .clean-controls .control.up{left:58px;top:0}
+ .gamepage .clean-controls .control.left{left:0;top:53px}
+ .gamepage .clean-controls .control.right{left:116px;top:53px}
+ .gamepage .clean-controls .control.down{left:58px;top:106px}
+ .gamepage .gamebottom.clean-controls{max-width:440px}
+ .gamepage .smallside{width:48px;flex-basis:48px;height:48px}
+}
+@media (max-width:350px){
+ .gamepage .clean-controls .dpad{width:148px;min-width:148px;flex-basis:148px;height:137px;min-height:137px}
+ .gamepage .clean-controls .control{width:45px;height:43px;min-height:43px;line-height:43px}
+ .gamepage .clean-controls .control.up{left:52px;top:0}
+ .gamepage .clean-controls .control.left{left:0;top:47px}
+ .gamepage .clean-controls .control.right{left:103px;top:47px}
+ .gamepage .clean-controls .control.down{left:52px;top:94px}
+}
+@media(min-width:700px){
+ .top.compacttop .topinner{max-width:850px}
+ .gamepage{max-width:850px;padding:9px 16px 16px}
+ .gamepage .gamehead{max-width:760px;margin:0 auto 9px}
+ .gamepage .canvasframe{max-width:740px;padding:8px}
+ .gamepage .gamebottom.clean-controls{max-width:690px}
+ .gamepage .smallside{flex:0 0 60px;width:60px;height:60px}
+ .gamepage .context-actions{max-width:700px}
+}
+@media(min-width:850px) and (orientation:landscape){
+ .gamepage{max-width:1120px;display:grid;grid-template-columns:minmax(0,1fr) 185px;grid-template-rows:auto auto auto;grid-template-areas:'head head' 'board controls' 'message controls';gap:9px 16px;align-items:start}
+ .gamepage .gamehead{grid-area:head;width:100%;max-width:none}
+ .gamepage .canvasframe{grid-area:board;max-width:720px;justify-self:center}
+ .gamepage .compact-toast{grid-area:message;margin:0}
+ .gamepage .gamebottom.clean-controls{grid-area:controls;max-width:185px;width:185px;min-width:185px;margin:0;padding-top:12px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center}
+ .gamepage .gamebottom .smallside{flex:none;width:54px;height:54px}
+ .gamepage .clean-controls .dpad{width:185px;min-width:185px;flex-basis:178px;height:178px}
+ .gamepage .clean-controls .control.up{left:63px}
+ .gamepage .clean-controls .control.left{left:0}
+ .gamepage .clean-controls .control.right{left:127px}
+ .gamepage .clean-controls .control.down{left:63px}
+ .gamepage .canvasframe canvas{margin-left:auto;margin-right:auto}
+ .gamepage .context-actions{grid-column:1 / -1;width:100%;margin-top:5px}
+}
+@media(max-height:650px){.overlay .dialog{max-height:calc(100vh - 18px)}}
+
 </style>
 </head>
 <body>
@@ -474,7 +534,7 @@ function worldUnlocked(i){return i===0||!!progress.done['c'+(i*10-1)];}
 function levelUnlocked(i){return i===0||!!progress.done['c'+(i-1)];}
 function earned(){var s=0;Object.keys(progress.done).forEach(function(k){if(k.charAt(0)==='c')s+=progress.done[k].stars||0;});return s;}
 function completed(){return CAMPAIGN.filter(function(c){return !!progress.done[c.id];}).length;}
-function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.1</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button></div></header>';}
+function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.1.1</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button></div></header>';}
 function stars(n){return '<span class="stars">'+('★'.repeat(n||0))+('☆'.repeat(3-(n||0)))+'</span>';}
 function character(){return AVATARS.find(function(a){return a.id===progress.avatar;})||AVATARS[0];}
 function avatarPicker(){return '<section class="panel picker"><div class="section-title" style="margin:0 0 9px"><h2>🎭 Choisis ton héros</h2><span class="sub">Modifiable à tout moment</span></div><div class="avatar-list">'+AVATARS.map(function(a){return '<button class="avatar-choice '+(a.id===progress.avatar?'picked':'')+'" data-action="avatar" data-avatar="'+a.id+'" aria-label="Choisir '+esc(a.name)+'" aria-pressed="'+(a.id===progress.avatar)+'"><span class="avatar-pic"><img class="avatar-art" src="./assets/avatars/'+a.id+'.webp" alt="" loading="lazy"></span><small>'+esc(a.name)+'</small></button>';}).join('')+'</div><div class="grade-row"><div><b>📚 Livres du niveau</b><small>Les questions restent facultatives</small></div><div class="grade-buttons"><button data-action="grade" data-grade="CE2" class="grade-btn '+(progress.grade==='CE2'?'chosen':'')+'">CE2</button><button data-action="grade" data-grade="CM1" class="grade-btn '+(progress.grade==='CM1'?'chosen':'')+'">CM1</button></div></div></section>';}
@@ -508,7 +568,7 @@ function gamePage(){var rr=run,mode=rr.cfg.mode==='academy'?'Défis du Savoir':r
  return '<main class="main gamepage"><div class="gamehead"><button class="mini-btn game-back" data-action="leave" aria-label="Retour à l’accueil">←</button><div class="ttl"><h2>'+esc(rr.cfg.title)+'</h2><p>'+esc(mode)+' · '+rr.cfg.size+' × '+rr.cfg.size+'</p></div></div>'+ 
  '<div class="canvasframe"><canvas id="gameCanvas" width="450" height="450" aria-label="Carte du labyrinthe. Utilise les flèches ou glisse ton doigt pour avancer."></canvas></div>'+
  '<div class="toast compact-toast" id="toast" role="status" aria-live="polite"></div>'+
- '<div class="gamebottom clean-controls"><button class="smallside" data-action="map" aria-label="Afficher ou cacher la carte générale" title="Carte">🗺️</button><div class="dpad"><button class="control up" data-action="move" data-dx="0" data-dy="-1" aria-label="Avancer vers le haut">▲</button><button class="control left" data-action="move" data-dx="-1" data-dy="0" aria-label="Avancer vers la gauche">◀</button><button class="control down" data-action="move" data-dx="0" data-dy="1" aria-label="Avancer vers le bas">▼</button><button class="control right" data-action="move" data-dx="1" data-dy="0" aria-label="Avancer vers la droite">▶</button></div><button class="smallside" data-action="pause" aria-label="Pause et autres actions" title="Menu">☰</button></div>'+
+ '<div class="gamebottom clean-controls"><button class="smallside" data-action="map" aria-label="Afficher ou cacher la carte générale" title="Carte"><svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></button><div class="dpad"><button class="control up" data-action="move" data-dx="0" data-dy="-1" aria-label="Avancer vers le haut">▲</button><button class="control left" data-action="move" data-dx="-1" data-dy="0" aria-label="Avancer vers la gauche">◀</button><button class="control down" data-action="move" data-dx="0" data-dy="1" aria-label="Avancer vers le bas">▼</button><button class="control right" data-action="move" data-dx="1" data-dy="0" aria-label="Avancer vers la droite">▶</button></div><button class="smallside" data-action="pause" aria-label="Pause et autres actions" title="Menu">☰</button></div>'+
  '<div class="context-actions" id="context-actions">'+(closeSecret?'<button class="context-btn" data-action="inspect">🔎 Fouiller</button>':'')+(readAgain?'<button class="context-btn" data-action="bookopen">📖 Lire</button>':'')+(rr.cfg.type==='guard'?'<button class="context-btn" data-action="wait">⏳ Attendre</button>':'')+'</div></main>';}
 
 function modalPage(){if(!modal)return'';var rr=run;var body='';if(modal==='friend'){
@@ -598,7 +658,7 @@ function drawHero(c,x,y,z){c.save();c.translate(x+z/2,y+z/2);c.fillStyle='#274b5
  c.fillStyle='#f9d4a8';c.beginPath();c.arc(0,-z*.20,z*.17,0,7);c.fill();
  c.fillStyle='#32494c';c.fillRect(-z*.07,-z*.20,z*.04,z*.035);c.fillRect(z*.07,-z*.20,z*.04,z*.035);c.restore();}
 
-function paint(){if(!run)return;var cvs=document.getElementById('gameCanvas');if(!cvs)return;var outer=cvs.parentNode,available=outer.clientWidth-16;var sz=Math.max(240,Math.min(available,540));var dpr=Math.min(window.devicePixelRatio||1,2);cvs.style.height=sz+'px';cvs.style.width=sz+'px';cvs.width=Math.floor(sz*dpr);cvs.height=Math.floor(sz*dpr);var c=cvs.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=true;
+function paint(){if(!run)return;var cvs=document.getElementById('gameCanvas');if(!cvs)return;var outer=cvs.parentNode,available=outer.clientWidth-16;var tablet=window.innerWidth>=700;var landscape=window.innerWidth>window.innerHeight;var sizeCap=tablet?(landscape?Math.max(280,window.innerHeight-142):720):540;if(tablet&&landscape){outer.style.width=Math.min(720,sizeCap+16)+'px';}else{outer.style.width='';}available=outer.clientWidth-16;var sz=Math.max(220,Math.min(available,sizeCap));var dpr=Math.min(window.devicePixelRatio||1,2);cvs.style.height=sz+'px';cvs.style.width=sz+'px';cvs.width=Math.floor(sz*dpr);cvs.height=Math.floor(sz*dpr);var c=cvs.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=true;
  var rr=run,n=rr.map.grid.length,dim=mapShown?n:Math.min(n,11);var tileSize=sz/dim;var max=n-dim;var ox=mapShown?0:Math.max(0,Math.min(max,rr.x-Math.floor(dim/2))),oy=mapShown?0:Math.max(0,Math.min(max,rr.y-Math.floor(dim/2)));
  c.fillStyle='#193d44';c.fillRect(0,0,sz,sz);for(var yy=0;yy<dim;yy++)for(var xx=0;xx<dim;xx++){var gx=xx+ox,gy=yy+oy,t=rr.map.grid[gy][gx],discovered=!!rr.seen[key(gx,gy)],visible=rr.cfg.type!=='fog'||discovered||mapShown;
  c.save();c.translate(xx*tileSize,yy*tileSize);tile(c,gx,gy,tileSize,t,rr.cfg.world,visible,discovered,mapShown,rr);
