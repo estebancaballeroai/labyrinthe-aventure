@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173c42">
-<title>Labyrinthe Aventure V4.5 — ELC Éducation</title>
+<title>Labyrinthe Aventure V4.6 — ELC Éducation</title>
 <meta name="description" content="Explore des labyrinthes avec des personnages fantastiques. Livres éducatifs CE2–CM1 facultatifs. Jeu gratuit, sans publicité ni compte.">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -257,6 +257,76 @@ html.a11y-reduced .gamebottom{backdrop-filter:none}
 @media(max-width:360px){.realm-grid{gap:8px}.realm-card strong{font-size:var(--a11y-home-size,13px)}.realm-thumb{height:94px}}
 @media(prefers-reduced-motion:no-preference){.realm-card:active{transform:scale(.986)}}
 
+
+/* V4.6: illustrated collectibles, large touch targets, no distracting animations. */
+.album-home{margin:14px 0;display:flex;align-items:center;gap:16px;background:#f5edff;border:1px solid #d9cdec;border-radius:22px;padding:14px;box-shadow:0 3px 0 #e3d9f1}
+.album-home-art{display:flex;flex:0 0 39%;max-width:220px;height:136px;min-width:115px}
+.album-home-art img{width:40%;height:100%;border-radius:13px;border:3px solid white;object-fit:cover;box-shadow:0 5px 12px #3025532a}
+.album-home-art img+img{margin-left:-9%}
+.album-home-copy{flex:1;min-width:0}.album-home h3{margin:0 0 6px;font-size:clamp(17px,3.4vw,22px);line-height:1.15;color:#4d356a}.album-home p{font-size:var(--a11y-home-size,14px);line-height:1.4;margin:0 0 11px}
+.album-home .album-action{min-height:46px}
+.collection-page{max-width:890px}.album-top{position:relative;overflow:hidden;margin:14px 0 12px;padding:21px;border-radius:23px;background:linear-gradient(120deg,#293e64,#57477c);color:white;min-height:205px}
+.album-top h1{font-size:clamp(25px,5vw,36px);line-height:1.1;margin:0 0 8px;position:relative;z-index:1}
+.album-top p{max-width:480px;font-size:var(--a11y-home-size,14px);line-height:1.45;margin:0 0 14px;position:relative;z-index:1}
+.album-top-art{position:absolute;right:-14px;top:-14px;height:130px;width:205px;display:flex;opacity:.62;transform:rotate(8deg)}
+.album-top-art img{width:44%;object-fit:cover;border-radius:10px;border:2px solid white;margin-left:-9%}
+.album-pills{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}.album-pills span{background:#ffffff22;border:1px solid #ffffff52;padding:8px 10px;border-radius:24px;font-size:12px;font-weight:800;color:white}
+.album-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:13px 0 14px}
+.album-tabs button{min-height:49px;border:1px solid #bfcbd5;background:white;border-radius:13px;color:#355266;font-weight:850;padding:10px 5px;font-size:var(--a11y-btn-size,14px)}
+.album-tabs button.selected{background:#3a6e83;border-color:#3a6e83;color:white}
+.album-section-title h2{font-size:clamp(19px,3.8vw,24px);margin:0 0 4px}.album-section-title p{color:#4f656c;line-height:1.5;font-size:var(--a11y-home-size,14px);margin:0 0 12px}
+.album-filters{display:flex;gap:7px;overflow-x:auto;max-width:100%;padding:3px 0 12px}
+.album-filters button{border:1px solid #b9d0cb;background:white;color:#315e60;border-radius:30px;padding:10px 15px;min-height:44px;font-size:var(--a11y-btn-size,14px);font-weight:800;white-space:nowrap}
+.album-filters button.active{background:#dff3e7;border-color:#59a384}
+.album-world-list{display:grid;gap:10px}.album-world{background:white;border:1px solid #cfdfe0;border-radius:16px;overflow:hidden;box-shadow:0 3px 0 #e0e9e7}
+.album-world summary{list-style:none;display:flex;align-items:center;gap:12px;cursor:pointer;min-height:95px;padding:9px 12px}.album-world summary::-webkit-details-marker{display:none}
+.album-world summary>img{width:91px;height:76px;object-fit:cover;flex-shrink:0;border-radius:10px}
+.album-world-title{flex:1;min-width:0}.album-world-title strong{font-size:var(--a11y-home-size,16px);line-height:1.2;display:block}.album-world-title small{font-size:12px;color:#537070;display:block;margin:5px 0}
+.album-chevron{font-size:25px;color:#52767d}.album-progress-track{display:block;background:#dce9e5;height:7px;border-radius:7px;overflow:hidden;margin-top:6px}
+.album-progress-track>span{display:block;background:#56ab87;height:100%;border-radius:7px}
+.album-piece-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:12px;border-top:1px solid #e1ebed}
+.album-piece{border:1px solid #dce7e4;background:#f8fbf9;display:flex;gap:9px;align-items:center;padding:9px;border-radius:12px;min-width:0}
+.album-piece-art{width:67px;height:67px;flex-shrink:0;position:relative}
+.album-piece-art img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+.album-piece-art span{position:absolute;right:-5px;bottom:-5px;border-radius:9px;background:#fffdf7;box-shadow:0 2px 6px #0002;font-size:22px;padding:1px 4px}
+.album-piece.locked .album-piece-art img{filter:grayscale(1) brightness(.74);opacity:.7}
+.album-piece.locked .album-piece-art span{color:#5e6675;font-weight:900;font-size:21px;padding:2px 10px}
+.album-piece-copy{min-width:0;flex:1}.album-piece-copy small{font-size:11px;color:#566d78;display:block}.album-piece-copy strong{display:block;font-size:var(--a11y-home-size,14px);line-height:1.2;margin:3px 0}
+.album-piece-copy p{color:#526f69;font-size:12px;line-height:1.35;margin:3px 0}
+.album-go{margin:0 12px 12px;min-height:44px}
+.album-medal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.album-medal{display:flex;gap:11px;min-width:0;align-items:flex-start;padding:10px;border:1px solid #d1dfda;border-radius:15px;background:white}
+.album-medal img{width:84px;height:92px;flex-shrink:0;object-fit:cover;border-radius:10px}.album-medal>div{flex:1;min-width:0}
+.album-medal strong{font-size:var(--a11y-home-size,15px)}.album-medal p{font-size:13px;color:#566e70;margin:6px 0}.album-medal small{font-size:12px;font-weight:900;color:#346b64}
+.album-medal.medal-locked img{filter:grayscale(.85);opacity:.68}
+.album-camp-banner{display:flex;align-items:center;gap:14px;min-height:122px;background:#e4efe4;border-radius:17px;padding:11px;margin-bottom:14px}
+.album-camp-banner img{width:140px;height:100px;object-fit:cover;border-radius:12px}
+.album-camp-banner strong{font-size:clamp(19px,4vw,27px);display:block}.album-camp-banner span{font-size:14px;display:block;color:#4d6962;line-height:1.4}
+.album-camp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.album-camp-item{border:1px solid #d4e5dc;background:white;border-radius:17px;overflow:hidden;box-shadow:0 3px 0 #dae9df}
+.album-camp-item>img{display:block;width:100%;height:132px;object-fit:cover}.album-camp-item[data-level="0"]>img{filter:saturate(.6);opacity:.73}
+.album-camp-item[data-level="2"]>img{filter:saturate(1.18)}.album-camp-item[data-level="3"]>img{filter:saturate(1.35) brightness(1.09)}
+.album-camp-copy{padding:12px}.album-camp-copy strong{display:block;font-size:var(--a11y-home-size,16px)}.album-camp-copy small{display:block;font-size:13px;color:#617675;min-height:37px;margin:5px 0}
+.album-stage{font-size:13px;font-weight:800;margin:8px 0}.album-stage span{color:#dba43a}.album-camp-copy button{min-height:43px;width:100%}
+.album-note{font-size:13px;color:#577269;line-height:1.4}
+.world-album-bar{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:11px 12px;background:#f4ecff;border:1px solid #dbcff2;border-radius:15px;margin:12px 0}
+.world-album-bar strong{font-size:var(--a11y-home-size,14px);display:block}.world-album-bar small{font-size:12px;color:#645d7c}
+.world-album-bar button{min-height:44px}
+.earned-prize{display:flex;gap:9px;text-align:left;align-items:center;padding:7px;background:#f6f2ff;border-radius:11px;margin:6px 0}
+.earned-prize img{width:55px;height:55px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.earned-prize b{display:block;font-size:14px}.earned-prize small{font-size:12px;color:#5b6b70;display:block;margin-top:3px}
+.prize-win-box{margin:13px 0;padding:11px;border:1px solid #c5d8f0;background:#fefeff;border-radius:14px;max-height:225px;overflow-y:auto}
+.prize-win-box>strong{display:block;font-size:17px;margin-bottom:7px}
+@media(max-width:610px){
+ .album-home{gap:10px}.album-home-art{min-width:88px;height:119px;flex-basis:31%}.album-home h3{font-size:17px}
+ .album-home p{font-size:13px}.album-top-art{opacity:.32}
+ .album-piece-grid,.album-medal-grid,.album-camp-grid{grid-template-columns:1fr}
+ .album-world summary>img{width:78px;height:73px}
+ .album-top{padding:18px;min-height:205px}
+ .album-medal img{width:86px}.album-camp-banner img{width:112px}
+}
+@media(max-width:350px){.album-home-art{display:none}.album-world summary{gap:7px;padding:8px}.album-world summary>img{width:65px}.album-tabs button{font-size:12px}}
+
 </style>
 </head>
 <body>
@@ -487,6 +557,125 @@ function badgeList(){return [
  ['🌠','Maître des étoiles',!!progress.done.c59],
  ['🏕️','Camp chaleureux',CAMP_ITEMS.some(function(a){return (progress.camp[a.id]||0)>=2;})]
  ];}
+
+
+/* V4.6 - Permanent illustrated collection. Nothing requires an account,
+   real money, daily presence or mandatory book questions. */
+var PRIZE_NAMES={
+ forest:['Carte du vieux chêne','Gemme de la clairière','Herbier des lucioles','Couronne des sentiers'],
+ ruins:['Plan du temple oublié','Pierre des colonnes','Papyrus des bâtisseurs','Sceau des ruines'],
+ cave:['Carte des galeries','Améthyste des profondeurs','Carnet du géologue','Diadème de cristal'],
+ island:['Carte du capitaine','Perle des marées','Journal du navigateur','Boussole royale'],
+ ice:['Carte du grand glacier','Cristal de givre','Journal des neiges','Couronne boréale'],
+ stars:['Atlas étoilé','Éclat de comète','Livre des constellations','Médaille des astres'],
+ unicorn:['Carte arc-en-ciel','Cristal de licorne','Grimoire des couleurs','Couronne enchantée'],
+ dragons:['Carte des dragons','Écaille étincelante','Chronique des vallées','Sceau des dragons'],
+ dinosaurs:['Carte des fossiles','Ambre préhistorique','Carnet des dinosaures','Couronne des anciens'],
+ atlantis:['Carte d’Atlantide','Perle du palais','Codex des océans','Trident des explorateurs'],
+ candy:['Carte des douceurs','Bonbon de lumière','Recettes enchantées','Diadème sucré'],
+ robots:['Plan de l’atelier','Puce lumineuse','Manuel des inventions','Étoile des inventeurs'],
+ planets:['Carte des planètes','Météorite bleue','Atlas du système solaire','Couronne cosmique'],
+ castle:['Plan du château','Rubis de la tour','Livre des chevaliers','Couronne du royaume'],
+ jungle:['Carte des lianes','Émeraude de la jungle','Carnet des explorateurs','Médaille de la canopée'],
+ volcano:['Carte du volcan','Pierre de lave','Livre du feu terrestre','Sceau des géants'],
+ pyramids:['Carte du désert','Scarabée de lumière','Papyrus du Nil','Couronne du soleil'],
+ clouds:['Carte des nuages','Goutte d’azur','Livre des vents','Couronne du ciel'],
+ reef:['Carte du récif','Corail précieux','Atlas des poissons','Médaille des coraux'],
+ fairies:['Carte des fées','Pollen scintillant','Livre des jardins','Couronne des fleurs'],
+ savanna:['Carte de la savane','Opale du soleil','Carnet des animaux','Médaille des plaines'],
+ knights:['Plan des remparts','Écu enchanté','Chronique des chevaliers','Couronne du courage'],
+ mountains:['Carte des sommets','Cristal des aigles','Guide de montagne','Médaille des cimes'],
+ clocks:['Plan des horloges','Rouage doré','Livre du temps','Couronne du temps'],
+ library:['Carte de la bibliothèque','Marque-page précieux','Grand livre des mots','Médaille des lecteurs'],
+ music:['Carte des mélodies','Note cristalline','Partition mystérieuse','Couronne musicale'],
+ autumn:['Carte de l’automne','Feuille d’or','Herbier des saisons','Couronne d’érable'],
+ palace:['Plan du palais','Prisme royal','Livre des miroirs','Diadème des reflets']
+};
+var PRIZE_TYPES=['Carte','Trésor','Savoir','Couronne'];
+var PRIZE_ICONS=['🗺️','💎','📖','👑'];
+var PRIZE_HINTS=['Termine une étape de ce monde','Trouve au moins deux cristaux dans une étape',
+ 'Réponds juste à un livre de ce monde','Termine les six étapes de ce monde'];
+var albumTab='worlds',albumFilter='all';
+function prizeKey(world,slot){return 'w'+world+'-'+slot;}
+function ensureAlbum(){
+ var a=progress.album;
+ if(!a||typeof a!=='object')a=progress.album={};
+ if(!a.owned||typeof a.owned!=='object')a.owned={};
+ if(!Array.isArray(a.recent))a.recent=[];
+ if(!a.uniqueCorrect||typeof a.uniqueCorrect!=='object')a.uniqueCorrect={};
+ if(!a.migrated){
+  Object.keys(progress.done||{}).forEach(function(id){
+   var cfg=findCfg(id),d=progress.done[id];
+   if(!cfg||!WORLDS[cfg.world])return;
+   a.owned[prizeKey(cfg.world,0)]=true;
+   if(d&&d.gems>=2)a.owned[prizeKey(cfg.world,1)]=true;
+  });
+  WORLDS.forEach(function(w,i){
+   if(WORLD_QUESTS[i].every(function(c){return !!progress.done[c.id];}))a.owned[prizeKey(i,3)]=true;
+  });
+  a.migrated=true;
+ }
+ return a;
+}
+function awardPrize(world,slot,rr){
+ if(!WORLDS[world]||slot<0||slot>3)return null;
+ var a=ensureAlbum(),id=prizeKey(world,slot);
+ if(a.owned[id])return null;
+ a.owned[id]=true;a.recent.unshift(id);if(a.recent.length>10)a.recent.length=10;
+ if(rr){rr.newAwards=rr.newAwards||[];rr.newAwards.push(id);}
+ return id;
+}
+function ownedInWorld(i){
+ var a=ensureAlbum().owned,num=0;
+ for(var k=0;k<4;k++)if(a[prizeKey(i,k)])num++;
+ return num;
+}
+function prizeCount(){return Object.keys(ensureAlbum().owned).length;}
+function prizeTitle(world,slot){var w=WORLDS[world]||WORLDS[0];return (PRIZE_NAMES[w.id]||['Carte','Trésor','Savoir','Couronne'])[slot];}
+function prizeInfo(id){
+ var m=/^w(\d+)-([0-3])$/.exec(id||'');if(!m)return null;
+ var wi=Number(m[1]),slot=Number(m[2]);if(!WORLDS[wi])return null;
+ return {id:id,world:wi,slot:slot,name:prizeTitle(wi,slot),worldName:WORLDS[wi].name,
+  card:WORLDS[wi].card,icon:PRIZE_ICONS[slot]};
+}
+function uniqueCorrectCount(){return Object.keys(ensureAlbum().uniqueCorrect).length;}
+function subjectCount(){var distinct={},a=ensureAlbum().uniqueCorrect;
+ Object.keys(a).forEach(function(id){if(a[id])distinct[a[id]]=true;});return Object.keys(distinct).length;
+}
+function visitedWorldCount(){var n=0;WORLDS.forEach(function(w,i){if(ensureAlbum().owned[prizeKey(i,0)])n++;});return n;}
+var ALBUM_MEDALS=[
+ {id:'pioneer',name:'Premiers pas',icon:'🌱',type:'levels',goal:1,art:0,desc:'Réussir un premier labyrinthe'},
+ {id:'pathfinder',name:'Guide des chemins',icon:'🧭',type:'levels',goal:10,art:13,desc:'Terminer 10 étapes'},
+ {id:'worlds',name:'Voyageur des mondes',icon:'🌈',type:'worlds',goal:5,art:6,desc:'Découvrir 5 mondes différents'},
+ {id:'voyager',name:'Explorateur des 28 mondes',icon:'🌍',type:'worlds',goal:28,art:12,desc:'Découvrir les 28 mondes'},
+ {id:'collector',name:'Petit collectionneur',icon:'🎒',type:'souvenirs',goal:10,art:10,desc:'Réunir 10 souvenirs'},
+ {id:'curator',name:'Grand conservateur',icon:'🏛️',type:'souvenirs',goal:50,art:1,desc:'Réunir 50 souvenirs'},
+ {id:'reader',name:'Lecteur curieux',icon:'📚',type:'books',goal:10,art:24,desc:'Explorer 10 livres'},
+ {id:'learner',name:'Ami des connaissances',icon:'💡',type:'correct',goal:10,art:2,desc:'Répondre juste à 10 livres'},
+ {id:'scholar',name:'Petit savant',icon:'🧠',type:'subjects',goal:5,art:11,desc:'Réussir dans 5 matières différentes'},
+ {id:'investigator',name:'Chercheur de secrets',icon:'🔎',type:'secrets',goal:5,art:14,desc:'Découvrir 5 passages cachés'},
+ {id:'friends',name:'Ami des rencontres',icon:'🦋',type:'friends',goal:5,art:19,desc:'Rencontrer 5 compagnons'},
+ {id:'builder',name:'Architecte du camp',icon:'🏕️',type:'camp',goal:6,art:0,desc:'Améliorer les bâtiments du camp 6 fois'}
+];
+function medalScore(m){
+ var a=ensureAlbum(),n=0;
+ if(m.type==='levels')n=Object.keys(progress.done||{}).length;
+ if(m.type==='worlds')n=visitedWorldCount();
+ if(m.type==='souvenirs')n=Object.keys(a.owned).length;
+ if(m.type==='books')n=progress.booksRead||0;
+ if(m.type==='correct')n=progress.booksCorrect||0;
+ if(m.type==='subjects')n=subjectCount();
+ if(m.type==='secrets')n=Object.keys(progress.secrets||{}).length;
+ if(m.type==='friends')n=Object.keys(progress.friends||{}).length;
+ if(m.type==='camp')CAMP_ITEMS.forEach(function(it){n+=(progress.camp[it.id]||0);});
+ return Math.max(0,n);
+}
+function earnedMedals(){return ALBUM_MEDALS.filter(function(m){return medalScore(m)>=m.goal;}).length;}
+function albumPrizeCards(ids){
+ return ids.map(function(id){var p=prizeInfo(id);if(!p)return'';
+  return '<div class="earned-prize"><img src="'+esc(p.card)+'" alt=""><span><b>'+p.icon+' '+esc(p.name)+'</b><small>'+esc(p.worldName)+'</small></span></div>';
+ }).join('');
+}
 
 var revisionId=null,revisionRight=false;var screen='home',tab='campaign',selectedWorld=Math.max(0,Math.min(27,Number(progress.lastWorld)||0)),run=null,modal=null,mapShown=false,feedback='',wrongAnswer=false,audio=null,lastSwipe=0;
 
@@ -818,10 +1007,10 @@ function addBranches(g,from,r,used,books,crystals){
  options.forEach(function(p){if(usedChests>=chestCount)return;if(!used[key(p[0],p[1])]&&points.every(function(q){return key(q[0],q[1])!==key(p[0],p[1]);})){g[p[1]][p[0]]='H';used[key(p[0],p[1])]=true;usedChests++;}});
  g._branches={fork:fork,points:points};
 }
-function makeRun(cfg){var map=generate(cfg);return{cfg:cfg,map:map,x:map.start[0],y:map.start[1],key:false,switchOn:false,quizDone:false,gems:[],seen:{},steps:0,bumps:0,portalUsed:false,booksDone:{},booksSkipped:{},bookQuestions:{},currentBook:null,lastBookResult:null,chosenRoute:null,openedChests:[],npcMet:false,blocks:map.extra?map.extra.blocks.map(function(p){return p.slice();}):[],bridgeOn:false,puzzleDone:false,landmarkDone:false,friendDone:false,secretFound:false,started:Date.now()};}
+function makeRun(cfg){var map=generate(cfg);return{cfg:cfg,map:map,x:map.start[0],y:map.start[1],key:false,switchOn:false,quizDone:false,gems:[],seen:{},steps:0,bumps:0,portalUsed:false,booksDone:{},booksSkipped:{},bookQuestions:{},currentBook:null,lastBookResult:null,newAwards:[],chosenRoute:null,openedChests:[],npcMet:false,blocks:map.extra?map.extra.blocks.map(function(p){return p.slice();}):[],bridgeOn:false,puzzleDone:false,landmarkDone:false,friendDone:false,secretFound:false,started:Date.now()};}
 function reveal(rr){var rad=2;for(var yy=rr.y-rad;yy<=rr.y+rad;yy++)for(var xx=rr.x-rad;xx<=rr.x+rad;xx++)if(inside(xx,yy,rr.map.grid.length)&&Math.abs(xx-rr.x)+Math.abs(yy-rr.y)<=rad+1)rr.seen[key(xx,yy)]=true;}
-function packRun(rr){return{cfg:rr.cfg,x:rr.x,y:rr.y,key:rr.key,switchOn:rr.switchOn,quizDone:rr.quizDone,gems:rr.gems,seen:rr.seen,steps:rr.steps,bumps:rr.bumps,portalUsed:rr.portalUsed,booksDone:rr.booksDone,booksSkipped:rr.booksSkipped,bookQuestions:rr.bookQuestions,chosenRoute:rr.chosenRoute,openedChests:rr.openedChests,npcMet:rr.npcMet,blocks:rr.blocks,bridgeOn:rr.bridgeOn,puzzleDone:rr.puzzleDone,landmarkDone:rr.landmarkDone,friendDone:rr.friendDone,secretFound:rr.secretFound,started:rr.started};}
-function unpackRun(packed){if(!packed||!packed.cfg)return null;var rr=makeRun(packed.cfg);rr.x=packed.x;rr.y=packed.y;rr.key=!!packed.key;rr.switchOn=!!packed.switchOn;rr.quizDone=!!packed.quizDone;rr.gems=packed.gems||[];rr.seen=packed.seen||{};rr.steps=packed.steps||0;rr.bumps=packed.bumps||0;rr.portalUsed=!!packed.portalUsed;rr.booksDone=packed.booksDone||{};rr.booksSkipped=packed.booksSkipped||{};rr.bookQuestions=packed.bookQuestions||{};rr.chosenRoute=packed.chosenRoute||null;rr.openedChests=packed.openedChests||[];rr.npcMet=!!packed.npcMet;rr.blocks=packed.blocks||rr.blocks||[];rr.bridgeOn=!!packed.bridgeOn;rr.puzzleDone=!!packed.puzzleDone;rr.landmarkDone=!!packed.landmarkDone;rr.friendDone=!!packed.friendDone;rr.secretFound=!!packed.secretFound;if(rr.secretFound&&rr.map.extra&&rr.map.extra.secret){var sp=rr.map.extra.secret;rr.map.grid[sp[1]][sp[0]]='.';}rr.started=packed.started||Date.now();reveal(rr);return rr;}
+function packRun(rr){return{cfg:rr.cfg,x:rr.x,y:rr.y,key:rr.key,switchOn:rr.switchOn,quizDone:rr.quizDone,gems:rr.gems,seen:rr.seen,steps:rr.steps,bumps:rr.bumps,portalUsed:rr.portalUsed,booksDone:rr.booksDone,booksSkipped:rr.booksSkipped,bookQuestions:rr.bookQuestions,newAwards:rr.newAwards||[],chosenRoute:rr.chosenRoute,openedChests:rr.openedChests,npcMet:rr.npcMet,blocks:rr.blocks,bridgeOn:rr.bridgeOn,puzzleDone:rr.puzzleDone,landmarkDone:rr.landmarkDone,friendDone:rr.friendDone,secretFound:rr.secretFound,started:rr.started};}
+function unpackRun(packed){if(!packed||!packed.cfg)return null;var rr=makeRun(packed.cfg);rr.x=packed.x;rr.y=packed.y;rr.key=!!packed.key;rr.switchOn=!!packed.switchOn;rr.quizDone=!!packed.quizDone;rr.gems=packed.gems||[];rr.seen=packed.seen||{};rr.steps=packed.steps||0;rr.bumps=packed.bumps||0;rr.portalUsed=!!packed.portalUsed;rr.booksDone=packed.booksDone||{};rr.booksSkipped=packed.booksSkipped||{};rr.bookQuestions=packed.bookQuestions||{};rr.newAwards=packed.newAwards||[];rr.chosenRoute=packed.chosenRoute||null;rr.openedChests=packed.openedChests||[];rr.npcMet=!!packed.npcMet;rr.blocks=packed.blocks||rr.blocks||[];rr.bridgeOn=!!packed.bridgeOn;rr.puzzleDone=!!packed.puzzleDone;rr.landmarkDone=!!packed.landmarkDone;rr.friendDone=!!packed.friendDone;rr.secretFound=!!packed.secretFound;if(rr.secretFound&&rr.map.extra&&rr.map.extra.secret){var sp=rr.map.extra.secret;rr.map.grid[sp[1]][sp[0]]='.';}rr.started=packed.started||Date.now();reveal(rr);return rr;}
 function bookAt(rr,x,y){for(var i=0;i<rr.map.books.length;i++)if(rr.map.books[i].x===x&&rr.map.books[i].y===y)return rr.map.books[i];return null;}
 function countBooks(rr){return Object.keys(rr.booksDone).length;}
 function currentQuiz(rr){if(!rr||!rr.currentBook)return null;var id=rr.bookQuestions[rr.currentBook];return QUIZZES.find(function(q){return q.id===id;})||null;}
@@ -878,13 +1067,15 @@ function step(dx,dy){if(!run||modal)return;var nx=run.x+dx,ny=run.y+dy,g=run.map
  if(t==='N'&&run.cfg.mode==='chapters'&&!run.npcMet){run.npcMet=true;progress.npcs[run.cfg.id]=true;modal='npc';playSound(650);persist();render();return;}
  if(t==='J'&&run.chosenRoute===null){modal='crossroads';persist();render();return;}
  if(t==='H'&&run.openedChests.indexOf(key(nx,ny))===-1){run.openedChests.push(key(nx,ny));progress.relics[run.cfg.id+':'+key(nx,ny)]=true;modal='chest';playSound(860);persist();render();return;}
- if(t==='C'&&run.gems.indexOf(key(nx,ny))===-1){run.gems.push(key(nx,ny));feedback='💎 Cristal découvert !';playSound(870);}
+ if(t==='C'&&run.gems.indexOf(key(nx,ny))===-1){run.gems.push(key(nx,ny));var crystalAward=run.gems.length>=2?awardPrize(run.cfg.world,1,run):null;feedback=crystalAward?'💎 Nouveau trésor dans ton album !':'💎 Cristal découvert !';playSound(870);}
  if(t==='Q'&&!run.booksDone[key(nx,ny)]&&!run.booksSkipped[key(nx,ny)]){var book=bookAt(run,nx,ny);openBook(run,book);playSound(700);return;}
  if(t==='P'&&run.map.portals.length===2&&!run.portalUsed){var p=run.map.portals;var dest=(p[0][0]===nx&&p[0][1]===ny)?p[1]:p[0];run.x=dest[0];run.y=dest[1];heroMove=null;run.portalUsed=true;reveal(run);feedback='🌀 Un portail t’a transporté ailleurs !';playSound(950);}else if(t!=='P'){run.portalUsed=false;}
  if(!collideGuard(run)&&t==='E'){if(!playerCanExit(run)){var tasks=requiredMessage(run);feedback='🚪 Avant de sortir, cherche '+tasks.join(' et ')+'.';}else{win();return;}}
  persist();updateGame();}
 function waitTurn(){if(!run||modal)return;run.steps++;feedback='⏳ Tu attends que le passage se libère.';collideGuard(run);persist();updateGame();}
-function win(){if(!run)return;playSound(950);var rr=run,stars=1+(rr.gems.length>=2?1:0)+(rr.gems.length>=3||countBooks(rr)>0?1:0),id=rr.cfg.id;var old=progress.done[id]||{stars:0,gems:0};if(rr.openedChests.length>=2)stars=3;var isFirst=!progress.done[id];progress.done[id]={stars:Math.max(old.stars,stars),gems:Math.max(old.gems,rr.gems.length),steps:old.steps?Math.min(old.steps,rr.steps):rr.steps};if(isFirst){progress.coins+=rr.gems.length*5+10;progress.finishes++;if(rr.cfg.mode==='endless')progress.adventures++;}
+function win(){if(!run)return;ensureAlbum();playSound(950);var rr=run,stars=1+(rr.gems.length>=2?1:0)+(rr.gems.length>=3||countBooks(rr)>0?1:0),id=rr.cfg.id;var old=progress.done[id]||{stars:0,gems:0};if(rr.openedChests.length>=2)stars=3;var isFirst=!progress.done[id];progress.done[id]={stars:Math.max(old.stars,stars),gems:Math.max(old.gems,rr.gems.length),steps:old.steps?Math.min(old.steps,rr.steps):rr.steps};if(isFirst){progress.coins+=rr.gems.length*5+10;progress.finishes++;if(rr.cfg.mode==='endless')progress.adventures++;}
+ if(WORLDS[rr.cfg.world]){awardPrize(rr.cfg.world,0,rr);if(rr.gems.length>=2)awardPrize(rr.cfg.world,1,rr);
+  if(rr.cfg.mode==='worldquest'&&WORLD_QUESTS[rr.cfg.world].every(function(c){return !!progress.done[c.id];}))awardPrize(rr.cfg.world,3,rr);}
  modal=(rr.cfg.mode==='chapters'&&rr.cfg.idx===CHAPTERS.length-1)?'finale':'win';if(modal==='finale')progress.completedStory=true;progress.lastRun=null;persist();render();}
 function nextLevel(){if(!run)return;var cfg=run.cfg,idx=cfg.idx;modal=null;if(cfg.mode==='worldquest'){var next=WORLD_QUESTS[cfg.world]&&WORLD_QUESTS[cfg.world][cfg.tier+1];if(next){start(next);return;}selectedWorld=cfg.world;screen='world';run=null;persist();render();return;}if(cfg.mode==='campaign'&&CAMPAIGN[idx+1]){start(CAMPAIGN[idx+1]);return;}if(cfg.mode==='academy'&&ACADEMY[idx+1]){start(ACADEMY[idx+1]);return;}if(cfg.mode==='chapters'&&CHAPTERS[idx+1]){start(CHAPTERS[idx+1]);return;}screen='home';run=null;tab=cfg.mode==='academy'?'academy':'campaign';persist();render();}
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
@@ -893,7 +1084,7 @@ function worldStageUnlocked(w,t){return t===0||!!progress.done['w'+w+'-'+(t-1)];
 function levelUnlocked(i){return i===0||!!progress.done['c'+(i-1)];}
 function earned(){var s=0;Object.keys(progress.done).forEach(function(k){if(k.charAt(0)==='c')s+=progress.done[k].stars||0;});return s;}
 function completed(){return CAMPAIGN.filter(function(c){return !!progress.done[c.id];}).length;}
-function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.5</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button>'+(playing?'':'<button class="headbtn a11y-open" data-action="settings" aria-label="Réglages d’affichage">⚙️</button>')+'</div></header>';}
+function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.6</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button>'+(playing?'':'<button class="headbtn a11y-open" data-action="settings" aria-label="Réglages d’affichage">⚙️</button>')+'</div></header>';}
 function stars(n){return '<span class="stars">'+('★'.repeat(n||0))+('☆'.repeat(3-(n||0)))+'</span>';}
 function character(){return AVATARS.find(function(a){return a.id===progress.avatar;})||AVATARS[0];}
 function avatarPicker(){return '<section class="panel picker"><div class="section-title" style="margin:0 0 9px"><h2>🎭 Choisis ton héros</h2><span class="sub">Modifiable à tout moment</span></div><div class="avatar-list">'+AVATARS.map(function(a){return '<button class="avatar-choice '+(a.id===progress.avatar?'picked':'')+'" data-action="avatar" data-avatar="'+a.id+'" aria-label="Choisir '+esc(a.name)+'" aria-pressed="'+(a.id===progress.avatar)+'"><span class="avatar-pic"><img class="avatar-art" src="./assets/avatars/'+a.id+'.webp" alt="" loading="lazy"></span><small>'+esc(a.name)+'</small></button>';}).join('')+'</div><div class="grade-row"><div><b>📚 Livres du niveau</b><small>Les questions restent facultatives</small></div><div class="grade-buttons"><button data-action="grade" data-grade="CE2" class="grade-btn '+(progress.grade==='CE2'?'chosen':'')+'">CE2</button><button data-action="grade" data-grade="CM1" class="grade-btn '+(progress.grade==='CM1'?'chosen':'')+'">CM1</button></div></div></section>';}
@@ -910,12 +1101,63 @@ function worldGallery(){
  return h;
 }
 
+
+function albumHomeCard(){
+ var a=ensureAlbum(),n=prizeCount(),latest=a.recent.slice(0,3);
+ var ids=latest.length?latest:['w6-0','w7-0','w19-0'];
+ return '<section class="album-home"><div class="album-home-art" aria-hidden="true">'+ids.map(function(id){
+  var info=prizeInfo(id);return info?'<img src="'+esc(info.card)+'" alt="" loading="lazy">':'';}).join('')+'</div>'+
+ '<div class="album-home-copy"><h3>✨ Le Grand Album des Mondes</h3><p><b>'+n+' / 112 souvenirs</b> à découvrir. Des cartes, des trésors, des savoirs et des couronnes à gagner dans les labyrinthes.</p>'+
+ '<button class="btn deep album-action" data-action="collection">Ouvrir mon album →</button></div></section>';
+}
+function collectionPage(){
+ var a=ensureAlbum(),count=prizeCount(),h='<main class="main collection-page">';
+ h+='<button class="mini-btn" data-action="home">← Retour à l’aventure</button>';
+ h+='<header class="album-top"><div class="album-top-art" aria-hidden="true"><img src="./assets/world-cards/unicorn.webp" alt=""><img src="./assets/world-cards/island.webp" alt=""><img src="./assets/world-cards/stars.webp" alt=""></div><h1>Mon Grand Album</h1><p>Chaque découverte compte ! Explore les mondes, complète tes collections et construis ton camp à ton rythme.</p><div class="album-pills"><span>'+count+' / 112 souvenirs</span><span>'+earnedMedals()+' / '+ALBUM_MEDALS.length+' médailles</span><span>'+progress.coins+' ✨ à utiliser</span></div></header>';
+ var tabs=[['worlds','🗺️ Mes mondes'],['medals','🏅 Mes médailles'],['camp','🏕️ Mon camp']];
+ h+='<nav class="album-tabs" aria-label="Rubriques de l’album">'+tabs.map(function(t){return '<button data-action="albumtab" data-tab="'+t[0]+'" class="'+(albumTab===t[0]?'selected':'')+'" aria-pressed="'+(albumTab===t[0])+'">'+t[1]+'</button>';}).join('')+'</nav>';
+ if(albumTab==='worlds'){
+  h+='<div class="album-section-title"><h2>Les souvenirs des 28 mondes</h2><p>4 objets illustrés par monde. Les livres donnent des bonus, mais ne bloquent jamais l’aventure.</p><p><b>'+Object.keys(progress.relics||{}).length+' coffres et trésors classiques</b> déjà découverts dans tes anciennes expéditions.</p></div>';
+  var filters=[['all','Tous'],['found','Découverts'],['missing','À compléter']];
+  h+='<div class="album-filters" role="group" aria-label="Filtrer les mondes">'+filters.map(function(t){return '<button data-action="albumfilter" data-filter="'+t[0]+'" aria-pressed="'+(albumFilter===t[0])+'" class="'+(albumFilter===t[0]?'active':'')+'">'+t[1]+'</button>';}).join('')+'</div>';
+  h+='<div class="album-world-list">';
+  WORLDS.forEach(function(w,i){
+   var owned=ownedInWorld(i);if(albumFilter==='found'&&owned===0)return;if(albumFilter==='missing'&&owned===4)return;
+   h+='<details class="album-world"><summary><img src="'+esc(w.card)+'" alt="" loading="lazy"><span class="album-world-title"><strong>'+esc(w.name)+'</strong><small>'+owned+' / 4 souvenirs · '+(owned===4?'Collection complète !':owned===0?'À découvrir':'Continue ton exploration')+'</small><span class="album-progress-track"><span style="width:'+(owned*25)+'%"></span></span></span><span class="album-chevron" aria-hidden="true">⌄</span></summary><div class="album-piece-grid">';
+   for(var slot=0;slot<4;slot++){
+    var has=!!a.owned[prizeKey(i,slot)],label=prizeTitle(i,slot);
+    h+='<div class="album-piece '+(has?'unlocked':'locked')+'"><div class="album-piece-art"><img src="'+esc(w.card)+'" alt="" loading="lazy"><span aria-hidden="true">'+(has?PRIZE_ICONS[slot]:'?')+'</span></div><div class="album-piece-copy"><small>'+PRIZE_TYPES[slot]+' · '+(has?'Obtenu':'À découvrir')+'</small><strong>'+esc(label)+'</strong><p>'+(has?'✨ Dans ta collection !':esc(PRIZE_HINTS[slot]))+'</p></div></div>';
+   }
+   h+='</div><button class="btn small deep album-go" data-action="world" data-world="'+i+'">Explorer ce monde →</button></details>';
+  });
+  h+='</div>';
+  if(albumFilter==='found'&&count===0)h+='<p class="help-note">Aucun souvenir encore : termine une première étape pour commencer !</p>';
+ }else if(albumTab==='medals'){
+  h+='<div class="album-section-title"><h2>Les médailles de l’explorateur</h2><p>Ces récompenses reconnaissent tes progrès en lecture, en découverte et en exploration. Elles sont automatiques et gratuites.</p></div><div class="album-medal-grid">';
+  ALBUM_MEDALS.forEach(function(m){var value=medalScore(m),done=value>=m.goal;
+   h+='<article class="album-medal '+(done?'medal-earned':'medal-locked')+'"><img src="'+esc(WORLDS[m.art].card)+'" alt="" loading="lazy"><div><strong>'+m.icon+' '+esc(m.name)+'</strong><p>'+esc(m.desc)+'</p><small>'+(done?'🏅 Médaille gagnée':Math.min(value,m.goal)+' / '+m.goal)+'</small><div class="album-progress-track"><span style="width:'+Math.min(100,100*value/m.goal)+'%"></span></div></div></article>';
+  });
+  h+='</div>';
+ }else{
+  h+='<div class="album-section-title"><h2>Le camp des découvertes</h2><p>Utilise tes étincelles gagnées dans le jeu pour embellir ton camp. Tes bâtiments restent acquis définitivement.</p></div>';
+  h+='<div class="album-camp-banner"><img src="./assets/world-cards/forest.webp" alt="Paysage illustré de la forêt" loading="lazy"><div><strong>'+progress.coins+' ✨ disponibles</strong><span>Améliore le camp quand tu en as envie. Aucune dépense réelle.</span></div></div>';
+  var artWorld=[0,19,24,5];
+  h+='<div class="album-camp-grid">';
+  CAMP_ITEMS.forEach(function(it,i){var level=progress.camp[it.id]||0,cost=15+level*15,max=level>=3,afford=progress.coins>=cost;
+   h+='<article class="album-camp-item" data-level="'+level+'"><img src="'+esc(WORLDS[artWorld[i]].card)+'" alt="" loading="lazy"><div class="album-camp-copy"><strong>'+esc(it.name)+'</strong><small>'+esc(it.desc)+'</small><div class="album-stage">Niveau '+level+' / 3 <span>'+('★'.repeat(level))+('☆'.repeat(3-level))+'</span></div><button class="btn small '+(!max&&afford?'deep':'ghost')+'" data-action="campupgrade" data-upgrade="'+it.id+'" '+(max||!afford?'disabled':'')+'>'+(max?'Bâtiment terminé':cost+' ✨ · Améliorer')+'</button></div></article>';
+  });h+='</div><p class="album-note">Tu ne perds jamais les objets de ton album en améliorant le camp.</p>';
+ }
+ h+='<div class="footer">Ton album est enregistré sur cet appareil · Gratuit · Sans publicité · ELC Éducation</div></main>';
+ return h;
+}
+
 function home(){var finish=completed(),h='<main class="main">';
  h+='<section class="hero"><div class="hill"></div><div class="tree" aria-hidden="true">🏞️</div><span class="shine" style="right:170px;top:24px">✦</span><span class="shine" style="right:34px;bottom:38px">✧</span><h1>À toi de choisir le chemin !</h1><p>Explore des labyrinthes géants, trouve des trésors et lis des livres magiques si tu en as envie. Aucun livre ne bloque ta sortie !</p><button class="btn" data-action="quickstart">'+character().emoji+' '+(finish?'Continuer l’aventure':'Partir à l’aventure')+'</button></section>';
+ h+=albumHomeCard();
  if(tab==='campaign')h+=worldGallery();
  h+='<div class="stats"><div class="stat"><span class="num">'+finish+'<span class="muted" style="font-size:12px"> / '+CAMPAIGN.length+'</span></span><span class="lbl">🏁 Niveaux terminés</span></div><div class="stat"><span class="num">'+earned()+'</span><span class="lbl">⭐ Étoiles gagnées</span></div><div class="stat"><span class="num">'+(progress.booksRead||0)+'</span><span class="lbl">📚 Livres lus</span></div></div>';
  if(progress.lastRun){h+='<div class="resume"><div><b>📍 Une exploration t’attend !</b><small>'+esc(progress.lastRun.cfg.title)+' · '+progress.lastRun.steps+' pas</small></div><button class="btn small deep" data-action="resume">Reprendre</button></div>';}
- h+=avatarPicker();if(progress.completedStory)h+='<section class="panel" style="margin-top:12px;background:#efe5ff"><b>🌌 Le Cœur d’Aéria est restauré !</b><p>Les six mondes sont réunis. Tu peux continuer à les explorer librement.</p></section>'; h+='<section class="panel" style="margin-top:12px;background:#f0eafa"><b>📘 Mon carnet de révisions</b><p class="muted" style="font-size:13px">'+Object.keys(progress.revision||{}).length+' question(s) à revoir, à ton rythme.</p><button class="btn small deep" data-action="review">Réviser mes découvertes →</button></section>';h+='<section class="panel" style="margin-top:12px;background:#e7f4fb"><h3 style="margin:0">🌌 La Grande Aventure · 12 chapitres</h3><p style="font-size:13px">Traverse les six mondes, rencontre leurs habitants et découvre le Cœur d’Aéria au fil de douze chapitres. Les livres restent facultatifs.</p><button class="btn small deep" data-action="chapters">Découvrir les chapitres →</button></section>';h+='<section class="panel" style="margin-top:12px;background:#fff8e3"><b>🎒 Mon carnet de collection</b><p class="muted" style="font-size:13px">'+Object.keys(progress.relics||{}).length+' trésor(s) secret(s) découvert(s) · '+Object.keys(progress.routes||{}).length+' itinéraire(s) choisis</p><button class="btn small deep" data-action="collection">Voir ma collection</button></section>';h+='<div class="art-showcase"><img src="./assets/worlds/forest.webp" alt="Forêt enchantée illustrée"><div><b>🌿 Nouveau : Le Pont aux trois chemins</b><p>Un grand niveau à explorer : prends le pont, la grotte ou le sentier secret.</p><button class="btn small deep" data-action="pilot">Jouer à la nouvelle aventure →</button></div></div>';
+ h+=avatarPicker();if(progress.completedStory)h+='<section class="panel" style="margin-top:12px;background:#efe5ff"><b>🌌 Le Cœur d’Aéria est restauré !</b><p>Les six mondes sont réunis. Tu peux continuer à les explorer librement.</p></section>'; h+='<section class="panel" style="margin-top:12px;background:#f0eafa"><b>📘 Mon carnet de révisions</b><p class="muted" style="font-size:13px">'+Object.keys(progress.revision||{}).length+' question(s) à revoir, à ton rythme.</p><button class="btn small deep" data-action="review">Réviser mes découvertes →</button></section>';h+='<section class="panel" style="margin-top:12px;background:#e7f4fb"><h3 style="margin:0">🌌 La Grande Aventure · 12 chapitres</h3><p style="font-size:13px">Traverse les six mondes, rencontre leurs habitants et découvre le Cœur d’Aéria au fil de douze chapitres. Les livres restent facultatifs.</p><button class="btn small deep" data-action="chapters">Découvrir les chapitres →</button></section>';h+='<div class="art-showcase"><img src="./assets/worlds/forest.webp" alt="Forêt enchantée illustrée"><div><b>🌿 Nouveau : Le Pont aux trois chemins</b><p>Un grand niveau à explorer : prends le pont, la grotte ou le sentier secret.</p><button class="btn small deep" data-action="pilot">Jouer à la nouvelle aventure →</button></div></div>';
  h+='<section class="panel" style="margin-top:12px;background:#ecf5e2"><h3 style="margin:0">🏕️ Le camp des découvertes</h3><p class="muted" style="font-size:13px">Décore ton camp avec les étincelles gagnées pendant tes aventures. '+CAMP_ITEMS.filter(function(it){return (progress.camp[it.id]||0)>0;}).map(function(it){return it.icon;}).join(' ')+'</p><b>'+progress.coins+' ✨ disponibles</b> <button class="btn small deep" data-action="camp">Améliorer mon camp →</button></section>';
  h+='<nav class="tabs" aria-label="Modes de jeu"><button class="tab '+(tab==='campaign'?'active':'')+'" data-action="tab" data-tab="campaign">🗺️ Aventure</button><button class="tab '+(tab==='endless'?'active':'')+'" data-action="tab" data-tab="endless">♾️ Infini</button><button class="tab '+(tab==='academy'?'active':'')+'" data-action="tab" data-tab="academy">📚 Défis</button></nav>';
  if(tab==='campaign'){h+='<p class="muted" style="font-size:13px">Les anciens parcours restent accessibles dans les six premiers mondes.</p>';}
@@ -926,6 +1168,7 @@ function home(){var finish=completed(),h='<main class="main">';
 function worldPage(){
  var w=WORLDS[selectedWorld],rows=WORLD_QUESTS[selectedWorld];
  var h='<main class="main" style="max-width:880px"><button class="mini-btn" data-action="home">← Les 28 mondes</button><img class="realm-header-image" src="'+esc(w.card)+'" alt="Paysage du monde '+esc(w.name)+'"><div class="worldhead"><span style="font-size:38px">'+w.emoji+'</span><div><h2>'+esc(w.name)+'</h2><p class="muted">'+esc(w.desc)+'</p></div></div>';
+ h+='<div class="world-album-bar"><div><strong>🎒 Mes souvenirs de ce monde : '+ownedInWorld(selectedWorld)+' / 4</strong><small>Carte · Trésor · Savoir · Couronne</small></div><button class="btn small deep" data-action="collection">Mon album →</button></div>';
  h+='<div class="panel"><div class="section-title" style="margin-top:0"><h2>Six étapes pour progresser</h2><span class="sub">'+esc(worldLayoutName(selectedWorld))+' · Livres CE2/CM1</span></div><div class="levelgrid">';
  rows.forEach(function(c,j){var open=worldStageUnlocked(selectedWorld,j),d=progress.done[c.id],nBooks=[2,3,3,4,4,5][j];h+='<button class="levelbtn world-quest-step '+(!open?'locked ':'')+(d?'done':'')+'" data-action="level" data-id="'+c.id+'" '+(!open?'disabled':'')+'><strong>'+(open?'🧭':'🔒')+' '+(j+1)+'. '+esc(['Découverte','Premiers détours','Cristaux','Porte mystérieuse','Défi du monde','Grande épreuve'][j])+'</strong><small>'+c.size+' × '+c.size+' cases · 📚 '+nBooks+' livres</small>'+(d?stars(d.stars):'<small>'+(open?'Prêt à jouer':'Après l’étape précédente')+'</small>')+'</button>';});
  h+='</div><p class="muted" style="margin:10px 0 0;font-size:12px">Tous les mondes sont ouverts. Dans chaque monde, le parcours avance du facile vers le difficile. Les livres ne bloquent jamais la sortie.</p></div>';
@@ -1024,12 +1267,24 @@ function modalPage(){if(!modal)return'';if(modal==='settings')return settingsPag
  else if(modal==='chest'){body='<div class="emoji">🎁</div><h2>Un coffre secret !</h2><p>Tu as découvert un objet pour ton carnet de collection. Bravo pour ton exploration !</p><div class="actions"><button class="btn deep" data-action="closemodal">Continuer →</button></div>';}
  else if(modal==='hint'){var need=requiredMessage(rr),lines=[];if(need.length)lines.push('Il te manque : <b>'+need.map(esc).join(', ')+'</b>.');else lines.push('Tu peux déjà rejoindre la sortie dorée 🚪.');if(rr.map.extra&&rr.map.extra.secret&&!rr.secretFound)lines.push('🔎 Certaines haies scintillent. Approche-toi et appuie sur Fouiller pour ouvrir un passage facultatif.');if(rr.map.books.length)lines.push('Les livres 📚 sont facultatifs : tu peux répondre, passer, ou revenir plus tard.');if(rr.blocks&&rr.blocks.length&&!rr.puzzleDone)lines.push('Tu peux pousser une caisse sur une dalle marquée d’une étoile : c’est un défi bonus, jamais obligatoire.');if(rr.gems.length<2)lines.push('Les cristaux sont cachés dans des branches du labyrinthe : explore les impasses !');if(rr.cfg.type==='fog')lines.push('Reviens sur tes pas si nécessaire : les zones déjà visitées restent sur ta carte.');if(rr.cfg.type==='guard')lines.push('Le gardien avance quand tu bouges ou attends. Observe son rythme.');if(rr.cfg.type==='portal')lines.push('Un portail t’envoie jusqu’à son jumeau.');body='<div class="emoji">💡</div><h2>Ton compagnon te conseille</h2><div class="help-note">'+lines.join('<br><br>')+'</div><div class="actions"><button class="btn deep" data-action="closemodal">Continuer l’exploration</button></div>';}
  else if(modal==='book'){var qq=currentQuiz(rr);if(!qq){modal=null;return '';}var meta=SUBJECTS[qq.subject];body='<div class="emoji">📖</div><span class="bookbadge" style="background:'+meta.color+'">'+esc(meta.name)+' · '+esc(qq.grade)+'</span><h2>Le livre des découvertes</h2><p class="quiz-question" style="color:#214d4e;font-weight:750">'+esc(qq.q)+'</p>'+qq.answers.map(function(a,i){return '<button class="quiz-option" data-action="answer" data-answer="'+i+'">'+esc(a)+'</button>';}).join('')+'<div class="actions"><button class="btn ghost" data-action="bookskip">🚶 Passer sans répondre</button></div><div class="help-note" style="margin-top:12px">Tu peux toujours sortir du labyrinthe sans lire ce livre.</div>'+speechControls();}
- else if(modal==='bookresult'){var q=currentQuiz(rr);if(!q){modal=null;return '';}var result=rr.lastBookResult;body='<div class="emoji">'+(result&&result.correct?'🌟':'💡')+'</div><h2>'+(result&&result.correct?'Bravo !':'Tu peux apprendre de cette réponse')+'</h2><p><b>Bonne réponse : '+esc(q.answers[q.ok])+'</b></p><div class="help-note">'+esc(q.why)+'</div><div class="actions"><button class="btn deep" data-action="closemodal">Continuer mon exploration →</button></div>'+speechControls();}
 
- else if(modal==='win'){var s=(progress.done[rr.cfg.id]||{}).stars||1;body='<div class="emoji">🏆</div><h2>Labyrinthe terminé !</h2><div style="font-size:34px;color:#d6a23f">'+('★'.repeat(s))+('☆'.repeat(3-s))+'</div><p>Tu as trouvé la sortie en <b>'+rr.steps+' pas</b>, avec <b>'+rr.gems.length+' cristal(aux)</b> !</p><div class="help-note">⭐ 1 étoile : terminer le niveau<br>⭐ 2 étoiles : trouver au moins 2 cristaux<br>⭐ 3 étoiles : trouver un 3ᵉ cristal ou lire un livre</div><div class="actions"><button class="btn deep" data-action="next">'+((rr.cfg.mode==='worldquest'&&rr.cfg.tier<5)||(rr.cfg.mode==='campaign'&&rr.cfg.idx<CAMPAIGN.length-1)||(rr.cfg.mode==='academy'&&rr.cfg.idx<ACADEMY.length-1)||(rr.cfg.mode==='chapters'&&rr.cfg.idx<CHAPTERS.length-1)?'Niveau suivant →':'Terminer →')+'</button><button class="btn secondary" data-action="restart">↻ Rejouer</button><button class="btn ghost" data-action="leave">⌂ Accueil</button></div>';}
+ else if(modal==='bookresult'){var q=currentQuiz(rr);if(!q){modal=null;return '';}var result=rr.lastBookResult;
+ body='<div class="emoji">'+(result&&result.correct?'🌟':'💡')+'</div><h2>'+(result&&result.correct?'Bravo !':'Tu peux apprendre de cette réponse')+'</h2><p><b>Bonne réponse : '+esc(q.answers[q.ok])+'</b></p><div class="help-note">'+esc(q.why)+'</div>';
+ if(result&&result.prize)body+='<div class="prize-win-box"><strong>✨ Nouveau souvenir de savoir !</strong>'+albumPrizeCards([result.prize])+'</div>';
+ body+='<div class="actions"><button class="btn deep" data-action="closemodal">Continuer mon exploration →</button></div>'+speechControls();}
+
+
+ else if(modal==='win'){
+ var total=(progress.done[rr.cfg.id]||{}).stars||1,gifts=rr.newAwards||[];
+ body='<div class="emoji">🏆</div><h2>Labyrinthe terminé !</h2><div style="font-size:34px;color:#d6a23f">'+('★'.repeat(total))+('☆'.repeat(3-total))+'</div>'+
+ '<p>Tu as trouvé la sortie en <b>'+rr.steps+' pas</b>, avec <b>'+rr.gems.length+' cristal(aux)</b> !</p>';
+ if(gifts.length)body+='<div class="prize-win-box"><strong>🎁 '+gifts.length+' nouveau(x) souvenir(s) !</strong>'+albumPrizeCards(gifts)+'</div>';
+ body+='<div class="help-note">⭐ 1 étoile : terminer le niveau<br>⭐ 2 étoiles : trouver 2 cristaux<br>⭐ 3 étoiles : trouver un 3ᵉ cristal ou lire un livre.<br>📚 Les livres restent facultatifs.</div>';
+ body+='<div class="actions"><button class="btn deep" data-action="next">'+((rr.cfg.mode==='worldquest'&&rr.cfg.tier<5)||(rr.cfg.mode==='campaign'&&rr.cfg.idx<CAMPAIGN.length-1)||(rr.cfg.mode==='academy'&&rr.cfg.idx<ACADEMY.length-1)||(rr.cfg.mode==='chapters'&&rr.cfg.idx<CHAPTERS.length-1)?'Niveau suivant →':'Terminer →')+'</button><button class="btn secondary" data-action="collection">🎒 Mon album</button><button class="btn ghost" data-action="restart">↻ Rejouer</button><button class="btn ghost" data-action="leave">⌂ Accueil</button></div>';
+}
  return '<div class="overlay" role="dialog" aria-modal="true"><div class="dialog">'+body+'</div></div>';}
 function chaptersPage(){var h='<main class="main"><button class="mini-btn" data-action="home">← Accueil</button><div class="section-title"><h2>🌌 La Grande Aventure</h2></div><p class="muted">Un voyage en 12 chapitres à travers six mondes. Chaque carte contient un nouveau mystère et plusieurs chemins.</p><div class="levelgrid">';CHAPTERS.forEach(function(c,i){var done=progress.done[c.id],open=i===0||!!progress.done[CHAPTERS[i-1].id];h+='<button class="levelbtn '+(done?'done':'')+'" data-action="chapter" data-id="'+c.id+'" '+(open?'':'disabled')+'><b>'+(open?'🧭':'🔒')+' '+(i+1)+'. '+esc(c.title)+'</b><small>'+esc(c.desc)+'</small></button>';});return h+'</div></main>';}
-function render(){applyPrefs();app.innerHTML=top()+(screen==='home'?home():screen==='world'?worldPage():screen==='chapters'?chaptersPage():gamePage())+modalPage();if(screen==='game'){paint();updateHud();}autoSpeech();}
+function render(){applyPrefs();app.innerHTML=top()+(screen==='home'?home():screen==='world'?worldPage():screen==='chapters'?chaptersPage():screen==='collection'?collectionPage():gamePage())+modalPage();if(screen==='game'){paint();updateHud();}autoSpeech();}
 function updateHud(){if(screen!=='game'||!run)return;var el=document.getElementById('steptext');if(el)el.textContent=run.steps;el=document.getElementById('gemtext');if(el)el.textContent=run.gems.length;el=document.getElementById('booktext');if(el)el.textContent=countBooks(run);el=document.getElementById('routejournal');if(el&&run.map.branches)el.textContent=run.chosenRoute===null?'🧭 Découvre le carrefour : 3 chemins disponibles':'🧭 Parcours choisi : '+['Pont','Grotte','Forêt'][run.chosenRoute];el=document.getElementById('puzzlechip');if(el)el.textContent=run.puzzleDone?'📦 Énigme réussie':'📦 Bloc facultatif';el=document.getElementById('chestchip');if(el)el.textContent='🎁 '+(run.openedChests||[]).length;el=document.getElementById('landmarkchip');if(el){el.style.display=run.map.extra&&run.map.extra.landmark?'inline-flex':'none';el.textContent=run.landmarkDone?'🗺️ Lieu découvert':'🗺️ Lieu à découvrir';}el=document.getElementById('secretchip');if(el){el.style.display=run.map.extra&&run.map.extra.secret?'inline-flex':'none';el.textContent=run.secretFound?'✨ Passage découvert':'✨ Secret à trouver';}el=document.getElementById('keychip');if(el)el.textContent=run.key?'🗝️ Clé trouvée':'🔎 Exploration';el=document.getElementById('switchchip');if(el)el.textContent=run.switchOn?'⚙️ Levier activé':run.quizDone?'📘 Énigme résolue':'✨ À découvrir';el=document.getElementById('toast');if(el)el.textContent=feedback;}
 function updateGame(){updateHud();paint();if(modal){render();return;}var row=document.getElementById('context-actions');if(row&&run){var e=run.map.extra||{},q=bookAt(run,run.x,run.y),secret=e.secret&&!run.secretFound&&Math.abs(run.x-e.secret[0])+Math.abs(run.y-e.secret[1])===1;row.innerHTML=(secret?'<button class="context-btn" data-action="inspect">🔎 Fouiller</button>':'')+(q&&!run.booksDone[key(run.x,run.y)]?'<button class="context-btn" data-action="bookopen">📖 Lire</button>':'')+(run.cfg.type==='guard'?'<button class="context-btn" data-action="wait">⏳ Attendre</button>':'');}}
 function rgb(hex){var h=hex.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
@@ -1224,12 +1479,14 @@ function handleAction(target){while(target&&target!==document){if(target.getAttr
  if(action==='home'||action==='leave'){stopSpeech();lastAutoSpeechKey='';speechMessage='';if(run&&modal!=='win'&&modal!=='finale')progress.lastRun=packRun(run);screen='home';modal=null;run=null;persist();render();window.scrollTo(0,0);return;}
  if(action==='world'){selectedWorld=Number(target.getAttribute('data-world'));if(!worldUnlocked(selectedWorld)){feedback='Termine d’abord le monde précédent.';return;}screen='world';progress.lastWorld=selectedWorld;persist();render();window.scrollTo(0,0);return;}
  if(action==='level'){var cfg=findCfg(target.getAttribute('data-id'));if(cfg&&(cfg.mode==='worldquest'?worldStageUnlocked(cfg.world,cfg.tier):cfg.mode!=='campaign'||levelUnlocked(cfg.idx)))start(cfg);return;}
- if(action==='camp'){modal='camp';render();return;}
+ if(action==='camp'){albumTab='camp';screen='collection';modal=null;run=null;render();window.scrollTo(0,0);return;}
  if(action==='campupgrade'){var id=target.getAttribute('data-upgrade'),item=CAMP_ITEMS.find(function(a){return a.id===id;});if(!item)return;var lvl=progress.camp[id]||0,cost=15+lvl*15;if(lvl<3&&progress.coins>=cost){progress.coins-=cost;progress.camp[id]=lvl+1;persist();playSound(720);}render();return;}
  if(action==='review'){var mistakes=Object.keys(progress.revision||{});revisionId=mistakes.length?mistakes[0]:null;modal='revision';render();return;}
  if(action==='revisionanswer'){var qq=QUIZZES.find(function(q){return q.id===revisionId;});if(!qq)return;revisionRight=Number(target.getAttribute('data-answer'))===qq.ok;if(revisionRight)delete progress.revision[qq.id];modal='revisionresult';persist();render();return;}
  if(action==='revisionnext'){var old=revisionId,ids=Object.keys(progress.revision||{});revisionId=ids.find(function(id){return id!==old;})||ids[0]||null;modal='revision';persist();render();return;}
- if(action==='collection'){modal='collection';render();return;}
+ if(action==='collection'){if(run&&modal==='win')run=null;else if(run)progress.lastRun=packRun(run);screen='collection';albumTab='worlds';modal=null;persist();render();window.scrollTo(0,0);return;}
+ if(action==='albumtab'){var nextTab=target.getAttribute('data-tab');if(['worlds','medals','camp'].indexOf(nextTab)>=0){albumTab=nextTab;render();}return;}
+ if(action==='albumfilter'){var nextFilter=target.getAttribute('data-filter');if(['all','found','missing'].indexOf(nextFilter)>=0){albumFilter=nextFilter;render();}return;}
  if(action==='chapters'){screen='chapters';modal=null;run=null;render();return;}
  if(action==='chapter'){var cc=CHAPTERS.find(function(c){return c.id===target.getAttribute('data-id');});if(cc&&(cc.idx===0||progress.done[CHAPTERS[cc.idx-1].id]))start(cc);return;}
  if(action==='pilot'){start({id:'pilot-v11',idx:0,title:'Le Pont aux trois chemins',type:'exit',size:21,seed:61731,world:0,mode:'pilot',desc:'Trois chemins, des trésors cachés et une sortie.',branching:true});return;}
@@ -1265,7 +1522,7 @@ function handleAction(target){while(target&&target!==document){if(target.getAttr
  if(action==='next'){nextLevel();return;}
  if(action==='bookopen'){if(modal==='pause'){modal=null;render();}if(!run)return;var b=bookAt(run,run.x,run.y);if(b&&!run.booksDone[key(run.x,run.y)])openBook(run,b);else{feedback='📖 Place-toi sur une case contenant un livre de couleur.';updateGame();}return;}
  if(action==='bookskip'){stopSpeech();speechMessage='';lastAutoSpeechKey='';if(run&&run.currentBook)run.booksSkipped[run.currentBook]=true;modal=null;persist();render();return;}
- if(action==='answer'){if(!run||modal!=='book')return;stopSpeech();speechMessage='';lastAutoSpeechKey='';var q=currentQuiz(run);if(!q)return;var pos=run.currentBook;if(run.booksDone[pos])return;var good=Number(target.getAttribute('data-answer'))===q.ok;run.booksDone[pos]={correct:good,id:q.id};progress.booksRead=(progress.booksRead||0)+1;if(good)progress.booksCorrect=(progress.booksCorrect||0)+1;progress.quizHistory[q.id]=(progress.quizHistory[q.id]||0)+1;if(!good){progress.revision=progress.revision||{};progress.revision[q.id]=(progress.revision[q.id]||0)+1;}progress.coins+=good?5:2;run.lastBookResult={correct:good};modal='bookresult';playSound(good?880:330);persist();render();return;}
+ if(action==='answer'){if(!run||modal!=='book')return;stopSpeech();speechMessage='';lastAutoSpeechKey='';var q=currentQuiz(run);if(!q)return;var pos=run.currentBook;if(run.booksDone[pos])return;var good=Number(target.getAttribute('data-answer'))===q.ok;run.booksDone[pos]={correct:good,id:q.id};progress.booksRead=(progress.booksRead||0)+1;var knowledgeAward=null;if(good){progress.booksCorrect=(progress.booksCorrect||0)+1;ensureAlbum().uniqueCorrect[q.id]=q.subject;knowledgeAward=awardPrize(run.cfg.world,2,run);}progress.quizHistory[q.id]=(progress.quizHistory[q.id]||0)+1;if(!good){progress.revision=progress.revision||{};progress.revision[q.id]=(progress.revision[q.id]||0)+1;}progress.coins+=good?5:2;run.lastBookResult={correct:good,prize:knowledgeAward};modal='bookresult';playSound(good?880:330);persist();render();return;}
 
 
 }
@@ -1288,7 +1545,7 @@ document.addEventListener('keydown',function(e){if(screen!=='game'||modal)return
 var touch=null;document.addEventListener('touchstart',function(e){if(screen!=='game'||modal||e.target.id!=='gameCanvas')return;var t=e.changedTouches[0];touch=[t.clientX,t.clientY];},{passive:true});document.addEventListener('touchend',function(e){if(!touch||screen!=='game'||modal)return;var t=e.changedTouches[0],dx=t.clientX-touch[0],dy=t.clientY-touch[1];touch=null;if(Math.max(Math.abs(dx),Math.abs(dy))<18)return;lastSwipe=Date.now();e.preventDefault();if(Math.abs(dx)>Math.abs(dy))step(dx>0?1:-1,0);else step(0,dy>0?1:-1);},{passive:false});
 window.addEventListener('resize',function(){if(screen==='game')paint();});
 // Small deterministic API for automated checks; does not change gameplay.
-window.LabyrintheTest={carveWorldLayout:carveWorldLayout,worldLayoutName:worldLayoutName,makeMazeSilhouette:makeMazeSilhouette,worlds:WORLDS,worldQuests:WORLD_QUESTS,generate:generate,makeRun:makeRun,bfs:bfs,trace:trace,campaign:CAMPAIGN,academy:ACADEMY,quizzes:QUIZZES,subjects:SUBJECTS,avatars:AVATARS,openBook:openBook,bookAt:bookAt,selectBookQuestion:selectBookQuestion,validExit:playerCanExit,step:step,getRun:function(){return run;},getScreen:function(){return screen;},getProgress:function(){return progress;},chapters:CHAPTERS,start:start,getModal:function(){return modal;},getArtReady:function(){return ART_READY;},getDecorReady:function(){return DECOR_IMAGES;},packRun:packRun,unpackRun:unpackRun};
+window.LabyrintheTest={awardPrize:awardPrize,ensureAlbum:ensureAlbum,prizeCount:prizeCount,ownedInWorld:ownedInWorld,collectionPage:collectionPage,medalScore:medalScore,albumMedals:ALBUM_MEDALS,win:win,handleAction:handleAction,carveWorldLayout:carveWorldLayout,worldLayoutName:worldLayoutName,makeMazeSilhouette:makeMazeSilhouette,worlds:WORLDS,worldQuests:WORLD_QUESTS,generate:generate,makeRun:makeRun,bfs:bfs,trace:trace,campaign:CAMPAIGN,academy:ACADEMY,quizzes:QUIZZES,subjects:SUBJECTS,avatars:AVATARS,openBook:openBook,bookAt:bookAt,selectBookQuestion:selectBookQuestion,validExit:playerCanExit,step:step,getRun:function(){return run;},getScreen:function(){return screen;},getProgress:function(){return progress;},chapters:CHAPTERS,start:start,getModal:function(){return modal;},getArtReady:function(){return ART_READY;},getDecorReady:function(){return DECOR_IMAGES;},packRun:packRun,unpackRun:unpackRun};
 render();
 if(('serviceWorker' in navigator)&&(location.protocol==='https:'||location.hostname==='localhost')){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}
 })();

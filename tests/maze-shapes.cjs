@@ -20,8 +20,9 @@ class ImageStub{
 }
 const window = {innerWidth:390,innerHeight:780,devicePixelRatio:1,
  addEventListener(){},scrollTo(){},matchMedia(){return {matches:false};}};
+const storage={};
 const context={window,document,navigator:{},location:{protocol:'file:',hostname:''},
- Image:ImageStub,localStorage:{getItem(){return null;},setItem(){}},
+ Image:ImageStub,localStorage:{getItem(k){return storage[k]||null;},setItem(k,v){storage[k]=v;}},
  setTimeout,clearTimeout,setInterval,clearInterval,console};
 vm.runInNewContext(match[1],context,{timeout:20000,filename:'labyrinthe-inline.js'});
 const game=window.LabyrintheTest;
@@ -94,5 +95,86 @@ assert.equal(game.getRun().cfg.shapeVersion,3,'new runs must select redesigned i
 assert(game.getRun().map.layout,'V4.5 architecture missing');
 assert(game.getRun().map.silhouette,'new run not shaped');
 assert(game.getScreen()==='game','start failed');
+
+// V4.6 collection regression: existing saves, unique awards, learning and camp.
+const gp=game.getProgress();
+const album=game.ensureAlbum();
+assert(game.prizeCount()===0,'fresh account should start with an empty souvenir album');
+assert(game.collectionPage().includes('Mon Grand Album'),'illustrated collection missing');
+assert(game.collectionPage().includes('assets/world-cards/unicorn.webp'),'world artwork not used in album');
+assert(game.collectionPage().includes('Royaume des licornes'),'album world gallery missing');
+assert.equal(game.awardPrize(6,0), 'w6-0','a first collectible should unlock');
+assert.equal(game.awardPrize(6,0),null,'same prize cannot be won twice');
+assert.equal(game.prizeCount(),1,'duplicate prize counted twice');
+assert.equal(game.ownedInWorld(6),1,'world progress display inaccurate');
+const runBefore=game.makeRun({...game.worldQuests[6][1],shapeVersion:3});
+assert.deepEqual([...runBefore.newAwards],[],'new run should start with no pending prizes');
+assert.equal(game.awardPrize(6,1,runBefore),'w6-1');
+assert.equal(runBefore.newAwards.length,1,'pending prize reveal not stored');
+const resumedRewards=game.unpackRun(game.packRun(runBefore));
+assert.equal(resumedRewards.newAwards.length,1,'saved reward reveal lost on resume');
+game.start(game.worldQuests[6][0]);
+const finished=game.getRun();
+finished.gems=finished.map.crystals.slice(0,2).map(p=>p[0]+','+p[1]);
+game.win();
+assert(gp.done['w6-0'],'world quest completion not saved');
+assert(album.owned['w6-0']&&album.owned['w6-1'],'earned souvenirs not unlocked at finish');
+assert.equal(game.getModal(),'win');
+assert(app.innerHTML.includes('Mon album'),'win screen should link to album');
+for(let stage=1;stage<6;stage++){game.start(game.worldQuests[6][stage]);game.win();}
+assert(album.owned['w6-3'],'finishing all six stages must unlock crown');
+assert.equal(game.awardPrize(6,3),null,'crown must not be granted twice');
+// Correctly answering one real question unlocks the world knowledge prize.
+game.start(game.worldQuests[6][0]);
+const bookRun=game.getRun(),book=bookRun.map.books[0];
+const question=game.selectBookQuestion(bookRun,book);
+game.openBook(bookRun,book);
+function fakeTarget(action,extras){return {parentNode:document,getAttribute(k){if(k==='data-action')return action;if(extras&&Object.prototype.hasOwnProperty.call(extras,k))return extras[k];return null;}};}
+game.handleAction(fakeTarget('answer',{'data-answer':String(question.ok)}));
+assert(album.owned['w6-2'],'correct answer did not unlock book souvenir');
+assert.equal(gp.booksCorrect,1,'correct answer count not updated');
+assert.equal(game.getModal(),'bookresult');
+assert(app.innerHTML.includes('Nouveau souvenir de savoir'),'book reveal not displayed');
+const oldGold=gp.coins;
+gp.coins=90;
+game.handleAction(fakeTarget('collection'));
+assert.equal(game.getScreen(),'collection','album screen cannot open');
+assert(app.innerHTML.includes('album-world-list'),'world collection layout not rendered');
+game.handleAction(fakeTarget('albumtab',{'data-tab':'medals'}));
+assert(app.innerHTML.includes('Les médailles'),'medals tab not rendered');
+game.handleAction(fakeTarget('albumtab',{'data-tab':'camp'}));
+assert(app.innerHTML.includes('Le camp des découvertes'),'camp tab not rendered');
+const goldBefore=gp.coins;
+game.handleAction(fakeTarget('campupgrade',{'data-upgrade':'garden'}));
+assert.equal(gp.coins,goldBefore-15,'camp must spend only in-game coins');
+assert.equal(gp.camp.garden,1,'camp upgrade did not persist');
+assert(storage['elc_labyrinthe_aventure_v10'],'saving after upgrade failed');
+assert(JSON.parse(storage['elc_labyrinthe_aventure_v10']).album.owned['w6-2'],'album not persisted');
+gp.coins=oldGold;
+// Migration from a real pre-album localStorage payload (without losing coins,
+// completed stages, gems or camp improvements).
+const savedPrevious={
+ done:{'w4-0':{stars:3,gems:3,steps:51},'w4-1':{stars:2,gems:2,steps:73}},
+ coins:83,booksRead:7,booksCorrect:4,camp:{library:2},relics:{'old-chest':true}
+};
+const previousStorage={'elc_labyrinthe_aventure_v10':JSON.stringify(savedPrevious)};
+const previousApp={innerHTML:'',style:{}};
+const previousWindow={innerWidth:390,innerHeight:780,devicePixelRatio:1,
+ addEventListener(){},scrollTo(){},matchMedia(){return {matches:false};}};
+const previousDoc={documentElement:{className:'',style:{setProperty(){}}},
+ getElementById(k){return k==='app'?previousApp:null;},addEventListener(){},querySelectorAll(){return [];}};
+vm.runInNewContext(match[1],{
+ window:previousWindow,document:previousDoc,Image:ImageStub,navigator:{},location:{protocol:'file:',hostname:''},
+ localStorage:{getItem(k){return previousStorage[k]||null;},setItem(k,v){previousStorage[k]=v;}},
+ setTimeout,clearTimeout,setInterval,clearInterval,console
+},{timeout:20000});
+const historic=previousWindow.LabyrintheTest;
+const historicAlbum=historic.ensureAlbum();
+assert(historicAlbum.owned['w4-0'],'old completed stage must grant world postcard');
+assert(historicAlbum.owned['w4-1'],'old crystal record must grant world gemstone');
+assert.equal(historic.getProgress().coins,83,'old wallet must remain unchanged');
+assert.equal(historic.getProgress().camp.library,2,'old camp must be retained');
+assert(historic.getProgress().relics['old-chest'],'old relics must remain');
+
 console.log('PASS',maps,'solvable levels;',books,'reachable books;',portalLevels,
- 'portal-type levels;',patterns.size,'unique outlines;',styles.size,'maze architectures;',carvings,'carved tiles; V4.4 saved-run safe.');
+ 'portal-type levels;',patterns.size,'unique outlines;',styles.size,'maze architectures;',carvings,'carved tiles; 112-prize collection tested.');
