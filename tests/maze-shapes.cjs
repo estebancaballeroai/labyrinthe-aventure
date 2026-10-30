@@ -42,7 +42,7 @@ function checkMap(cfg){
  assert(map.silhouette.nodeCount>=8,'too few usable nodes '+tag);
  assert.equal(map.grid[map.start[1]][map.start[0]],'.','invalid start '+tag);
  assert(map.silhouette.footprint[map.start[1]][map.start[0]],'start outside shape '+tag);
- assert.notDeepEqual([...map.start],[1,1].filter(()=>false),'start exists');
+ assert(map.start[0]>=1&&map.start[1]>=1,'invalid maze spawn '+tag);
  const key=(x,y)=>x+','+y,reach=reachable(map.grid,map.start);
  assert(reach.has(key(...map.exit)),'exit unreachable '+tag);
  for(const book of map.books)assert(reach.has(key(book.x,book.y)),'book unreachable '+tag);
@@ -55,7 +55,7 @@ function checkMap(cfg){
  let blocked={};
  for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(map.grid[y][x]==='D'||map.grid[y][x]==='G')blocked[key(x,y)]=true;
  const initial=reachable(map.grid,map.start,blocked);
- if(map.needKey){assert.equal(count(map.grid,'K'),1,'missing key '+tag);assert(initial.has(Object.entries(map.grid).flatMap(([y,row])=>row.map((val,x)=>val==='K'?key(x,Number(y)):null)).find(Boolean)),'key behind door '+tag);}
+ if(map.needKey){assert.equal(count(map.grid,'K'),1,'missing key '+tag);let found=false;for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(map.grid[y][x]==='K'&&initial.has(key(x,y)))found=true;assert(found,'key behind door '+tag);}
  if(map.needSwitch){assert.equal(count(map.grid,'S'),1,'missing lever '+tag);let found=false;for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(map.grid[y][x]==='S'&&initial.has(key(x,y)))found=true;assert(found,'lever behind door '+tag);}
  if(map.needCrystals)assert(map.crystals.length>=map.needCrystals,'treasures impossible '+tag);
  if(config.type==='portal')portalLevels++;
