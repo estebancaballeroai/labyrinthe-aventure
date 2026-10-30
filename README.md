@@ -1,23 +1,49 @@
-# Labyrinthe Aventure V4.2 — ELC Éducation
+# Labyrinthe Aventure — ELC Éducation — V4.3
 
-Jeu éducatif gratuit pour enfants de 8 à 10 ans, sans inscription ni publicité : [jouer à Labyrinthe Aventure](https://estebancaballeroai.github.io/labyrinthe-aventure/).
+**Jouer :** https://estebancaballeroai.github.io/labyrinthe-aventure/
 
-### Contenu et liberté de jeu
+Jeu éducatif et ludique gratuit pour les 8–10 ans (CE2–CM1), sans inscription ni publicité, conçu pour smartphone, ordinateur et tablette Android ancienne.
 
-60 labyrinthes dans 6 mondes, 16 expéditions, 12 chapitres, 336 questions CE2–CM1, 8 personnages, mode infini et sauvegarde locale. Les livres sont **toujours facultatifs** : une mauvaise réponse ne bloque jamais la sortie.
+## Nouveauté V4.3 : 28 mondes accessibles immédiatement
 
-### Accessibilité et confort
+La sélection des mondes est visible dès l'accueil. Le Royaume des licornes, la Vallée des dragons, le Jardin des fées et le Pays des bonbons sont proposés en tête. Les **28 mondes sont accessibles dès la première partie** ; il suffit de choisir un monde. Chaque monde dispose de **six étapes** qui se débloquent progressivement **à l'intérieur de ce seul monde**, indépendamment de la progression des autres mondes.
 
-Depuis l'accueil **⚙️**, ou en partie **☰ → ⚙️ Confort** : taille de police 100–200 %, commandes agrandies, contraste, zoom, vitesse par appui long, animations réduites, lecture plus aérée et lecture vocale française lorsqu'elle est prise en charge par l'appareil.
+Progression dans chaque monde :
 
-Les préférences sont stockées séparément de la progression ; réinitialiser les réglages n'efface **jamais** la progression.
+| Étape | Taille | Livres | Mécanique |
+|---|---|---|---|
+| 1 | 9×9 | 2 | Découverte / sortie |
+| 2 | 11×11 | 3 | Bifurcations |
+| 3 | 13×13 | 3 | Cristaux à découvrir |
+| 4 | 15×15 | 4 | Clé ou levier |
+| 5 | 17×17 | 4 | Défi lié à l'ambiance du monde : brouillard, portail, gardien ou levier |
+| 6 | 19×19 | 5 | Clé + levier et plusieurs itinéraires |
 
-Documents : [guide](ACCESSIBILITE.md) ; [rapport des tests](QA-V4.2.md).
+**Total :** 168 nouveaux niveaux progressifs, 588 livres placés dans ces nouveaux niveaux ; 60 niveaux historiques de campagne conservés dans les six premiers mondes, ainsi que 16 expéditions éducatives et 12 chapitres déjà existants.
 
-### Historique et protection des versions
+## Livres CE2 et CM1
 
-- V4.1.1 (optimisation tablette) conservée dans `backup/index-v4.1.1.html`.
-- Jalons intermédiaires complets : `versions/v4.1.2/`, `versions/v4.1.3/`.
-- V4.2 : `versions/v4.2/index.html` et `index.html` à la racine.
+- 672 nouvelles questions contextualisées par monde, réparties entre mathématiques et un domaine associé au monde (français, sciences, histoire/repères temporels, géographie, citoyenneté, découverte du monde, logique).
+- 336 questions précédentes conservées, soit **1 008 questions** au total.
+- Deux degrés scolaires indépendants : CE2 et CM1. Dans chacun, les questions des nouveaux parcours progressent avec l'étape.
+- Chaque livre est identifiable par la couleur de sa matière. Les réponses comportent une explication.
+- **Aucune question n'est obligatoire** pour ouvrir un passage ou quitter le labyrinthe.
 
-Fonctionnement hors ligne après installation / premier chargement si le navigateur prend en charge Service Worker. La lecture vocale utilise uniquement les voix françaises déjà installées et n'est pas garantie sur les anciennes tablettes.
+## Nouveaux visuels
+
+28 vignettes illustrées originales WebP (`assets/world-cards/`) de 280×192 px, issues d'un atlas graphique conçu pour cette application. Le labyrinthe en jeu conserve le style épuré voulu par les enfants (pas de petits arbres ni de cailloux ajoutés), avec des palettes propres aux nouveaux mondes. Les anciens mondes conservent leur moteur et leurs assets.
+
+## Versions et sauvegardes
+
+- V4.2 sauvegardée dans `backup/index-v4.2.html`.
+- V4.3 dans `index.html` et `versions/v4.3/index.html`.
+- Les identifiants des 60 niveaux historiques, des questions d'origine, et la clé de progression `elc_labyrinthe_aventure_v10` restent inchangés.
+- Dernier monde choisi mémorisé localement. Les préférences d'accessibilité V4.2 restent conservées (police, zoom, taille des boutons, etc.).
+
+## Documentation
+
+- `CATALOGUE-V4.3.md` : les 28 mondes et leur progression.
+- `QA-V4.3.md` : contrôle des 168 nouveaux niveaux, des 88 cartes fixes existantes, des questions et des écrans.
+- `ROADMAP-V5.md` : prochaines étapes de perfectionnement des mécanismes.
+
+**Limites :** les niveaux V4.3 sont construits avec des graines fixes et des variantes de mécanismes éprouvés ; ils ne sont pas encore tous conçus individuellement à la main. Les premiers tests sont automatisés dans Chromium ; le comportement sur l'ancienne tablette Samsung doit être confirmé par un essai réel.
