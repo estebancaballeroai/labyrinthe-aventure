@@ -327,6 +327,12 @@ html.a11y-reduced .gamebottom{backdrop-filter:none}
 }
 @media(max-width:350px){.album-home-art{display:none}.album-world summary{gap:7px;padding:8px}.album-world summary>img{width:65px}.album-tabs button{font-size:12px}}
 
+
+/* V4.7: atlas backgrounds use original painted rewards, not world card crops */
+.prize-art-sprite{display:block;width:100%;height:100%;background-size:400% 700%;background-repeat:no-repeat;filter:drop-shadow(0 1px 1px #6545)}
+.album-piece-art.v47-art{overflow:hidden;background:#fff8ec;border-radius:10px}
+.album-piece.locked .prize-art-sprite{filter:grayscale(1) opacity(.38)}
+.album-piece-art .prize-lock{position:absolute;right:15px;bottom:15px;border-radius:50%;font-size:25px;font-weight:900;color:#5e6675;background:#fffd;padding:0 10px}
 </style>
 </head>
 <body>
@@ -596,6 +602,15 @@ var PRIZE_ICONS=['🗺️','💎','📖','👑'];
 var PRIZE_HINTS=['Termine une étape de ce monde','Trouve au moins deux cristaux dans une étape',
  'Réponds juste à un livre de ce monde','Termine les six étapes de ce monde'];
 var albumTab='worlds',albumFilter='all';
+/* V4.7: three original compact 4x7 atlases, for the first 21 worlds. */
+function prizeArtHtml(world,slot){
+ var w=WORLDS[world],alt=esc(prizeTitle(world,slot));
+ if(world>=0&&world<21&&slot>=0&&slot<4){
+  var sheet=Math.floor(world/7),row=world%7,px=Math.round(slot*100/3*100)/100,py=Math.round(row*100/6*100)/100;
+  return '<span class="prize-art-sprite" role="img" aria-label="'+alt+'" style="background-image:url(./assets/collectibles/atlas-'+sheet+'.webp);background-position:'+px+'% '+py+'%"></span>';
+ }
+ return '<img src="'+esc(w.card)+'" alt="'+alt+'" loading="lazy">';
+}
 function prizeKey(world,slot){return 'w'+world+'-'+slot;}
 function ensureAlbum(){
  var a=progress.album;
@@ -1126,7 +1141,7 @@ function collectionPage(){
    h+='<details class="album-world"><summary><img src="'+esc(w.card)+'" alt="" loading="lazy"><span class="album-world-title"><strong>'+esc(w.name)+'</strong><small>'+owned+' / 4 souvenirs · '+(owned===4?'Collection complète !':owned===0?'À découvrir':'Continue ton exploration')+'</small><span class="album-progress-track"><span style="width:'+(owned*25)+'%"></span></span></span><span class="album-chevron" aria-hidden="true">⌄</span></summary><div class="album-piece-grid">';
    for(var slot=0;slot<4;slot++){
     var has=!!a.owned[prizeKey(i,slot)],label=prizeTitle(i,slot);
-    h+='<div class="album-piece '+(has?'unlocked':'locked')+'"><div class="album-piece-art"><img src="'+esc(w.card)+'" alt="" loading="lazy"><span aria-hidden="true">'+(has?PRIZE_ICONS[slot]:'?')+'</span></div><div class="album-piece-copy"><small>'+PRIZE_TYPES[slot]+' · '+(has?'Obtenu':'À découvrir')+'</small><strong>'+esc(label)+'</strong><p>'+(has?'✨ Dans ta collection !':esc(PRIZE_HINTS[slot]))+'</p></div></div>';
+    h+='<div class="album-piece '+(has?'unlocked':'locked')+'"><div class="album-piece-art '+(i<21?'v47-art':'')+'">'+prizeArtHtml(i,slot)+(has?'':'<span class="prize-lock" aria-hidden="true">?</span>')+'</div><div class="album-piece-copy"><small>'+PRIZE_TYPES[slot]+' · '+(has?'Obtenu':'À découvrir')+'</small><strong>'+esc(label)+'</strong><p>'+(has?'✨ Dans ta collection !':esc(PRIZE_HINTS[slot]))+'</p></div></div>';
    }
    h+='</div><button class="btn small deep album-go" data-action="world" data-world="'+i+'">Explorer ce monde →</button></details>';
   });
