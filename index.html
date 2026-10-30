@@ -589,7 +589,7 @@ function generate(cfg){if(!cfg.branching && ((cfg.mode==='campaign'&&cfg.idx>=3&
  if(!found)stack.pop();}
  // Extra openings make genuine alternate routes, not only dead ends.
  var openings=Math.floor(n*n*(cfg.type==='exit'?.035:.055));var walls=[];
- for(y=1;y<n-1;y++)for(x=1;x<n-1;x++){if(g[y][x]==='#'&&((g[y][x-1]==='.'&&g[y][x+1]==='.')||(g[y-1][x]==='.'&&g[y+1][x]==='.')))walls.push([x,y]);}
+ for(y=1;y<n-1;y++)for(x=1;x<n-1;x++){if(g[y][x]==='#'&&(!silhouette||silhouette.footprint[y][x])&&((g[y][x-1]==='.'&&g[y][x+1]==='.')||(g[y-1][x]==='.'&&g[y+1][x]==='.')))walls.push([x,y]);}
  walls=shuffle(walls,r);for(k=0;k<Math.min(openings,walls.length);k++){g[walls[k][1]][walls[k][0]]='.';}
  var from=bfs(g,origin[0],origin[1]),far=from.q[0];for(k=1;k<from.q.length;k++){var pp=from.q[k];if(from.dist[key(pp[0],pp[1])]>from.dist[key(far[0],far[1])])far=pp;}
  var end=far,path=trace(from.parent,end),used={};used[key(origin[0],origin[1])]=true;used[key(end[0],end[1])]=true;
@@ -634,7 +634,7 @@ function generate(cfg){if(!cfg.branching && ((cfg.mode==='campaign'&&cfg.idx>=3&
  if(n>=11&&friendOptions.length){var fp=friendOptions[0];extra.friend=[fp[0],fp[1]];}
  if(n>=11){
   var secretSpots=[];
-  for(var sy=2;sy<n-2;sy++)for(var sx=2;sx<n-2;sx++)if(g[sy][sx]==='#'){
+  for(var sy=2;sy<n-2;sy++)for(var sx=2;sx<n-2;sx++)if(g[sy][sx]==='#'&&(!silhouette||silhouette.footprint[sy][sx])){
    var horiz=g[sy][sx-1]!== '#'&&g[sy][sx+1]!== '#';
    var vert=g[sy-1][sx]!== '#'&&g[sy+1][sx]!== '#';
    if(horiz||vert)secretSpots.push([sx,sy]);
