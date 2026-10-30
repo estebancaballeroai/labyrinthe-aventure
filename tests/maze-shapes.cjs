@@ -151,6 +151,30 @@ assert.equal(gp.camp.garden,1,'camp upgrade did not persist');
 assert(storage['elc_labyrinthe_aventure_v10'],'saving after upgrade failed');
 assert(JSON.parse(storage['elc_labyrinthe_aventure_v10']).album.owned['w6-2'],'album not persisted');
 gp.coins=oldGold;
+// Migration from a real pre-album localStorage payload (without losing coins,
+// completed stages, gems or camp improvements).
+const savedPrevious={
+ done:{'w4-0':{stars:3,gems:3,steps:51},'w4-1':{stars:2,gems:2,steps:73}},
+ coins:83,booksRead:7,booksCorrect:4,camp:{library:2},relics:{'old-chest':true}
+};
+const previousStorage={'elc_labyrinthe_aventure_v10':JSON.stringify(savedPrevious)};
+const previousApp={innerHTML:'',style:{}};
+const previousWindow={innerWidth:390,innerHeight:780,devicePixelRatio:1,
+ addEventListener(){},scrollTo(){},matchMedia(){return {matches:false};}};
+const previousDoc={documentElement:{className:'',style:{setProperty(){}}},
+ getElementById(k){return k==='app'?previousApp:null;},addEventListener(){},querySelectorAll(){return [];}};
+vm.runInNewContext(match[1],{
+ window:previousWindow,document:previousDoc,Image:ImageStub,navigator:{},location:{protocol:'file:',hostname:''},
+ localStorage:{getItem(k){return previousStorage[k]||null;},setItem(k,v){previousStorage[k]=v;}},
+ setTimeout,clearTimeout,setInterval,clearInterval,console
+},{timeout:20000});
+const historic=previousWindow.LabyrintheTest;
+const historicAlbum=historic.ensureAlbum();
+assert(historicAlbum.owned['w4-0'],'old completed stage must grant world postcard');
+assert(historicAlbum.owned['w4-1'],'old crystal record must grant world gemstone');
+assert.equal(historic.getProgress().coins,83,'old wallet must remain unchanged');
+assert.equal(historic.getProgress().camp.library,2,'old camp must be retained');
+assert(historic.getProgress().relics['old-chest'],'old relics must remain');
 
 console.log('PASS',maps,'solvable levels;',books,'reachable books;',portalLevels,
  'portal-type levels;',patterns.size,'unique outlines;',styles.size,'maze architectures;',carvings,'carved tiles; 112-prize collection tested.');
