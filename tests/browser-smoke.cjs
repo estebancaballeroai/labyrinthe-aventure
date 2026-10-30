@@ -19,7 +19,7 @@ async function main(){
  const url='file://'+path.resolve('index.html');
  await page.goto(url,{waitUntil:'load'});
  await page.waitForFunction(()=>window.LabyrintheTest&&window.LabyrintheTest.worlds.length===28);
- assert.match(await page.title(),/V4\.6/);
+ assert.match(await page.title(),/V4\.7/);
  assert.equal(await page.locator('.realm-card').count(),28);
  assert.equal(await page.locator('.album-home').count(),1,'home album card missing');
  await page.locator('.album-home [data-action=collection]').click();
@@ -27,8 +27,8 @@ async function main(){
  assert.equal(await page.locator('.album-world summary img').count(),28,'world artwork not rendered');
  await page.locator('.album-world summary').first().click();
  assert.equal(await page.locator('.album-world').first().locator('.album-piece').count(),4,'four souvenirs per world expected');
- assert.equal(await page.locator('.prize-art-sprite').count(),84,'84 unique pictograms in 21 worlds expected');
- const imgs=await page.evaluate(async()=>{const urls=['atlas-0.webp','atlas-1.webp','atlas-2.webp'];return Promise.all(urls.map(async x=>{const pic=new Image();pic.src='./assets/collectibles/'+x;await pic.decode();return {name:x,width:pic.naturalWidth,height:pic.naturalHeight}}))});
+ assert.equal(await page.locator('.prize-art-sprite').count(),112,'112 painted pictograms in 28 worlds expected');
+ const imgs=await page.evaluate(async()=>{const urls=['atlas-0.webp','atlas-1.webp','atlas-2.webp','atlas-3.webp'];return Promise.all(urls.map(async x=>{const pic=new Image();pic.src='./assets/collectibles/'+x;await pic.decode();return {name:x,width:pic.naturalWidth,height:pic.naturalHeight}}))});
  assert(imgs.every(x=>x.width>=280&&x.height>=420),'all collectible atlases must load with expected dimensions');
  const loaded=await page.locator('.album-world summary img').first().evaluate(im=>im.complete&&im.naturalWidth>0);
  assert(loaded,'world artwork did not load');
