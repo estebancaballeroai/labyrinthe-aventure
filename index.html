@@ -488,6 +488,125 @@ function badgeList(){return [
  ['🏕️','Camp chaleureux',CAMP_ITEMS.some(function(a){return (progress.camp[a.id]||0)>=2;})]
  ];}
 
+
+/* V4.6 - Permanent illustrated collection. Nothing requires an account,
+   real money, daily presence or mandatory book questions. */
+var PRIZE_NAMES={
+ forest:['Carte du vieux chêne','Gemme de la clairière','Herbier des lucioles','Couronne des sentiers'],
+ ruins:['Plan du temple oublié','Pierre des colonnes','Papyrus des bâtisseurs','Sceau des ruines'],
+ cave:['Carte des galeries','Améthyste des profondeurs','Carnet du géologue','Diadème de cristal'],
+ island:['Carte du capitaine','Perle des marées','Journal du navigateur','Boussole royale'],
+ ice:['Carte du grand glacier','Cristal de givre','Journal des neiges','Couronne boréale'],
+ stars:['Atlas étoilé','Éclat de comète','Livre des constellations','Médaille des astres'],
+ unicorn:['Carte arc-en-ciel','Cristal de licorne','Grimoire des couleurs','Couronne enchantée'],
+ dragons:['Carte des dragons','Écaille étincelante','Chronique des vallées','Sceau des dragons'],
+ dinosaurs:['Carte des fossiles','Ambre préhistorique','Carnet des dinosaures','Couronne des anciens'],
+ atlantis:['Carte d’Atlantide','Perle du palais','Codex des océans','Trident des explorateurs'],
+ candy:['Carte des douceurs','Bonbon de lumière','Recettes enchantées','Diadème sucré'],
+ robots:['Plan de l’atelier','Puce lumineuse','Manuel des inventions','Étoile des inventeurs'],
+ planets:['Carte des planètes','Météorite bleue','Atlas du système solaire','Couronne cosmique'],
+ castle:['Plan du château','Rubis de la tour','Livre des chevaliers','Couronne du royaume'],
+ jungle:['Carte des lianes','Émeraude de la jungle','Carnet des explorateurs','Médaille de la canopée'],
+ volcano:['Carte du volcan','Pierre de lave','Livre du feu terrestre','Sceau des géants'],
+ pyramids:['Carte du désert','Scarabée de lumière','Papyrus du Nil','Couronne du soleil'],
+ clouds:['Carte des nuages','Goutte d’azur','Livre des vents','Couronne du ciel'],
+ reef:['Carte du récif','Corail précieux','Atlas des poissons','Médaille des coraux'],
+ fairies:['Carte des fées','Pollen scintillant','Livre des jardins','Couronne des fleurs'],
+ savanna:['Carte de la savane','Opale du soleil','Carnet des animaux','Médaille des plaines'],
+ knights:['Plan des remparts','Écu enchanté','Chronique des chevaliers','Couronne du courage'],
+ mountains:['Carte des sommets','Cristal des aigles','Guide de montagne','Médaille des cimes'],
+ clocks:['Plan des horloges','Rouage doré','Livre du temps','Couronne du temps'],
+ library:['Carte de la bibliothèque','Marque-page précieux','Grand livre des mots','Médaille des lecteurs'],
+ music:['Carte des mélodies','Note cristalline','Partition mystérieuse','Couronne musicale'],
+ autumn:['Carte de l’automne','Feuille d’or','Herbier des saisons','Couronne d’érable'],
+ palace:['Plan du palais','Prisme royal','Livre des miroirs','Diadème des reflets']
+};
+var PRIZE_TYPES=['Carte','Trésor','Savoir','Couronne'];
+var PRIZE_ICONS=['🗺️','💎','📖','👑'];
+var PRIZE_HINTS=['Termine une étape de ce monde','Trouve au moins deux cristaux dans une étape',
+ 'Réponds juste à un livre de ce monde','Termine les six étapes de ce monde'];
+var albumTab='worlds',albumFilter='all';
+function prizeKey(world,slot){return 'w'+world+'-'+slot;}
+function ensureAlbum(){
+ var a=progress.album;
+ if(!a||typeof a!=='object')a=progress.album={};
+ if(!a.owned||typeof a.owned!=='object')a.owned={};
+ if(!Array.isArray(a.recent))a.recent=[];
+ if(!a.uniqueCorrect||typeof a.uniqueCorrect!=='object')a.uniqueCorrect={};
+ if(!a.migrated){
+  Object.keys(progress.done||{}).forEach(function(id){
+   var cfg=findCfg(id),d=progress.done[id];
+   if(!cfg||!WORLDS[cfg.world])return;
+   a.owned[prizeKey(cfg.world,0)]=true;
+   if(d&&d.gems>=2)a.owned[prizeKey(cfg.world,1)]=true;
+  });
+  WORLDS.forEach(function(w,i){
+   if(WORLD_QUESTS[i].every(function(c){return !!progress.done[c.id];}))a.owned[prizeKey(i,3)]=true;
+  });
+  a.migrated=true;
+ }
+ return a;
+}
+function awardPrize(world,slot,rr){
+ if(!WORLDS[world]||slot<0||slot>3)return null;
+ var a=ensureAlbum(),id=prizeKey(world,slot);
+ if(a.owned[id])return null;
+ a.owned[id]=true;a.recent.unshift(id);if(a.recent.length>10)a.recent.length=10;
+ if(rr){rr.newAwards=rr.newAwards||[];rr.newAwards.push(id);}
+ return id;
+}
+function ownedInWorld(i){
+ var a=ensureAlbum().owned,num=0;
+ for(var k=0;k<4;k++)if(a[prizeKey(i,k)])num++;
+ return num;
+}
+function prizeCount(){return Object.keys(ensureAlbum().owned).length;}
+function prizeTitle(world,slot){var w=WORLDS[world]||WORLDS[0];return (PRIZE_NAMES[w.id]||['Carte','Trésor','Savoir','Couronne'])[slot];}
+function prizeInfo(id){
+ var m=/^w(\d+)-([0-3])$/.exec(id||'');if(!m)return null;
+ var wi=Number(m[1]),slot=Number(m[2]);if(!WORLDS[wi])return null;
+ return {id:id,world:wi,slot:slot,name:prizeTitle(wi,slot),worldName:WORLDS[wi].name,
+  card:WORLDS[wi].card,icon:PRIZE_ICONS[slot]};
+}
+function uniqueCorrectCount(){return Object.keys(ensureAlbum().uniqueCorrect).length;}
+function subjectCount(){var distinct={},a=ensureAlbum().uniqueCorrect;
+ Object.keys(a).forEach(function(id){if(a[id])distinct[a[id]]=true;});return Object.keys(distinct).length;
+}
+function visitedWorldCount(){var n=0;WORLDS.forEach(function(w,i){if(ensureAlbum().owned[prizeKey(i,0)])n++;});return n;}
+var ALBUM_MEDALS=[
+ {id:'pioneer',name:'Premiers pas',icon:'🌱',type:'levels',goal:1,art:0,desc:'Réussir un premier labyrinthe'},
+ {id:'pathfinder',name:'Guide des chemins',icon:'🧭',type:'levels',goal:10,art:13,desc:'Terminer 10 étapes'},
+ {id:'worlds',name:'Voyageur des mondes',icon:'🌈',type:'worlds',goal:5,art:6,desc:'Découvrir 5 mondes différents'},
+ {id:'voyager',name:'Explorateur des 28 mondes',icon:'🌍',type:'worlds',goal:28,art:12,desc:'Découvrir les 28 mondes'},
+ {id:'collector',name:'Petit collectionneur',icon:'🎒',type:'souvenirs',goal:10,art:10,desc:'Réunir 10 souvenirs'},
+ {id:'curator',name:'Grand conservateur',icon:'🏛️',type:'souvenirs',goal:50,art:1,desc:'Réunir 50 souvenirs'},
+ {id:'reader',name:'Lecteur curieux',icon:'📚',type:'books',goal:10,art:24,desc:'Explorer 10 livres'},
+ {id:'learner',name:'Ami des connaissances',icon:'💡',type:'correct',goal:10,art:2,desc:'Répondre juste à 10 livres'},
+ {id:'scholar',name:'Petit savant',icon:'🧠',type:'subjects',goal:5,art:11,desc:'Réussir dans 5 matières différentes'},
+ {id:'investigator',name:'Chercheur de secrets',icon:'🔎',type:'secrets',goal:5,art:14,desc:'Découvrir 5 passages cachés'},
+ {id:'friends',name:'Ami des rencontres',icon:'🦋',type:'friends',goal:5,art:19,desc:'Rencontrer 5 compagnons'},
+ {id:'builder',name:'Architecte du camp',icon:'🏕️',type:'camp',goal:6,art:0,desc:'Améliorer les bâtiments du camp 6 fois'}
+];
+function medalScore(m){
+ var a=ensureAlbum(),n=0;
+ if(m.type==='levels')n=Object.keys(progress.done||{}).length;
+ if(m.type==='worlds')n=visitedWorldCount();
+ if(m.type==='souvenirs')n=Object.keys(a.owned).length;
+ if(m.type==='books')n=progress.booksRead||0;
+ if(m.type==='correct')n=progress.booksCorrect||0;
+ if(m.type==='subjects')n=subjectCount();
+ if(m.type==='secrets')n=Object.keys(progress.secrets||{}).length;
+ if(m.type==='friends')n=Object.keys(progress.friends||{}).length;
+ if(m.type==='camp')CAMP_ITEMS.forEach(function(it){n+=(progress.camp[it.id]||0);});
+ return Math.max(0,n);
+}
+function earnedMedals(){return ALBUM_MEDALS.filter(function(m){return medalScore(m)>=m.goal;}).length;}
+function albumPrizeCards(ids){
+ return ids.map(function(id){var p=prizeInfo(id);if(!p)return'';
+  return '<div class="earned-prize"><img src="'+esc(p.card)+'" alt=""><span><b>'+p.icon+' '+esc(p.name)+'</b><small>'+esc(p.worldName)+'</small></span></div>';
+ }).join('');
+}
+
 var revisionId=null,revisionRight=false;var screen='home',tab='campaign',selectedWorld=Math.max(0,Math.min(27,Number(progress.lastWorld)||0)),run=null,modal=null,mapShown=false,feedback='',wrongAnswer=false,audio=null,lastSwipe=0;
 
 function persist(){try{if(run)progress.lastRun=(modal==='win'||modal==='finale')?null:packRun(run);localStorage.setItem(STORAGE,JSON.stringify(progress));}catch(e){feedback='Sauvegarde indisponible sur ce navigateur.';}}
