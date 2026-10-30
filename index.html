@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#173c42">
-<title>Labyrinthe Aventure V4.4 — ELC Éducation</title>
+<title>Labyrinthe Aventure V4.5 — ELC Éducation</title>
 <meta name="description" content="Explore des labyrinthes avec des personnages fantastiques. Livres éducatifs CE2–CM1 facultatifs. Jeu gratuit, sans publicité ni compte.">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -580,13 +580,141 @@ function makeMazeSilhouette(n,worldId){
  return {allowed:allowed,footprint:footprint,start:start,nodeCount:nodes.length};
 }
 
+
+/* V4.5 - Architecture carved into the maze. ES5-compatible with older tablets. */
+var WORLD_LAYOUTS={forest:'groves',ruins:'courts',cave:'caverns',island:'bridges',ice:'crystals',
+ stars:'orbits',unicorn:'petals',dragons:'ridges',dinosaurs:'groves',atlantis:'courts',
+ candy:'petals',robots:'circuits',planets:'orbits',castle:'courts',jungle:'groves',
+ volcano:'ridges',pyramids:'crystals',clouds:'bridges',reef:'bridges',fairies:'petals',
+ savanna:'groves',knights:'courts',mountains:'ridges',clocks:'orbits',
+ library:'circuits',music:'circuits',autumn:'groves',palace:'courts'};
+var LAYOUT_NAMES={groves:'Clairières et sentiers',courts:'Salles et cours royales',
+ caverns:'Chambres souterraines',bridges:'Ponts et passages',crystals:'Galeries cristallines',
+ orbits:'Anneaux célestes',petals:'Jardins en pétales',ridges:'Chemins de crête',
+ circuits:'Circuits et carrefours'};
+function worldLayoutName(i){return LAYOUT_NAMES[WORLD_LAYOUTS[WORLDS[i].id]]||'Chemins enchantés';}
+function carveWorldLayout(cfg,g,mask){
+ var n=g.length,id=(WORLDS[cfg.world]||WORLDS[0]).id,style=WORLD_LAYOUTS[id]||'groves';
+ var tier=cfg.mode==='worldquest'?(cfg.tier||0):(cfg.idx||0),phase=tier%3;
+ var tiles={},cut=0,segments=0;
+ function ok(x,y){return x>0&&y>0&&x<n-1&&y<n-1&&mask[y]&&mask[y][x];}
+ function put(pts,x,y){x=Math.round(x);y=Math.round(y);if(ok(x,y))pts[x+','+y]=[x,y];}
+ function carve(points,mark){
+  var todo=[],k,i,changed=true,loops=0,made=false;
+  for(k in points)if(Object.prototype.hasOwnProperty.call(points,k))todo.push(points[k]);
+  // Carve only if connected to a current floor tile, never an isolated pocket.
+  while(changed&&loops++<n*3){
+   changed=false;
+   for(i=todo.length-1;i>=0;i--){
+    var p=todo[i],x=p[0],y=p[1];
+    if(g[y][x]!=='#'||g[y-1][x]!=='#'||g[y+1][x]!=='#'||g[y][x-1]!=='#'||g[y][x+1]!=='#'){
+     if(g[y][x]==='#'){g[y][x]='.';cut++;}
+     tiles[x+','+y]=mark;todo.splice(i,1);changed=true;made=true;
+    }
+   }
+  }
+  if(made)segments++;
+ }
+ function hall(cx,cy,rx,ry,mark){
+  var pts={};for(var y=Math.floor(cy-ry);y<=Math.ceil(cy+ry);y++)
+   for(var x=Math.floor(cx-rx);x<=Math.ceil(cx+rx);x++)put(pts,x,y);
+  carve(pts,mark);
+ }
+ function path(x1,y1,x2,y2,mark){
+  var pts={},d=Math.ceil((Math.abs(x2-x1)+Math.abs(y2-y1))*3)+1;
+  for(var i=0;i<=d;i++){var t=i/d;put(pts,x1+(x2-x1)*t,y1+(y2-y1)*t);}
+  carve(pts,mark);
+ }
+ function loop(cx,cy,rx,ry,mark){
+  var pts={};for(var a=0;a<6.283;a+=.038)put(pts,cx+Math.cos(a)*rx,cy+Math.sin(a)*ry);
+  carve(pts,mark);
+ }
+ var m=n*.5;
+ if(style==='groves'){
+  hall(n*(phase===1?.36:.68),n*.34,Math.max(1,n*.083),Math.max(1,n*.082),'clearing');
+  if(n>=13)hall(n*(phase===2?.68:.32),n*.70,n*.087,n*.083,'clearing');
+  if(n>=17)path(n*.29,n*.37,n*.69,n*.69,'trail');
+ }else if(style==='courts'){
+  hall(m,n*(phase===1?.39:.56),Math.max(1,n*.13),Math.max(1,n*.10),'hall');
+  if(n>=13)hall(n*.28,n*.38,n*.073,n*.082,'tower');
+  if(n>=17)hall(n*.74,n*.64,n*.077,n*.08,'tower');
+  if(n>=19)path(n*.30,n*.54,n*.70,n*.54,'gallery');
+ }else if(style==='caverns'){
+  hall(n*.37,n*.41,n*.11,n*.12,'chamber');
+  if(n>=13)hall(n*.64,n*.65,n*.12,n*.10,'chamber');
+  if(n>=17)path(n*.36,n*.41,n*.64,n*.65,'tunnel');
+ }else if(style==='bridges'){
+  path(n*.18,n*(phase===2?.47:.37),n*.81,n*(phase===1?.53:.41),'bridge');
+  if(n>=13)path(n*.26,n*.69,n*.77,n*.65,'bridge');
+  if(n>=17)hall(n*.50,n*.54,n*.085,n*.073,'dock');
+ }else if(style==='crystals'){
+  path(n*.26,n*.71,n*.75,n*.27,'facet');
+  if(n>=13)path(n*.28,n*.27,n*.72,n*.74,'facet');
+  if(n>=17)hall(n*.49,n*.52,n*.092,n*.09,'geode');
+ }else if(style==='orbits'){
+  loop(n*.50,n*.52,Math.max(2,n*(phase===0?.22:.25)),Math.max(2,n*.20),'orbit');
+  if(n>=13)path(n*.23,n*.53,n*.78,n*.53,'ray');
+  if(n>=17)hall(m,m,n*.07,n*.07,'hub');
+ }else if(style==='petals'){
+  hall(n*.32,n*.32,n*.085,n*.095,'petal');
+  hall(n*.69,n*.35,n*.09,n*.084,'petal');
+  if(n>=13)hall(n*.51,n*.70,n*.11,n*.075,'petal');
+  if(n>=17)path(n*.31,n*.51,n*.73,n*.51,'ribbon');
+ }else if(style==='ridges'){
+  path(n*.23,n*.73,n*.46,n*.29,'ridge');
+  path(n*.46,n*.29,n*.76,n*.69,'ridge');
+  if(n>=15)path(n*.76,n*.69,n*.83,n*.29,'ridge');
+  if(n>=19)hall(m,m,n*.075,n*.083,'lookout');
+ }else{
+  path(n*.23,n*.27,n*.77,n*.27,'circuit');
+  if(n>=13)path(n*.77,n*.27,n*.77,n*.73,'circuit');
+  if(n>=15)path(n*.23,n*.73,n*.77,n*.73,'circuit');
+  hall(m,m,n*.07,n*.085,'junction');
+ }
+ return {style:style,title:LAYOUT_NAMES[style],variant:phase,tiles:tiles,cuts:cut,segments:segments};
+}
+function drawWorldFloorDetails(c,z,world,rr,x,y,t){
+ var a=rr.map.layout;if(!a||t==='#'||!a.tiles[x+','+y])return;
+ var w=WORLDS[world]||WORLDS[0],light=w.palette&&w.palette.light||'#d9dcb2';
+ c.save();c.globalAlpha=.48;c.fillStyle=light;c.fillRect(z*.08,z*.08,z*.84,z*.84);
+ c.strokeStyle='#fffbe8';c.globalAlpha=.62;c.lineWidth=Math.max(.8,z*.035);c.beginPath();
+ if(a.style==='orbits'){c.arc(z*.5,z*.5,z*.3,0,Math.PI*2);}
+ else if(a.style==='bridges'){c.moveTo(z*.1,z*.22);c.lineTo(z*.9,z*.22);c.moveTo(z*.1,z*.77);c.lineTo(z*.9,z*.77);}
+ else if(a.style==='circuits'){c.moveTo(z*.5,0);c.lineTo(z*.5,z);c.moveTo(0,z*.5);c.lineTo(z,z*.5);}
+ else if(a.style==='petals'){c.moveTo(z*.21,z*.77);c.quadraticCurveTo(z*.5,z*.12,z*.78,z*.77);}
+ else if(a.style==='crystals'||a.style==='ridges'){c.moveTo(z*.1,z*.79);c.lineTo(z*.48,z*.16);c.lineTo(z*.88,z*.76);}
+ else{c.moveTo(z*.15,z*.81);c.lineTo(z*.15,z*.16);c.lineTo(z*.85,z*.16);}
+ c.stroke();c.restore();
+}
+function drawWorldWallDetails(c,z,world,rr){
+ if(!rr.map.layout)return;
+ var w=WORLDS[world]||WORLDS[0],light=w.palette&&w.palette.light||'#cbdba8',style=rr.map.layout.style;
+ c.save();c.globalAlpha=.73;c.fillStyle=light;c.strokeStyle=light;c.lineWidth=Math.max(1,z*.045);
+ if(style==='courts'){
+  for(var i=0;i<3;i++)c.fillRect(z*(.07+i*.31),z*.02,z*.20,z*.17);
+  c.strokeRect(z*.27,z*.40,z*.46,z*.38);
+ }else if(style==='crystals'||style==='ridges'){
+  c.beginPath();c.moveTo(0,z*.37);c.lineTo(z*.23,z*.08);c.lineTo(z*.47,z*.35);c.lineTo(z*.69,z*.03);c.lineTo(z,z*.39);c.fill();
+ }else if(style==='bridges'||style==='petals'||style==='groves'){
+  c.beginPath();c.arc(z*.26,z*.27,z*.24,Math.PI,Math.PI*2);c.arc(z*.74,z*.27,z*.24,Math.PI,Math.PI*2);c.fill();
+ }else if(style==='orbits'){
+  c.beginPath();c.arc(z*.5,z*.5,z*.3,0,Math.PI*2);c.stroke();
+ }else if(style==='circuits'){
+  c.fillRect(z*.1,z*.12,z*.80,z*.11);c.strokeRect(z*.24,z*.38,z*.52,z*.37);
+ }else{
+  c.strokeRect(z*.15,z*.27,z*.7,z*.46);
+ }
+ c.restore();
+}
+
 function generate(cfg){if(!cfg.branching && ((cfg.mode==='campaign'&&cfg.idx>=3&&cfg.size>=13)||(cfg.mode==='academy'&&cfg.size>=15)||(cfg.mode==='endless'&&cfg.size>=15)))cfg.branching=true;
  var n=cfg.size,r=rng(cfg.seed),g=[],x,y;for(y=0;y<n;y++){g[y]=[];for(x=0;x<n;x++)g[y][x]='#';}
- var silhouette=cfg.shapeVersion===2?makeMazeSilhouette(n,(WORLDS[cfg.world]||WORLDS[0]).id):null,origin=silhouette?silhouette.start:[1,1];
+ var silhouette=cfg.shapeVersion>=2?makeMazeSilhouette(n,(WORLDS[cfg.world]||WORLDS[0]).id):null,origin=silhouette?silhouette.start:[1,1];
  var stack=[[origin[0],origin[1]]];g[origin[1]][origin[0]]='.';
  while(stack.length){var cell=stack[stack.length-1],dirs=shuffle([[2,0],[-2,0],[0,2],[0,-2]],r),found=false;
  for(var k=0;k<dirs.length;k++){var nx=cell[0]+dirs[k][0],ny=cell[1]+dirs[k][1];if(nx>0&&ny>0&&nx<n-1&&ny<n-1&&g[ny][nx]==='#'&&(!silhouette||silhouette.allowed[key(nx,ny)])){g[ny][nx]='.';g[cell[1]+dirs[k][1]/2][cell[0]+dirs[k][0]/2]='.';stack.push([nx,ny]);found=true;break;}}
  if(!found)stack.pop();}
+ var layout=cfg.shapeVersion>=3&&silhouette?carveWorldLayout(cfg,g,silhouette.footprint):null;
  // Extra openings make genuine alternate routes, not only dead ends.
  var openings=Math.floor(n*n*(cfg.type==='exit'?.035:.055));var walls=[];
  for(y=1;y<n-1;y++)for(x=1;x<n-1;x++){if(g[y][x]==='#'&&(!silhouette||silhouette.footprint[y][x])&&((g[y][x-1]==='.'&&g[y][x+1]==='.')||(g[y-1][x]==='.'&&g[y+1][x]==='.')))walls.push([x,y]);}
@@ -674,7 +802,7 @@ function generate(cfg){if(!cfg.branching && ((cfg.mode==='campaign'&&cfg.idx>=3&
  }
  extra.landmark=safeMarker(extra.landmark,null);
  extra.friend=safeMarker(extra.friend,extra.landmark);
- return{extra:extra,grid:g,start:origin,silhouette:silhouette,exit:end,portals:portals,patrol:patrol,crystals:crystalPos,books:books,branches:g._branches||null,needKey:needsKey,needSwitch:needsSwitch,needQuiz:false,needCrystals:cfg.type==='treasure'?2:0,pathLength:path.length};
+ return{extra:extra,grid:g,start:origin,silhouette:silhouette,layout:layout,exit:end,portals:portals,patrol:patrol,crystals:crystalPos,books:books,branches:g._branches||null,needKey:needsKey,needSwitch:needsSwitch,needQuiz:false,needCrystals:cfg.type==='treasure'?2:0,pathLength:path.length};
 }
 function addBranches(g,from,r,used,books,crystals){
  var n=g.length,route=trace(from.parent,from.q.reduce(function(best,p){return from.dist[key(p[0],p[1])]>from.dist[key(best[0],best[1])]?p:best;},from.q[0]));
@@ -713,7 +841,7 @@ function openBook(rr,book){if(!book)return;var pos=key(book.x,book.y);if(rr.book
 
 function playSound(note){if(!progress.sound)return;try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;if(!audio)audio=new C();if(audio.state==='suspended')audio.resume();var osc=audio.createOscillator(),gain=audio.createGain();osc.type='sine';osc.frequency.value=note||520;gain.gain.value=.037;osc.connect(gain);gain.connect(audio.destination);osc.start();gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.13);osc.stop(audio.currentTime+.14);}catch(e){}}
 function findCfg(id){if(/^w\d+-\d+$/.test(id)){var parts=id.slice(1).split('-');return WORLD_QUESTS[Number(parts[0])]&&WORLD_QUESTS[Number(parts[0])][Number(parts[1])];}if(id.indexOf('v2-')===0)return CHAPTERS.find(function(c){return c.id===id;});if(id.indexOf('c')===0)return CAMPAIGN[Number(id.slice(1))];if(id.indexOf('a')===0)return ACADEMY[Number(id.slice(1))];return null;}
-function start(cfg){heroMove=null;run=makeRun(Object.assign({},cfg,{shapeVersion:2}));reveal(run);screen='game';modal='intro';mapShown=false;feedback='';persist();render();window.scrollTo(0,0);}
+function start(cfg){heroMove=null;run=makeRun(Object.assign({},cfg,{shapeVersion:3}));reveal(run);screen='game';modal='intro';mapShown=false;feedback='';persist();render();window.scrollTo(0,0);}
 function resume(){heroMove=null;try{run=unpackRun(progress.lastRun);if(!run)return;screen='game';modal=null;feedback='';mapShown=false;render();window.scrollTo(0,0);}catch(e){progress.lastRun=null;persist();render();}}
 function requiredMessage(rr){var needs=[];if(rr.map.needKey&&!rr.key)needs.push('une clé 🗝️');if(rr.map.needSwitch&&!rr.switchOn)needs.push('un levier ⚙️');if(rr.map.needCrystals&&rr.gems.length<rr.map.needCrystals)needs.push((rr.map.needCrystals-rr.gems.length)+' cristal(aux) 💎');return needs;}
 function playerCanExit(rr){return !requiredMessage(rr).length;}
@@ -765,7 +893,7 @@ function worldStageUnlocked(w,t){return t===0||!!progress.done['w'+w+'-'+(t-1)];
 function levelUnlocked(i){return i===0||!!progress.done['c'+(i-1)];}
 function earned(){var s=0;Object.keys(progress.done).forEach(function(k){if(k.charAt(0)==='c')s+=progress.done[k].stars||0;});return s;}
 function completed(){return CAMPAIGN.filter(function(c){return !!progress.done[c.id];}).length;}
-function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.4</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button>'+(playing?'':'<button class="headbtn a11y-open" data-action="settings" aria-label="Réglages d’affichage">⚙️</button>')+'</div></header>';}
+function top(){var playing=screen==='game';return '<header class="top '+(playing?'compacttop':'')+'"><div class="topinner"><div class="brand"><div class="brandicon" aria-hidden="true">🧭</div><div><b>Labyrinthe Aventure</b>'+(playing?'':'<small>ELC ÉDUCATION · V4.5</small>')+'</div></div><button class="headbtn" data-action="sound" aria-label="'+(progress.sound?'Couper le son':'Activer le son')+'">'+(progress.sound?'🔊':'🔇')+'</button>'+(playing?'':'<button class="headbtn a11y-open" data-action="settings" aria-label="Réglages d’affichage">⚙️</button>')+'</div></header>';}
 function stars(n){return '<span class="stars">'+('★'.repeat(n||0))+('☆'.repeat(3-(n||0)))+'</span>';}
 function character(){return AVATARS.find(function(a){return a.id===progress.avatar;})||AVATARS[0];}
 function avatarPicker(){return '<section class="panel picker"><div class="section-title" style="margin:0 0 9px"><h2>🎭 Choisis ton héros</h2><span class="sub">Modifiable à tout moment</span></div><div class="avatar-list">'+AVATARS.map(function(a){return '<button class="avatar-choice '+(a.id===progress.avatar?'picked':'')+'" data-action="avatar" data-avatar="'+a.id+'" aria-label="Choisir '+esc(a.name)+'" aria-pressed="'+(a.id===progress.avatar)+'"><span class="avatar-pic"><img class="avatar-art" src="./assets/avatars/'+a.id+'.webp" alt="" loading="lazy"></span><small>'+esc(a.name)+'</small></button>';}).join('')+'</div><div class="grade-row"><div><b>📚 Livres du niveau</b><small>Les questions restent facultatives</small></div><div class="grade-buttons"><button data-action="grade" data-grade="CE2" class="grade-btn '+(progress.grade==='CE2'?'chosen':'')+'">CE2</button><button data-action="grade" data-grade="CM1" class="grade-btn '+(progress.grade==='CM1'?'chosen':'')+'">CM1</button></div></div></section>';}
@@ -798,7 +926,7 @@ function home(){var finish=completed(),h='<main class="main">';
 function worldPage(){
  var w=WORLDS[selectedWorld],rows=WORLD_QUESTS[selectedWorld];
  var h='<main class="main" style="max-width:880px"><button class="mini-btn" data-action="home">← Les 28 mondes</button><img class="realm-header-image" src="'+esc(w.card)+'" alt="Paysage du monde '+esc(w.name)+'"><div class="worldhead"><span style="font-size:38px">'+w.emoji+'</span><div><h2>'+esc(w.name)+'</h2><p class="muted">'+esc(w.desc)+'</p></div></div>';
- h+='<div class="panel"><div class="section-title" style="margin-top:0"><h2>Six étapes pour progresser</h2><span class="sub">9 × 9 → 19 × 19 · Livres CE2/CM1</span></div><div class="levelgrid">';
+ h+='<div class="panel"><div class="section-title" style="margin-top:0"><h2>Six étapes pour progresser</h2><span class="sub">'+esc(worldLayoutName(selectedWorld))+' · Livres CE2/CM1</span></div><div class="levelgrid">';
  rows.forEach(function(c,j){var open=worldStageUnlocked(selectedWorld,j),d=progress.done[c.id],nBooks=[2,3,3,4,4,5][j];h+='<button class="levelbtn world-quest-step '+(!open?'locked ':'')+(d?'done':'')+'" data-action="level" data-id="'+c.id+'" '+(!open?'disabled':'')+'><strong>'+(open?'🧭':'🔒')+' '+(j+1)+'. '+esc(['Découverte','Premiers détours','Cristaux','Porte mystérieuse','Défi du monde','Grande épreuve'][j])+'</strong><small>'+c.size+' × '+c.size+' cases · 📚 '+nBooks+' livres</small>'+(d?stars(d.stars):'<small>'+(open?'Prêt à jouer':'Après l’étape précédente')+'</small>')+'</button>';});
  h+='</div><p class="muted" style="margin:10px 0 0;font-size:12px">Tous les mondes sont ouverts. Dans chaque monde, le parcours avance du facile vers le difficile. Les livres ne bloquent jamais la sortie.</p></div>';
  if(selectedWorld<6){h+='<details class="classic-archive"><summary>🗺️ Retrouver les 10 niveaux classiques de ce monde</summary><div class="levelgrid">'; CAMPAIGN.slice(selectedWorld*10,selectedWorld*10+10).forEach(function(c){var open=levelUnlocked(c.idx),d=progress.done[c.id];h+='<button class="levelbtn '+(open?'':'locked ')+(d?'done':'')+'" data-action="level" data-id="'+c.id+'" '+(open?'':'disabled')+'><b>'+esc(c.title)+'</b><small>'+c.size+' × '+c.size+' · '+esc(c.desc)+'</small></button>';});h+='</div></details>';}
@@ -1022,14 +1150,14 @@ function paintMazeSilhouetteEdge(c,z,world,x,y,mask){
 
 function tile(c,x,y,z,t,world,seen,discovered,full,rr){if(rr.map.silhouette&&!rr.map.silhouette.footprint[y][x]){drawMazeOutside(c,z,world,x,y);return;}var bg=world===0?['#a9d39c','#afd99f','#a4cf98']:world===1?['#dbc496','#e3cba0','#d6be92']:['#a8b5da','#b2c0e4','#9eadd6'];var v=Math.floor(rndhash(x,y,13)*3);var tiles=TILE_IMAGES[world]||TILE_IMAGES[0],texture=tiles&&(t==='#'?tiles[1]:tiles[0]);var textured=!!(texture&&texture.complete&&texture.naturalWidth);
  if(world>=6){themedMaterial(c,x,y,z,t==='#',world);
-  if(t==='#'){if(rr.map.extra&&rr.map.extra.secret&&rr.map.extra.secret[0]===x&&rr.map.extra.secret[1]===y&&!rr.secretFound)emoji(c,'✧',z*.5,z*.47,z*.45);return;}
+  if(t==='#'){drawWorldWallDetails(c,z,world,rr);if(rr.map.extra&&rr.map.extra.secret&&rr.map.extra.secret[0]===x&&rr.map.extra.secret[1]===y&&!rr.secretFound)emoji(c,'✧',z*.5,z*.47,z*.45);return;}
  }else if(textured){c.drawImage(texture,0,0,z,z);if(t!=='#'){c.fillStyle='#fff9d41a';c.fillRect(0,0,z,z);}}else if(world<6){c.fillStyle=bg[v];c.fillRect(0,0,z,z);}
- if(t==='#'){if(textured){decorateTile(c,x,y,z,t,world,rr);
+ if(t==='#'){if(textured){decorateTile(c,x,y,z,t,world,rr);drawWorldWallDetails(c,z,world,rr);
   if(rr.map.extra&&rr.map.extra.secret&&rr.map.extra.secret[0]===x&&rr.map.extra.secret[1]===y&&!rr.secretFound){emoji(c,'✧',z*.5,z*.46,z*.46);}
-  return;}if(world===0){c.fillStyle='#4f8665';c.fillRect(0,z*.2,z,z*.79);c.fillStyle='#6ba479';c.beginPath();c.arc(z*.30,z*.30,z*.30,0,7);c.arc(z*.72,z*.31,z*.32,0,7);c.fill();c.fillStyle='#7eb88b';c.beginPath();c.arc(z*.51,z*.15,z*.26,0,7);c.fill();c.fillStyle='#3c6d59';c.fillRect(0,z*.8,z,z*.2);}else if(world===1){rrRect(c,z*.035,z*.09,z*.94,z*.87,z*.09,'#715e62');rrRect(c,z*.055,0,z*.89,z*.79,z*.07,'#9a8182');c.strokeStyle='#c6a8a0';c.lineWidth=1.5;c.beginPath();c.moveTo(0,z*.43);c.lineTo(z,z*.43);c.moveTo(z*.52,0);c.lineTo(z*.52,z*.43);c.moveTo(z*.27,z*.44);c.lineTo(z*.27,z*.8);c.stroke();}else{c.fillStyle='#475c88';c.fillRect(0,z*.12,z,z*.88);c.fillStyle='#6e84ad';c.beginPath();c.moveTo(0,z*.22);c.lineTo(z*.27,z*.02);c.lineTo(z*.64,z*.11);c.lineTo(z,z*.02);c.lineTo(z,z*.72);c.lineTo(z*.65,z*.93);c.lineTo(z*.28,z*.76);c.lineTo(0,z);c.fill();c.strokeStyle='#aec7f8';c.lineWidth=1;c.beginPath();c.moveTo(z*.21,z*.18);c.lineTo(z*.6,z*.42);c.lineTo(z*.47,z*.74);c.stroke();}decorateTile(c,x,y,z,t,world,rr);
+  return;}if(world===0){c.fillStyle='#4f8665';c.fillRect(0,z*.2,z,z*.79);c.fillStyle='#6ba479';c.beginPath();c.arc(z*.30,z*.30,z*.30,0,7);c.arc(z*.72,z*.31,z*.32,0,7);c.fill();c.fillStyle='#7eb88b';c.beginPath();c.arc(z*.51,z*.15,z*.26,0,7);c.fill();c.fillStyle='#3c6d59';c.fillRect(0,z*.8,z,z*.2);}else if(world===1){rrRect(c,z*.035,z*.09,z*.94,z*.87,z*.09,'#715e62');rrRect(c,z*.055,0,z*.89,z*.79,z*.07,'#9a8182');c.strokeStyle='#c6a8a0';c.lineWidth=1.5;c.beginPath();c.moveTo(0,z*.43);c.lineTo(z,z*.43);c.moveTo(z*.52,0);c.lineTo(z*.52,z*.43);c.moveTo(z*.27,z*.44);c.lineTo(z*.27,z*.8);c.stroke();}else{c.fillStyle='#475c88';c.fillRect(0,z*.12,z,z*.88);c.fillStyle='#6e84ad';c.beginPath();c.moveTo(0,z*.22);c.lineTo(z*.27,z*.02);c.lineTo(z*.64,z*.11);c.lineTo(z,z*.02);c.lineTo(z,z*.72);c.lineTo(z*.65,z*.93);c.lineTo(z*.28,z*.76);c.lineTo(0,z);c.fill();c.strokeStyle='#aec7f8';c.lineWidth=1;c.beginPath();c.moveTo(z*.21,z*.18);c.lineTo(z*.6,z*.42);c.lineTo(z*.47,z*.74);c.stroke();}decorateTile(c,x,y,z,t,world,rr);drawWorldWallDetails(c,z,world,rr);
  if(rr.map.extra&&rr.map.extra.secret&&rr.map.extra.secret[0]===x&&rr.map.extra.secret[1]===y&&!rr.secretFound){emoji(c,'✧',z*.5,z*.45,z*.48);}
  return;}
- decorateTile(c,x,y,z,t,world,rr);
+ decorateTile(c,x,y,z,t,world,rr);drawWorldFloorDetails(c,z,world,rr,x,y,t);
 
  if(t==='E'){rrRect(c,z*.14,z*.1,z*.72,z*.8,z*.15,'#85603b');rrRect(c,z*.20,z*.13,z*.60,z*.73,z*.12,'#f6c95c');rrRect(c,z*.28,z*.21,z*.44,z*.59,z*.10,'#fff1ad');c.strokeStyle='#fffbe1';c.lineWidth=2;c.strokeRect(z*.32,z*.28,z*.36,z*.45);emoji(c,'★',z*.51,z*.52,z*.45);}
  if(t==='D'||t==='G'||t==='B'){rrRect(c,z*.04,z*.04,z*.92,z*.92,z*.14,t==='D'?'#b27c43':t==='G'?'#71899b':'#8970b6');rrRect(c,z*.13,z*.08,z*.74,z*.84,z*.13,t==='D'?'#d4a360':t==='G'?'#a9c4d3':'#c4aedf');emoji(c,t==='D'?'🔒':t==='G'?'⚙️':'📕',z*.5,z*.51,z*.55);}
@@ -1160,7 +1288,7 @@ document.addEventListener('keydown',function(e){if(screen!=='game'||modal)return
 var touch=null;document.addEventListener('touchstart',function(e){if(screen!=='game'||modal||e.target.id!=='gameCanvas')return;var t=e.changedTouches[0];touch=[t.clientX,t.clientY];},{passive:true});document.addEventListener('touchend',function(e){if(!touch||screen!=='game'||modal)return;var t=e.changedTouches[0],dx=t.clientX-touch[0],dy=t.clientY-touch[1];touch=null;if(Math.max(Math.abs(dx),Math.abs(dy))<18)return;lastSwipe=Date.now();e.preventDefault();if(Math.abs(dx)>Math.abs(dy))step(dx>0?1:-1,0);else step(0,dy>0?1:-1);},{passive:false});
 window.addEventListener('resize',function(){if(screen==='game')paint();});
 // Small deterministic API for automated checks; does not change gameplay.
-window.LabyrintheTest={makeMazeSilhouette:makeMazeSilhouette,worlds:WORLDS,worldQuests:WORLD_QUESTS,generate:generate,makeRun:makeRun,bfs:bfs,trace:trace,campaign:CAMPAIGN,academy:ACADEMY,quizzes:QUIZZES,subjects:SUBJECTS,avatars:AVATARS,openBook:openBook,bookAt:bookAt,selectBookQuestion:selectBookQuestion,validExit:playerCanExit,step:step,getRun:function(){return run;},getScreen:function(){return screen;},getProgress:function(){return progress;},chapters:CHAPTERS,start:start,getModal:function(){return modal;},getArtReady:function(){return ART_READY;},getDecorReady:function(){return DECOR_IMAGES;},packRun:packRun,unpackRun:unpackRun};
+window.LabyrintheTest={carveWorldLayout:carveWorldLayout,worldLayoutName:worldLayoutName,makeMazeSilhouette:makeMazeSilhouette,worlds:WORLDS,worldQuests:WORLD_QUESTS,generate:generate,makeRun:makeRun,bfs:bfs,trace:trace,campaign:CAMPAIGN,academy:ACADEMY,quizzes:QUIZZES,subjects:SUBJECTS,avatars:AVATARS,openBook:openBook,bookAt:bookAt,selectBookQuestion:selectBookQuestion,validExit:playerCanExit,step:step,getRun:function(){return run;},getScreen:function(){return screen;},getProgress:function(){return progress;},chapters:CHAPTERS,start:start,getModal:function(){return modal;},getArtReady:function(){return ART_READY;},getDecorReady:function(){return DECOR_IMAGES;},packRun:packRun,unpackRun:unpackRun};
 render();
 if(('serviceWorker' in navigator)&&(location.protocol==='https:'||location.hostname==='localhost')){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}
 })();
