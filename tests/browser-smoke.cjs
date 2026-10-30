@@ -27,6 +27,9 @@ async function main(){
  assert.equal(await page.locator('.album-world summary img').count(),28,'world artwork not rendered');
  await page.locator('.album-world summary').first().click();
  assert.equal(await page.locator('.album-world').first().locator('.album-piece').count(),4,'four souvenirs per world expected');
+ assert.equal(await page.locator('.prize-art-sprite').count(),84,'84 unique pictograms in 21 worlds expected');
+ const imgs=await page.evaluate(async()=>{const urls=['atlas-0.webp','atlas-1.webp','atlas-2.webp'];return Promise.all(urls.map(async x=>{const pic=new Image();pic.src='./assets/collectibles/'+x;await pic.decode();return {name:x,width:pic.naturalWidth,height:pic.naturalHeight}}))});
+ assert(imgs.every(x=>x.width>=280&&x.height>=420),'all collectible atlases must load with expected dimensions');
  const loaded=await page.locator('.album-world summary img').first().evaluate(im=>im.complete&&im.naturalWidth>0);
  assert(loaded,'world artwork did not load');
  fs.mkdirSync('qa-screens',{recursive:true});
