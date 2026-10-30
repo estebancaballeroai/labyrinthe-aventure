@@ -1,0 +1,16 @@
+name: Labyrinthe - tests des parcours
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, feature-themed-mazes-v4-4]
+jobs:
+  test-game:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate game script and all maze levels
+        run: node tests/maze-shapes.cjs
