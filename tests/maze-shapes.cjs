@@ -97,6 +97,11 @@ assert(game.getRun().map.silhouette,'new run not shaped');
 assert(game.getScreen()==='game','start failed');
 
 // V4.6 collection regression: existing saves, unique awards, learning and camp.
+// V4.7: world-specific sprite art and fallback must all be present.
+const artMarkup=game.collectionPage();
+assert(artMarkup.includes('prize-art-sprite'),'illustrated collectible art is missing');
+assert(artMarkup.includes('atlas-0.webp')&&artMarkup.includes('atlas-1.webp')&&artMarkup.includes('atlas-2.webp'),'three original atlases not referenced');
+assert.equal((artMarkup.match(/prize-art-sprite/g)||[]).length,84,'expected 84 original artifacts, four each for 21 worlds');
 const gp=game.getProgress();
 const album=game.ensureAlbum();
 assert(game.prizeCount()===0,'fresh account should start with an empty souvenir album');
