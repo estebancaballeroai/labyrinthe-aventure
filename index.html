@@ -595,7 +595,7 @@ var LAYOUT_NAMES={groves:'Clairières et sentiers',courts:'Salles et cours royal
 function worldLayoutName(i){return LAYOUT_NAMES[WORLD_LAYOUTS[WORLDS[i].id]]||'Chemins enchantés';}
 function carveWorldLayout(cfg,g,mask){
  var n=g.length,id=(WORLDS[cfg.world]||WORLDS[0]).id,style=WORLD_LAYOUTS[id]||'groves';
- var tier=cfg.mode==='worldquest'?(cfg.tier||0):(cfg.idx||0),phase=(tier+Math.abs(cfg.seed%3))%3;
+ var tier=cfg.mode==='worldquest'?(cfg.tier||0):(cfg.idx||0),phase=tier%3;
  var tiles={},cut=0,segments=0;
  function ok(x,y){return x>0&&y>0&&x<n-1&&y<n-1&&mask[y]&&mask[y][x];}
  function put(pts,x,y){x=Math.round(x);y=Math.round(y);if(ok(x,y))pts[x+','+y]=[x,y];}
