@@ -20,15 +20,6 @@ jobs:
           python3 scripts/build-collectible-atlas.py
       - name: Validate game script and all maze levels
         run: node tests/maze-shapes.cjs
-      - name: Publish generated atlas to experimental branch if missing
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        run: |
-          if git cat-file -e HEAD:assets/collectibles/atlas-3.webp 2>/dev/null; then exit 0; fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/collectibles/atlas-3.webp
-          git commit -m "V4.7: generated 28 illustrated collectible assets"
-          git push origin HEAD:refs/heads/${{ github.head_ref }}
   test-browser:
     runs-on: ubuntu-latest
     steps:
