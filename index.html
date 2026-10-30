@@ -498,24 +498,107 @@ function neighbors(g,x,y){var d=[[1,0],[0,1],[-1,0],[0,-1]],o=[];for(var i=0;i<4
 function bfs(g,sx,sy,blocked){var q=[[sx,sy]],seen={},parent={},dist={};seen[key(sx,sy)]=true;dist[key(sx,sy)]=0;for(var i=0;i<q.length;i++){var p=q[i],nbr=neighbors(g,p[0],p[1]);for(var j=0;j<nbr.length;j++){var n=nbr[j],id=key(n[0],n[1]);if(!seen[id]&&(!blocked||!blocked[id])){seen[id]=true;dist[id]=dist[key(p[0],p[1])]+1;parent[id]=p;q.push(n);}}}return{q:q,dist:dist,parent:parent,seen:seen};}
 function trace(parent,point){var path=[point];while(parent[key(point[0],point[1])]){point=parent[key(point[0],point[1])];path.push(point);}return path.reverse();}
 function choose(candidates,r){return candidates[Math.floor(r()*candidates.length)];}
+
+/* V4.4: geometry of the maze is defined by the world. Uses ES5 for older tablets.
+   Shapes affect only NEW runs (shapeVersion=2); previous saved runs keep legacy maps. */
+function makeMazeSilhouette(n,worldId){
+ var p=n<=11?.047:n<=15?.027:.012;
+ function within(u,v){
+  var dx=u-.5,dy=v-.5,a=Math.atan2(dy,dx),d=Math.sqrt(dx*dx+dy*dy);
+  function oval(cx,cy,rx,ry){var xx=(u-cx)/(rx+p),yy=(v-cy)/(ry+p);return xx*xx+yy*yy<=1;}
+  function box(x1,y1,x2,y2){return u>=x1-p&&u<=x2+p&&v>=y1-p&&v<=y2+p;}
+  function triangle(cx,top,bottom,base){return v>=top-p&&v<=bottom+p&&Math.abs(u-cx)<=(.065+base*(v-top)/(bottom-top)+p);}
+  switch(worldId){
+   case 'forest':return oval(.5,.37,.43,.32)||box(.40,.39,.60,.88);
+   case 'ruins':return box(.17,.37,.83,.86)||box(.09,.21,.30,.78)||box(.70,.21,.91,.78)||triangle(.5,.13,.45,.45);
+   case 'cave':return Math.abs(dx)/(.46+p)+Math.abs(dy)/(.47+p)<1.34;
+   case 'island':return oval(.51,.53,.43,.35)||oval(.30,.64,.22,.23);
+   case 'ice':return d<.46+p&&(Math.abs(dx)<.105+p||Math.abs(dy)<.105+p||Math.abs(Math.abs(dx)-Math.abs(dy))<.060+p);
+   case 'stars':return d<.37+.18*Math.cos(5*(a+Math.PI/2))+p;
+   case 'unicorn':return !(v<.30&&Math.abs(dx)<.14)&&((v<.54+p&&(oval(.32,.36,.27,.28)||oval(.68,.36,.27,.28)))||(v>=.43-p&&v<=.90+p&&Math.abs(dx)<Math.max(.13,.49*(.92-v)/.49)+p));
+   case 'dragons':return (v>.15-p&&v<.89+p&&Math.abs(dx)<(.15+.28*Math.sin(Math.PI*(v-.12)/.8)+p))||box(.16,.30,.32,.51)||box(.68,.30,.84,.51);
+   case 'dinosaurs':return oval(.5,.64,.33,.27)||oval(.21,.29,.17,.19)||oval(.50,.24,.19,.23)||oval(.79,.29,.17,.19);
+   case 'atlantis':return box(.37,.43,.63,.87)||box(.15,.39,.85,.60)||box(.14,.16,.35,.57)||box(.39,.14,.61,.57)||box(.65,.16,.86,.57);
+   case 'candy':return oval(.5,.5,.30,.26)||(u<.29+p&&Math.abs(dy)<(.17+(.3-u)*.26)+p)||(u>.71-p&&Math.abs(dy)<(.17+(u-.7)*.26)+p);
+   case 'robots':return box(.17,.30,.83,.83)||box(.09,.46,.26,.68)||box(.74,.46,.91,.68)||box(.37,.14,.63,.36);
+   case 'planets':return oval(.50,.51,.31,.31)||(Math.abs(dy+dx*.36)<.13+p&&Math.abs(dx)<.46+p);
+   case 'castle':return box(.19,.42,.81,.88)||box(.09,.16,.32,.83)||box(.68,.16,.91,.83)||box(.37,.26,.63,.62);
+   case 'jungle':return Math.pow((u-v)/(.72+p),2)+Math.pow((u+v-1)/(.57+p),2)<1;
+   case 'volcano':return !(v<.37&&Math.abs(dx)<.09)&&(triangle(.49,.19,.91,.54)||box(.30,.22,.70,.37));
+   case 'pyramids':return triangle(.51,.13,.91,.49);
+   case 'clouds':return box(.14,.44,.86,.77)||oval(.28,.44,.24,.25)||oval(.50,.33,.27,.29)||oval(.73,.45,.25,.24);
+   case 'reef':return v>.20-p&&v<.91+p&&Math.abs(dx)<(.12+.45*(.91-v)/.71+p);
+   case 'fairies':return oval(.23,.31,.19,.20)||oval(.77,.31,.19,.20)||oval(.24,.72,.20,.17)||oval(.76,.72,.20,.17)||box(.42,.24,.58,.83);
+   case 'savanna':return d<.33+p||(d<.48+p&&Math.abs(Math.sin(8*a))>.77);
+   case 'knights':return v>.17-p&&v<.91+p&&Math.abs(dx)<(.43-.30*Math.max(0,v-.41)+p);
+   case 'mountains':var ridge=Math.min(.55-.43*Math.max(0,1-Math.abs(u-.24)/.27),.57-.47*Math.max(0,1-Math.abs(u-.52)/.29),.58-.36*Math.max(0,1-Math.abs(u-.80)/.24));return v>=ridge-p&&v<.91+p;
+   case 'clocks':return d<.34+p||(d<.47+p&&Math.abs(Math.sin(6*a))>.52);
+   case 'library':return u>.11-p&&u<.89+p&&v>.23+.22*Math.max(0,1-Math.abs(dx)/.42)-p&&v<.83-.12*Math.max(0,1-Math.abs(dx)/.42)+p;
+   case 'music':return box(.27,.23,.76,.41)||box(.27,.28,.42,.72)||box(.62,.28,.77,.68)||oval(.29,.71,.23,.20)||oval(.68,.68,.22,.20);
+   case 'autumn':return (Math.abs(dx)/(.41+p)+Math.abs(dy)/(.40+p)<1.36)||oval(.25,.34,.20,.18)||oval(.75,.34,.20,.18)||box(.42,.52,.58,.92);
+   case 'palace':return (v>.16-p&&v<.89+p&&Math.abs(dx)<(.16+.33*Math.max(0,1-Math.abs(v-.55)/.38)+p))||triangle(.29,.22,.65,.18)||triangle(.71,.22,.65,.18);
+   default:return oval(.5,.5,.44,.43);
+  }
+ }
+ var all={},count=0,x,y,k,idx,queue,component,groups=[];
+ function cellKey(x,y){return x+','+y;}
+ for(y=1;y<n-1;y+=2)for(x=1;x<n-1;x+=2)if(within(x/(n-1),y/(n-1))){all[cellKey(x,y)]=[x,y];count++;}
+ var seen={},dirs=[[2,0],[-2,0],[0,2],[0,-2]];
+ for(k in all)if(Object.prototype.hasOwnProperty.call(all,k)&&!seen[k]){
+  queue=[all[k]];component=[];seen[k]=true;
+  for(idx=0;idx<queue.length;idx++){
+   var cur=queue[idx];component.push(cur);
+   for(var di=0;di<4;di++){var nx=cur[0]+dirs[di][0],ny=cur[1]+dirs[di][1],id=cellKey(nx,ny);if(all[id]&&!seen[id]){seen[id]=true;queue.push(all[id]);}}
+  }
+  groups.push(component);
+ }
+ groups.sort(function(a,b){return b.length-a.length;});
+ var nodes=groups[0]||[],expected=Math.max(8,Math.floor(Math.pow((n-1)/2,2)*.39));
+ if(nodes.length<expected){
+  var chosen={};nodes.forEach(function(node){chosen[cellKey(node[0],node[1])]=true;});
+  while(nodes.length<expected){
+   var options=[];
+   for(y=1;y<n-1;y+=2)for(x=1;x<n-1;x+=2){
+    var id=cellKey(x,y);if(chosen[id])continue;
+    for(var d=0;d<4;d++)if(chosen[cellKey(x+dirs[d][0],y+dirs[d][1])]){options.push([x,y]);break;}
+   }
+   if(!options.length)break;
+   options.sort(function(a,b){var ad=Math.abs(a[0]-(n-1)/2)+Math.abs(a[1]-(n-1)/2),bd=Math.abs(b[0]-(n-1)/2)+Math.abs(b[1]-(n-1)/2);return ad-bd||a[1]-b[1]||a[0]-b[0];});
+   var next=options[0];chosen[cellKey(next[0],next[1])]=true;nodes.push(next);
+  }
+ }
+ var allowed={},footprint=[];
+ for(y=0;y<n;y++){footprint[y]=[];for(x=0;x<n;x++)footprint[y][x]=within(x/(n-1),y/(n-1));}
+ for(idx=0;idx<nodes.length;idx++){
+  var cell=nodes[idx];allowed[cellKey(cell[0],cell[1])]=true;
+  for(var dy=-1;dy<=1;dy++)for(var dx=-1;dx<=1;dx++){
+   var yy=cell[1]+dy,xx=cell[0]+dx;
+   if(yy>=0&&yy<n&&xx>=0&&xx<n&&Math.abs(dx)+Math.abs(dy)<=1)footprint[yy][xx]=true;
+  }
+ }
+ var start=nodes.slice().sort(function(a,b){return a[1]-b[1]||a[0]-b[0];})[0]||[1,1];
+ return {allowed:allowed,footprint:footprint,start:start,nodeCount:nodes.length};
+}
+
 function generate(cfg){if(!cfg.branching && ((cfg.mode==='campaign'&&cfg.idx>=3&&cfg.size>=13)||(cfg.mode==='academy'&&cfg.size>=15)||(cfg.mode==='endless'&&cfg.size>=15)))cfg.branching=true;
  var n=cfg.size,r=rng(cfg.seed),g=[],x,y;for(y=0;y<n;y++){g[y]=[];for(x=0;x<n;x++)g[y][x]='#';}
- var stack=[[1,1]];g[1][1]='.';
+ var silhouette=cfg.shapeVersion===2?makeMazeSilhouette(n,(WORLDS[cfg.world]||WORLDS[0]).id):null,origin=silhouette?silhouette.start:[1,1];
+ var stack=[[origin[0],origin[1]]];g[origin[1]][origin[0]]='.';
  while(stack.length){var cell=stack[stack.length-1],dirs=shuffle([[2,0],[-2,0],[0,2],[0,-2]],r),found=false;
- for(var k=0;k<dirs.length;k++){var nx=cell[0]+dirs[k][0],ny=cell[1]+dirs[k][1];if(nx>0&&ny>0&&nx<n-1&&ny<n-1&&g[ny][nx]==='#'){g[ny][nx]='.';g[cell[1]+dirs[k][1]/2][cell[0]+dirs[k][0]/2]='.';stack.push([nx,ny]);found=true;break;}}
+ for(var k=0;k<dirs.length;k++){var nx=cell[0]+dirs[k][0],ny=cell[1]+dirs[k][1];if(nx>0&&ny>0&&nx<n-1&&ny<n-1&&g[ny][nx]==='#'&&(!silhouette||silhouette.allowed[key(nx,ny)])){g[ny][nx]='.';g[cell[1]+dirs[k][1]/2][cell[0]+dirs[k][0]/2]='.';stack.push([nx,ny]);found=true;break;}}
  if(!found)stack.pop();}
  // Extra openings make genuine alternate routes, not only dead ends.
  var openings=Math.floor(n*n*(cfg.type==='exit'?.035:.055));var walls=[];
  for(y=1;y<n-1;y++)for(x=1;x<n-1;x++){if(g[y][x]==='#'&&((g[y][x-1]==='.'&&g[y][x+1]==='.')||(g[y-1][x]==='.'&&g[y+1][x]==='.')))walls.push([x,y]);}
  walls=shuffle(walls,r);for(k=0;k<Math.min(openings,walls.length);k++){g[walls[k][1]][walls[k][0]]='.';}
- var from=bfs(g,1,1),far=from.q[0];for(k=1;k<from.q.length;k++){var pp=from.q[k];if(from.dist[key(pp[0],pp[1])]>from.dist[key(far[0],far[1])])far=pp;}
- var end=far,path=trace(from.parent,end),used={};used[key(1,1)]=true;used[key(end[0],end[1])]=true;
+ var from=bfs(g,origin[0],origin[1]),far=from.q[0];for(k=1;k<from.q.length;k++){var pp=from.q[k];if(from.dist[key(pp[0],pp[1])]>from.dist[key(far[0],far[1])])far=pp;}
+ var end=far,path=trace(from.parent,end),used={};used[key(origin[0],origin[1])]=true;used[key(end[0],end[1])]=true;
  function reserve(pos,sym){if(!pos)return null;g[pos[1]][pos[0]]=sym;used[key(pos[0],pos[1])]=true;return pos;}
  var needsKey=cfg.type==='key'||cfg.type==='both';var needsSwitch=cfg.type==='switch'||cfg.type==='both';var hasQuiz=false; // Questions are optional even in the Academy.
  // Place gate(s) along a real solution path, and their tools in the reachable initial sector.
  var gateCells=[];if(needsKey||needsSwitch||hasQuiz){var count=(needsKey&&needsSwitch)?2:1;for(k=0;k<count;k++){var frac=count===2?(k===0?.44:.75):.66;var pos=path[Math.max(2,Math.min(path.length-2,Math.floor(path.length*frac)))];if(pos&&!used[key(pos[0],pos[1])]&&!gateCells.some(function(t){return key(t[0],t[1])===key(pos[0],pos[1]);})){gateCells.push(pos);used[key(pos[0],pos[1])]=true;}}}
  var blocked={};gateCells.forEach(function(v){blocked[key(v[0],v[1])]=true;});
- var accessible=bfs(g,1,1,blocked).q.filter(function(p){return !used[key(p[0],p[1])]&&!(p[0]===1&&p[1]===1);});
+ var accessible=bfs(g,origin[0],origin[1],blocked).q.filter(function(p){return !used[key(p[0],p[1])]&&!(p[0]===origin[0]&&p[1]===origin[1]);});
  // Prefer rewarding a detour rather than giving the tool on the main corridor.
  function toolSpot(){var off=accessible.filter(function(p){return !used[key(p[0],p[1])]&&!path.some(function(z){return key(z[0],z[1])===key(p[0],p[1]);});});var opts=off.length?off:accessible.filter(function(p){return !used[key(p[0],p[1])];});if(!opts.length){opts=from.q.filter(function(p){return !used[key(p[0],p[1])];});}return choose(opts,r);}
  if(needsKey)reserve(toolSpot(),'K');if(needsSwitch)reserve(toolSpot(),'S');if(hasQuiz)reserve(toolSpot(),'Q');
@@ -573,7 +656,7 @@ function generate(cfg){if(!cfg.branching && ((cfg.mode==='campaign'&&cfg.idx>=3&
  }
  // Never let an optional crate cut off the exit, keys, levers or required crystals.
  if(extra.blocks.length){var crate=extra.blocks[0],stop={};stop[key(crate[0],crate[1])]=true;
- var free=bfs(g,1,1,stop).q;var visible={};free.forEach(function(p){visible[key(p[0],p[1])]=true;});
+ var free=bfs(g,origin[0],origin[1],stop).q;var visible={};free.forEach(function(p){visible[key(p[0],p[1])]=true;});
  var necessary=[[end[0],end[1]]];
  if(needsKey){for(y=1;y<n;y++)for(x=1;x<n;x++)if(g[y][x]==='K')necessary.push([x,y]);}
  if(needsSwitch){for(y=1;y<n;y++)for(x=1;x<n;x++)if(g[y][x]==='S')necessary.push([x,y]);}
@@ -591,7 +674,7 @@ function generate(cfg){if(!cfg.branching && ((cfg.mode==='campaign'&&cfg.idx>=3&
  }
  extra.landmark=safeMarker(extra.landmark,null);
  extra.friend=safeMarker(extra.friend,extra.landmark);
- return{extra:extra,grid:g,start:[1,1],exit:end,portals:portals,patrol:patrol,crystals:crystalPos,books:books,branches:g._branches||null,needKey:needsKey,needSwitch:needsSwitch,needQuiz:false,needCrystals:cfg.type==='treasure'?2:0,pathLength:path.length};
+ return{extra:extra,grid:g,start:origin,silhouette:silhouette,exit:end,portals:portals,patrol:patrol,crystals:crystalPos,books:books,branches:g._branches||null,needKey:needsKey,needSwitch:needsSwitch,needQuiz:false,needCrystals:cfg.type==='treasure'?2:0,pathLength:path.length};
 }
 function addBranches(g,from,r,used,books,crystals){
  var n=g.length,route=trace(from.parent,from.q.reduce(function(best,p){return from.dist[key(p[0],p[1])]>from.dist[key(best[0],best[1])]?p:best;},from.q[0]));
@@ -607,7 +690,7 @@ function addBranches(g,from,r,used,books,crystals){
  options.forEach(function(p){if(usedChests>=chestCount)return;if(!used[key(p[0],p[1])]&&points.every(function(q){return key(q[0],q[1])!==key(p[0],p[1]);})){g[p[1]][p[0]]='H';used[key(p[0],p[1])]=true;usedChests++;}});
  g._branches={fork:fork,points:points};
 }
-function makeRun(cfg){var map=generate(cfg);return{cfg:cfg,map:map,x:1,y:1,key:false,switchOn:false,quizDone:false,gems:[],seen:{},steps:0,bumps:0,portalUsed:false,booksDone:{},booksSkipped:{},bookQuestions:{},currentBook:null,lastBookResult:null,chosenRoute:null,openedChests:[],npcMet:false,blocks:map.extra?map.extra.blocks.map(function(p){return p.slice();}):[],bridgeOn:false,puzzleDone:false,landmarkDone:false,friendDone:false,secretFound:false,started:Date.now()};}
+function makeRun(cfg){var map=generate(cfg);return{cfg:cfg,map:map,x:map.start[0],y:map.start[1],key:false,switchOn:false,quizDone:false,gems:[],seen:{},steps:0,bumps:0,portalUsed:false,booksDone:{},booksSkipped:{},bookQuestions:{},currentBook:null,lastBookResult:null,chosenRoute:null,openedChests:[],npcMet:false,blocks:map.extra?map.extra.blocks.map(function(p){return p.slice();}):[],bridgeOn:false,puzzleDone:false,landmarkDone:false,friendDone:false,secretFound:false,started:Date.now()};}
 function reveal(rr){var rad=2;for(var yy=rr.y-rad;yy<=rr.y+rad;yy++)for(var xx=rr.x-rad;xx<=rr.x+rad;xx++)if(inside(xx,yy,rr.map.grid.length)&&Math.abs(xx-rr.x)+Math.abs(yy-rr.y)<=rad+1)rr.seen[key(xx,yy)]=true;}
 function packRun(rr){return{cfg:rr.cfg,x:rr.x,y:rr.y,key:rr.key,switchOn:rr.switchOn,quizDone:rr.quizDone,gems:rr.gems,seen:rr.seen,steps:rr.steps,bumps:rr.bumps,portalUsed:rr.portalUsed,booksDone:rr.booksDone,booksSkipped:rr.booksSkipped,bookQuestions:rr.bookQuestions,chosenRoute:rr.chosenRoute,openedChests:rr.openedChests,npcMet:rr.npcMet,blocks:rr.blocks,bridgeOn:rr.bridgeOn,puzzleDone:rr.puzzleDone,landmarkDone:rr.landmarkDone,friendDone:rr.friendDone,secretFound:rr.secretFound,started:rr.started};}
 function unpackRun(packed){if(!packed||!packed.cfg)return null;var rr=makeRun(packed.cfg);rr.x=packed.x;rr.y=packed.y;rr.key=!!packed.key;rr.switchOn=!!packed.switchOn;rr.quizDone=!!packed.quizDone;rr.gems=packed.gems||[];rr.seen=packed.seen||{};rr.steps=packed.steps||0;rr.bumps=packed.bumps||0;rr.portalUsed=!!packed.portalUsed;rr.booksDone=packed.booksDone||{};rr.booksSkipped=packed.booksSkipped||{};rr.bookQuestions=packed.bookQuestions||{};rr.chosenRoute=packed.chosenRoute||null;rr.openedChests=packed.openedChests||[];rr.npcMet=!!packed.npcMet;rr.blocks=packed.blocks||rr.blocks||[];rr.bridgeOn=!!packed.bridgeOn;rr.puzzleDone=!!packed.puzzleDone;rr.landmarkDone=!!packed.landmarkDone;rr.friendDone=!!packed.friendDone;rr.secretFound=!!packed.secretFound;if(rr.secretFound&&rr.map.extra&&rr.map.extra.secret){var sp=rr.map.extra.secret;rr.map.grid[sp[1]][sp[0]]='.';}rr.started=packed.started||Date.now();reveal(rr);return rr;}
@@ -630,12 +713,12 @@ function openBook(rr,book){if(!book)return;var pos=key(book.x,book.y);if(rr.book
 
 function playSound(note){if(!progress.sound)return;try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return;if(!audio)audio=new C();if(audio.state==='suspended')audio.resume();var osc=audio.createOscillator(),gain=audio.createGain();osc.type='sine';osc.frequency.value=note||520;gain.gain.value=.037;osc.connect(gain);gain.connect(audio.destination);osc.start();gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.13);osc.stop(audio.currentTime+.14);}catch(e){}}
 function findCfg(id){if(/^w\d+-\d+$/.test(id)){var parts=id.slice(1).split('-');return WORLD_QUESTS[Number(parts[0])]&&WORLD_QUESTS[Number(parts[0])][Number(parts[1])];}if(id.indexOf('v2-')===0)return CHAPTERS.find(function(c){return c.id===id;});if(id.indexOf('c')===0)return CAMPAIGN[Number(id.slice(1))];if(id.indexOf('a')===0)return ACADEMY[Number(id.slice(1))];return null;}
-function start(cfg){heroMove=null;run=makeRun(cfg);reveal(run);screen='game';modal='intro';mapShown=false;feedback='';persist();render();window.scrollTo(0,0);}
+function start(cfg){heroMove=null;run=makeRun(Object.assign({},cfg,{shapeVersion:2}));reveal(run);screen='game';modal='intro';mapShown=false;feedback='';persist();render();window.scrollTo(0,0);}
 function resume(){heroMove=null;try{run=unpackRun(progress.lastRun);if(!run)return;screen='game';modal=null;feedback='';mapShown=false;render();window.scrollTo(0,0);}catch(e){progress.lastRun=null;persist();render();}}
 function requiredMessage(rr){var needs=[];if(rr.map.needKey&&!rr.key)needs.push('une clé 🗝️');if(rr.map.needSwitch&&!rr.switchOn)needs.push('un levier ⚙️');if(rr.map.needCrystals&&rr.gems.length<rr.map.needCrystals)needs.push((rr.map.needCrystals-rr.gems.length)+' cristal(aux) 💎');return needs;}
 function playerCanExit(rr){return !requiredMessage(rr).length;}
 function guardAt(rr,turn){var p=rr.map.patrol;if(!p.length)return null;var cyc=[0,1,2,1],ix=cyc[(turn||0)%4];return p[ix];}
-function collideGuard(rr){var g=guardAt(rr,rr.steps);if(g&&g[0]===rr.x&&g[1]===rr.y){rr.x=1;rr.y=1;rr.bumps++;reveal(rr);feedback='👻 Le gardien t’a repéré : retour au départ !';playSound(210);return true;}return false;}
+function collideGuard(rr){var g=guardAt(rr,rr.steps);if(g&&g[0]===rr.x&&g[1]===rr.y){rr.x=rr.map.start[0];rr.y=rr.map.start[1];rr.bumps++;reveal(rr);feedback='👻 Le gardien t’a repéré : retour au départ !';playSound(210);return true;}return false;}
 function step(dx,dy){if(!run||modal)return;var nx=run.x+dx,ny=run.y+dy,g=run.map.grid;if(!inside(nx,ny,g.length))return;var t=g[ny][nx];if(t==='#'){feedback='🌿 Un mur bloque ce passage.';updateGame();return;}
  if(run.blocks&&run.blocks.some(function(p){return p[0]===nx&&p[1]===ny;})){
   var tx=nx+dx,ty=ny+dy,blocked=!inside(tx,ty,g.length)||g[ty][tx]==='#'||g[ty][tx]==='D'||g[ty][tx]==='G'||g[ty][tx]==='E'||run.blocks.some(function(p){return p[0]===tx&&p[1]===ty;});
@@ -906,7 +989,38 @@ function themedMaterial(c,x,y,z,isWall,world){
  }
 }
 
-function tile(c,x,y,z,t,world,seen,discovered,full,rr){var bg=world===0?['#a9d39c','#afd99f','#a4cf98']:world===1?['#dbc496','#e3cba0','#d6be92']:['#a8b5da','#b2c0e4','#9eadd6'];var v=Math.floor(rndhash(x,y,13)*3);var tiles=TILE_IMAGES[world]||TILE_IMAGES[0],texture=tiles&&(t==='#'?tiles[1]:tiles[0]);var textured=!!(texture&&texture.complete&&texture.naturalWidth);
+
+/* Silhouette void is not a wall: dark surrounding landscape makes each outline clear.
+   The underlying grid remains blocked, so fingers and keyboard movement work as before. */
+function drawMazeOutside(c,z,world,x,y){
+ var w=WORLDS[world]||WORLDS[0],id=w.id;
+ var water=id==='island'||id==='atlantis'||id==='reef',sky=id==='ice'||id==='clouds'||id==='mountains',cosmos=id==='stars'||id==='planets';
+ var bg=water?'#184d64':sky?'#304d6b':cosmos?'#181c42':id==='volcano'||id==='dragons'?'#3b3039':id==='unicorn'||id==='fairies'||id==='candy'||id==='music'?'#61455f':id==='forest'||id==='jungle'||id==='autumn'?'#294b3d':'#343f4f';
+ c.fillStyle=bg;c.fillRect(0,0,z,z);
+ if(z<9)return;
+ c.lineWidth=Math.max(.7,z*.018);
+ if(water){
+  c.strokeStyle='rgba(147,218,225,.27)';c.beginPath();c.moveTo(0,z*.65);c.quadraticCurveTo(z*.4,z*.44,z*.75,z*.59);c.stroke();
+ }else if(cosmos){
+  if(rndhash(x,y,world+623)>.68){c.fillStyle='rgba(244,238,255,.62)';c.beginPath();c.arc(z*.44,z*.34,z*.04,0,Math.PI*2);c.fill();}
+ }else if(sky){
+  c.strokeStyle='rgba(226,247,255,.22)';c.beginPath();c.moveTo(0,z*.75);c.lineTo(z*.32,z*.65);c.lineTo(z*.76,z*.79);c.stroke();
+ }
+}
+function paintMazeSilhouetteEdge(c,z,world,x,y,mask){
+ if(!mask||!mask[y]||!mask[y][x])return;
+ var n=mask.length,up=y<=0||!mask[y-1][x],down=y>=n-1||!mask[y+1][x],left=x<=0||!mask[y][x-1],right=x>=n-1||!mask[y][x+1];
+ if(!up&&!down&&!left&&!right)return;
+ var w=WORLDS[world]||WORLDS[0],light=w.palette&&w.palette.light||'#d4ebbf';
+ c.strokeStyle=light;c.globalAlpha=.87;c.lineWidth=Math.max(1,z*.06);c.beginPath();
+ if(up){c.moveTo(0,0);c.lineTo(z,0);}
+ if(down){c.moveTo(0,z);c.lineTo(z,z);}
+ if(left){c.moveTo(0,0);c.lineTo(0,z);}
+ if(right){c.moveTo(z,0);c.lineTo(z,z);}
+ c.stroke();c.globalAlpha=1;
+}
+
+function tile(c,x,y,z,t,world,seen,discovered,full,rr){if(rr.map.silhouette&&!rr.map.silhouette.footprint[y][x]){drawMazeOutside(c,z,world,x,y);return;}var bg=world===0?['#a9d39c','#afd99f','#a4cf98']:world===1?['#dbc496','#e3cba0','#d6be92']:['#a8b5da','#b2c0e4','#9eadd6'];var v=Math.floor(rndhash(x,y,13)*3);var tiles=TILE_IMAGES[world]||TILE_IMAGES[0],texture=tiles&&(t==='#'?tiles[1]:tiles[0]);var textured=!!(texture&&texture.complete&&texture.naturalWidth);
  if(world>=6){themedMaterial(c,x,y,z,t==='#',world);
   if(t==='#'){if(rr.map.extra&&rr.map.extra.secret&&rr.map.extra.secret[0]===x&&rr.map.extra.secret[1]===y&&!rr.secretFound)emoji(c,'✧',z*.5,z*.47,z*.45);return;}
  }else if(textured){c.drawImage(texture,0,0,z,z);if(t!=='#'){c.fillStyle='#fff9d41a';c.fillRect(0,0,z,z);}}else if(world<6){c.fillStyle=bg[v];c.fillRect(0,0,z,z);}
@@ -953,6 +1067,7 @@ function paint(){if(!run)return;var cvs=document.getElementById('gameCanvas');if
  var rr=run,n=rr.map.grid.length,dim=mapShown?n:Math.min(n,prefs.zoom==='close'?7:prefs.zoom==='near'?9:11);var tileSize=sz/dim;var max=n-dim;var ox=mapShown?0:Math.max(0,Math.min(max,rr.x-Math.floor(dim/2))),oy=mapShown?0:Math.max(0,Math.min(max,rr.y-Math.floor(dim/2)));
  c.fillStyle='#193d44';c.fillRect(0,0,sz,sz);for(var yy=0;yy<dim;yy++)for(var xx=0;xx<dim;xx++){var gx=xx+ox,gy=yy+oy,t=rr.map.grid[gy][gx],discovered=!!rr.seen[key(gx,gy)],visible=rr.cfg.type!=='fog'||discovered||mapShown;
  c.save();c.translate(xx*tileSize,yy*tileSize);tile(c,gx,gy,tileSize,t,rr.cfg.world,visible,discovered,mapShown,rr);
+ if(rr.map.silhouette)paintMazeSilhouetteEdge(c,tileSize,rr.cfg.world,gx,gy,rr.map.silhouette.footprint);
  if(!visible){c.fillStyle='#122f3e';c.fillRect(0,0,tileSize,tileSize);if(rndhash(gx,gy,42)>.92)emoji(c,'✦',tileSize*.5,tileSize*.5,tileSize*.25);}
  else if(mapShown&&!discovered&&rr.cfg.type==='fog'){c.fillStyle='#1d354dcc';c.fillRect(0,0,tileSize,tileSize);}
  if(t==='D'&&rr.key||t==='G'&&rr.switchOn){c.fillStyle=rr.cfg.world===2?'#a8b5da':rr.cfg.world===1?'#dbc496':'#a9d39c';c.fillRect(0,0,tileSize,tileSize);c.fillStyle='#3f806d';c.fillRect(tileSize*.28,tileSize*.7,tileSize*.44,tileSize*.06);}
@@ -1045,7 +1160,7 @@ document.addEventListener('keydown',function(e){if(screen!=='game'||modal)return
 var touch=null;document.addEventListener('touchstart',function(e){if(screen!=='game'||modal||e.target.id!=='gameCanvas')return;var t=e.changedTouches[0];touch=[t.clientX,t.clientY];},{passive:true});document.addEventListener('touchend',function(e){if(!touch||screen!=='game'||modal)return;var t=e.changedTouches[0],dx=t.clientX-touch[0],dy=t.clientY-touch[1];touch=null;if(Math.max(Math.abs(dx),Math.abs(dy))<18)return;lastSwipe=Date.now();e.preventDefault();if(Math.abs(dx)>Math.abs(dy))step(dx>0?1:-1,0);else step(0,dy>0?1:-1);},{passive:false});
 window.addEventListener('resize',function(){if(screen==='game')paint();});
 // Small deterministic API for automated checks; does not change gameplay.
-window.LabyrintheTest={worlds:WORLDS,worldQuests:WORLD_QUESTS,generate:generate,makeRun:makeRun,bfs:bfs,trace:trace,campaign:CAMPAIGN,academy:ACADEMY,quizzes:QUIZZES,subjects:SUBJECTS,avatars:AVATARS,openBook:openBook,bookAt:bookAt,selectBookQuestion:selectBookQuestion,validExit:playerCanExit,step:step,getRun:function(){return run;},getScreen:function(){return screen;},getProgress:function(){return progress;},chapters:CHAPTERS,start:start,getModal:function(){return modal;},getArtReady:function(){return ART_READY;},getDecorReady:function(){return DECOR_IMAGES;},packRun:packRun,unpackRun:unpackRun};
+window.LabyrintheTest={makeMazeSilhouette:makeMazeSilhouette,worlds:WORLDS,worldQuests:WORLD_QUESTS,generate:generate,makeRun:makeRun,bfs:bfs,trace:trace,campaign:CAMPAIGN,academy:ACADEMY,quizzes:QUIZZES,subjects:SUBJECTS,avatars:AVATARS,openBook:openBook,bookAt:bookAt,selectBookQuestion:selectBookQuestion,validExit:playerCanExit,step:step,getRun:function(){return run;},getScreen:function(){return screen;},getProgress:function(){return progress;},chapters:CHAPTERS,start:start,getModal:function(){return modal;},getArtReady:function(){return ART_READY;},getDecorReady:function(){return DECOR_IMAGES;},packRun:packRun,unpackRun:unpackRun};
 render();
 if(('serviceWorker' in navigator)&&(location.protocol==='https:'||location.hostname==='localhost')){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}
 })();
